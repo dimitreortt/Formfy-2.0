@@ -1,0 +1,19 @@
+{
+  "name": "formfy-2.0",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc && jest ./dist --forceExit",
+    "coverage": "tsc && jest ./dist --coverage",
+    "main": "tsc && node ./dist/src/main"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jest": "^27.0.3",
+    "jest": "^27.4.3",
+    "pg-promise": "^10.11.1",
+    "typescript": "^4.5.2"
+  }
+}

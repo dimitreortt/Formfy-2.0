@@ -9,4 +9,8 @@ export default class Form {
     if (this.fields[field.label]) throw new Error('Label already exists in this form');
     this.fields[field.label] = field;
   }
+
+  getFields() {
+    return this.fields;
+  }
 }

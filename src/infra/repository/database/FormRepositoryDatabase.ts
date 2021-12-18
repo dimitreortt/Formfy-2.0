@@ -2,7 +2,7 @@ import FormRepository from '../../../domain/repository/FormRepository';
 import Form from '../../../domain/entitites/Form';
 import DatabaseConnection from '../../database/DatabaseConnection';
 import FormDTO from '../../../application/dto/FormDTO';
-import FormFieldOptionsFormatter from '../../../domain/service/FormFieldOptionsFormatter';
+import FormFieldOptionsFormatter from '../../service/FormFieldOptionsFormatter';
 
 export default class FormRepositoryDatabase implements FormRepository {
   constructor(private databaseConnection: DatabaseConnection) {}
@@ -16,8 +16,8 @@ export default class FormRepositoryDatabase implements FormRepository {
     );
     // pesquisar forma de integrar um performance booster tipo o PgArrayFormatter sem quebrar a hierarquia das camadas de DDD
     for (const label in form.fields) {
-      const result = await this.databaseConnection.query(
-        'insert into formfy.form_fields (form_id, label, type, options) values ($1, $2, $3);',
+      await this.databaseConnection.query(
+        'insert into formfy.form_field (form_id, label, type, options) values ($1, $2, $3, $4);',
         [
           formData.id,
           label,
@@ -25,10 +25,7 @@ export default class FormRepositoryDatabase implements FormRepository {
           FormFieldOptionsFormatter.format(form.fields[label].options),
         ]
       );
-
-      console.log(result);
     }
-
     return formData;
   }
 }

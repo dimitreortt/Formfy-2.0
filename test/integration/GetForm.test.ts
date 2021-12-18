@@ -35,7 +35,7 @@ test('Should get a form with two fields', async () => {
   ];
   const createFormInput = new CreateFormInput('Stock Analysis', fields);
   const createFormOutput = await createForm.execute(createFormInput);
-  const getFormInput = new GetFormInput('Subscription', createFormOutput.formId);
+  const getFormInput = new GetFormInput('Stock Analysis', createFormOutput.formId);
   const output = await getForm.execute(getFormInput);
   expect(output.formFields).toHaveLength(2);
   expect(output.formFields[0].label).toBe('Number of patches');

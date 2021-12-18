@@ -8,6 +8,9 @@ export default class CreateForm {
 
   async execute(input: CreateFormInput): Promise<CreateFormOutput> {
     const form = new Form(input.name);
+    for (const field of input.fields) {
+      form.addField(field);
+    }
     const formData = await this.formRepository.save(form);
     return new CreateFormOutput(formData.name, formData.id);
   }

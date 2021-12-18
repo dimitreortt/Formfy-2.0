@@ -35,7 +35,8 @@ export default class DatabaseConnectionMock implements DatabaseConnection {
     return this;
   }
 
-  query(statement: string, params?: any): Promise<any> {
-    return this.pgp.query(statement, params);
+  async query(statement: string, params?: any): Promise<any> {
+    const result = await this.pgp.query(statement, params);
+    return result;
   }
 }

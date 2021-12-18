@@ -3,6 +3,7 @@ import DatabaseConnection from '../database/DatabaseConnection';
 import FormField from '../../domain/entitites/FormField';
 import FormDTO from '../../application/dto/FormDTO';
 import FormFieldDTO from '../../application/dto/FormFieldDTO';
+import FormFieldOptionsParser from '../service/FormFieldOptionsParser';
 
 export default class FormDAODatabase implements FormDAO {
   constructor(readonly databaseConnection: DatabaseConnection) {}
@@ -19,6 +20,10 @@ export default class FormDAODatabase implements FormDAO {
       'select * from formfy.form_field where form_id = $1',
       [formId]
     );
-    return fields;
+    const parsedFields = fields.map((field: any) => {
+      return { ...field, options: FormFieldOptionsParser.parse(field.options) };
+    });
+
+    return parsedFields;
   }
 }

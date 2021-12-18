@@ -28,4 +28,27 @@ export default class FormRepositoryDatabase implements FormRepository {
     }
     return formData;
   }
+
+  async update(formName: string, newForm: Form): Promise<FormDTO> {
+    const [
+      formData,
+    ] = await this.databaseConnection.query(
+      'update formfy.form set name = $1 where name = $2 returning *;',
+      [newForm.name, formName]
+    );
+    return { name: 'oi', id: 1 };
+  }
+
+  async delete(formId: number): Promise<void> {
+    await this.databaseConnection.query('delete from formfy.form where id = $1 returning *;', [
+      formId,
+    ]);
+  }
+
+  async deleteFields(formId: number): Promise<void> {
+    await this.databaseConnection.query(
+      'delete from formfy.form_field where form_id = $1 returning *;',
+      [formId]
+    );
+  }
 }

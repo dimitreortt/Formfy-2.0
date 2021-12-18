@@ -9,6 +9,7 @@ export default class GetForm {
 
   async execute(input: GetFormInput): Promise<GetFormOutput> {
     const formData = await this.formDAO.getForm(input.name);
+    if (!formData) throw new Error('Form does not exist');
     // aqui dá pra mandar um assembly, pq tem que fazer a parte de adicionar os formFields tbm
     const formFields = await this.formDAO.getFormFields(formData.id);
     return new GetFormOutput(formData, formFields);

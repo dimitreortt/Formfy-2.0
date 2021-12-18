@@ -14,9 +14,9 @@ let getForm: GetForm;
 
 beforeAll(async () => {
   databaseConnection = await new DatabaseConnectionMock().build();
+  getForm = new GetForm(new FormDAODatabase(databaseConnection));
   formRepositoryDatabase = new FormRepositoryDatabase(databaseConnection);
   createForm = new CreateForm(formRepositoryDatabase);
-  getForm = new GetForm(new FormDAODatabase(databaseConnection));
 });
 
 test('Should get a form from name', async () => {

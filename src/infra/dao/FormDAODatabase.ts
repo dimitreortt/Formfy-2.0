@@ -15,6 +15,10 @@ export default class FormDAODatabase implements FormDAO {
     return formData;
   }
 
+  async getForms(): Promise<FormDTO[]> {
+    return await this.databaseConnection.query('select * from formfy.form');
+  }
+
   async getFormFields(formId: number): Promise<FormFieldDTO[]> {
     const fields = await this.databaseConnection.query(
       'select * from formfy.form_field where form_id = $1',

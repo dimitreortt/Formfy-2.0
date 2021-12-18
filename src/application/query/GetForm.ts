@@ -9,9 +9,8 @@ export default class GetForm {
 
   async execute(input: GetFormInput): Promise<GetFormOutput> {
     const formData = await this.formDAO.getForm(input.name);
-    const form = new Form(formData.name); // aqui dá pra mandar um assembly, pq tem que fazer a parte de adicionar os formFields tbm
+    // aqui dá pra mandar um assembly, pq tem que fazer a parte de adicionar os formFields tbm
     const formFields = await this.formDAO.getFormFields(formData.id);
-    console.log(formFields);
-    return new GetFormOutput(form, formFields);
+    return new GetFormOutput(formData, formFields);
   }
 }

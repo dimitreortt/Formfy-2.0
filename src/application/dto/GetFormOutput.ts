@@ -1,6 +1,6 @@
-import Form from '../../domain/entitites/Form';
 import FormField from '../../domain/entitites/FormField';
+import FormDTO from './FormDTO';
 
 export default class GetFormOutput {
-  constructor(readonly form: Form, readonly formFields: FormField[]) {}
+  constructor(readonly form: FormDTO, readonly formFields: FormField[]) {}
 }

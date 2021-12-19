@@ -65,4 +65,11 @@ export default class FormRepositoryDatabase implements FormRepository {
       ]
     );
   }
+
+  async deleteField(formId: number, label: string): Promise<void> {
+    await this.databaseConnection.query(
+      'delete from formfy.form_field where form_id = $1 and label = $2;',
+      [formId, label]
+    );
+  }
 }

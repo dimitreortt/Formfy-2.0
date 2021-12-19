@@ -8,5 +8,6 @@ export default interface FormRepository {
   delete(formId: number): Promise<void>;
   deleteFields(formId: number): Promise<void>;
   updateField(formId: number, fieldName: string, newField: FormField): Promise<void>;
+  deleteField(formId: number, label: string): Promise<void>;
   // getByName(name: string): Promise<Form>;
 }

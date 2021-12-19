@@ -31,4 +31,8 @@ export default class FormRepositoryMemory implements FormRepository {
   ): Promise<void> {
     throw new Error('Method not implemented.');
   }
+
+  deleteField(formId: number, label: string): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
 }

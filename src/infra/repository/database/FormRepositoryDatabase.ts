@@ -3,6 +3,7 @@ import Form from '../../../domain/entitites/Form';
 import DatabaseConnection from '../../database/DatabaseConnection';
 import FormDTO from '../../../application/dto/FormDTO';
 import FormFieldOptionsFormatter from '../../service/FormFieldOptionsFormatter';
+import FormField from '../../../domain/entitites/FormField';
 
 export default class FormRepositoryDatabase implements FormRepository {
   constructor(private databaseConnection: DatabaseConnection) {}
@@ -36,7 +37,7 @@ export default class FormRepositoryDatabase implements FormRepository {
       'update formfy.form set name = $1 where name = $2 returning *;',
       [newForm.name, formName]
     );
-    return { name: 'oi', id: 1 };
+    return formData;
   }
 
   async delete(formId: number): Promise<void> {
@@ -49,6 +50,19 @@ export default class FormRepositoryDatabase implements FormRepository {
     await this.databaseConnection.query(
       'delete from formfy.form_field where form_id = $1 returning *;',
       [formId]
+    );
+  }
+
+  async updateField(formId: number, fieldLabel: string, newField: FormField): Promise<void> {
+    await this.databaseConnection.query(
+      'update formfy.form_field set (label, type, options) = ($1, $2, $3) where form_id = $4 and label = $5;',
+      [
+        newField.label,
+        newField.type,
+        FormFieldOptionsFormatter.format(newField.options),
+        formId,
+        fieldLabel,
+      ]
     );
   }
 }

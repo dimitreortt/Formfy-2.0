@@ -9,7 +9,7 @@ beforeAll(async () => {
   formRepositoryDatabase = new FormRepositoryDatabase(databaseConnection);
 });
 
-test('Should delete fields from formId', async () => {
+test('Should delete fields from db based on formId', async () => {
   const FORM_ID = 1;
   const fields = [
     {

@@ -23,4 +23,12 @@ export default class FormRepositoryMemory implements FormRepository {
   deleteFields(formId: number): Promise<void> {
     throw new Error('Method not implemented.');
   }
+
+  updateField(
+    formId: number,
+    fieldName: string,
+    newField: import('../../../domain/entitites/FormField').default
+  ): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
 }

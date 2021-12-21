@@ -16,3 +16,16 @@ CREATE TABLE formfy.form_field (
   options text,
   unique (form_id, label)
 );
+
+CREATE TABLE formfy.regitry (
+  id serial primary key,
+  form_id integer not null  
+);
+
+CREATE TABLE formfy.regitry_field (
+  registry_id integer not null,
+  label text not null,
+  value text not null,
+  unique (registry_id, label)
+);
+

@@ -1,5 +1,5 @@
 import Form from '../entitites/Form';
-import FormDTO from '../../application/dto/FormDTO';
+import FormDTO from '../dto/FormDTO';
 import FormField from '../entitites/FormField';
 
 export default interface FormRepository {

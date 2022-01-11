@@ -1,7 +1,7 @@
 import FormRepository from '../../../domain/repository/FormRepository';
 import Form from '../../../domain/entitites/Form';
 import DatabaseConnection from '../../database/DatabaseConnection';
-import FormDTO from '../../../application/dto/FormDTO';
+import FormDTO from '../../../domain/dto/FormDTO';
 import FormFieldOptionsFormatter from '../../service/FormFieldOptionsFormatter';
 import FormField from '../../../domain/entitites/FormField';
 

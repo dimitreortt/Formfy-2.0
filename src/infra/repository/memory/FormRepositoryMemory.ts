@@ -1,6 +1,6 @@
 import FormRepository from '../../../domain/repository/FormRepository';
 import Form from '../../../domain/entitites/Form';
-import FormDTO from '../../../application/dto/FormDTO';
+import FormDTO from '../../../domain/dto/FormDTO';
 
 export default class FormRepositoryMemory implements FormRepository {
   forms: Form[] = [];

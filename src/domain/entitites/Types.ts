@@ -9,3 +9,5 @@ export type FieldType =
   | 'Checkbox'
   | 'Phone Number'
   | 'File';
+
+export type FieldValue = string | string[] | File | Date;

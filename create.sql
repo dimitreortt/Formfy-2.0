@@ -17,12 +17,12 @@ CREATE TABLE formfy.form_field (
   unique (form_id, label)
 );
 
-CREATE TABLE formfy.regitry (
+CREATE TABLE formfy.registry (
   id serial primary key,
   form_id integer not null  
 );
 
-CREATE TABLE formfy.regitry_field (
+CREATE TABLE formfy.registry_field (
   registry_id integer not null,
   label text not null,
   value text not null,

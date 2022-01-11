@@ -15,20 +15,19 @@ beforeAll(async () => {
 
 test('Should save a registry', async () => {
   const FORM_ID = 1;
-  const form = new Form('Subscription');
   const listSelectionOptions = ['Brazil', 'England'];
-  form.addField(new FormField('List Selection', 'Country', listSelectionOptions));
   const checkBoxOptions = ['Big', 'Crispy', 'Yellow', 'Melancholic'];
-  form.addField(new FormField('Checkbox', 'Fixtures', checkBoxOptions));
+  const fields = [
+    new FormField('List Selection', 'Country', listSelectionOptions),
+    new FormField('Checkbox', 'Fixtures', checkBoxOptions),
+  ];
   const checkBoxInputs = ['Big', 'Yellow'];
-  const registry = new Registry(form, ['Brazil', checkBoxInputs]);
+  const registry = new Registry(fields, ['Brazil', checkBoxInputs]);
   await registryRepositoryDatabase.save(registry, FORM_ID);
-
   const registries = await databaseConnection.query('select * from formfy.registry;');
   expect(registries).toHaveLength(1);
   const [registryData] = registries;
   expect(registryData.form_id).toBe(FORM_ID);
-
   const registryFields = await databaseConnection.query(
     'select * from formfy.registry_field where registry_id = $1;',
     [registryData.id]

@@ -1,6 +1,5 @@
 import CreateFormInput from '../../src/application/dto/CreateFormInput';
 import CreateForm from '../../src/application/usecase/CreateForm';
-import DatabaseConnectionAdapter from '../../src/infra/database/DatabaseConnectionAdapter';
 import FormRepositoryDatabase from '../../src/infra/repository/database/FormRepositoryDatabase';
 import DatabaseConnectionMock from '../mocks/DatabaseConnectionMock';
 
@@ -17,4 +16,5 @@ test('Should create a form', async () => {
   const createForm = new CreateForm(formRepositoryDatabase);
   const output = await createForm.execute(createFormInput);
   expect(output.name).toBe('Subscription');
+  expect(typeof output.formId).toBe('number');
 });

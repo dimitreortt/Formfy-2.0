@@ -12,9 +12,9 @@ export default class DatabaseConnectionMock implements DatabaseConnection {
     const pgp = await newDb().adapters.createPgPromise();
     await pgp.connect();
 
-    await pgp.query(`CREATE SCHEMA formfy;
+    await pgp.query(`
+    CREATE SCHEMA formfy;
 
-    
     CREATE TABLE formfy.form (  
       id serial primary key,
       name text unique not null
@@ -28,7 +28,20 @@ export default class DatabaseConnectionMock implements DatabaseConnection {
       type text not null,
       options text,
       unique (form_id, label)
-    );`);
+    );
+    
+    CREATE TABLE formfy.registry (
+      id serial primary key,
+      form_id integer not null  
+    );
+    
+    CREATE TABLE formfy.registry_field (
+      registry_id integer not null,
+      label text not null,
+      value text not null,
+      unique (registry_id, label)
+    );
+    `);
 
     // colocar um TypeORM vai mudar tudo...
 
@@ -41,3 +54,5 @@ export default class DatabaseConnectionMock implements DatabaseConnection {
     return result;
   }
 }
+
+//ALTER TABLE tablename ADD CONSTRAINT constraintname UNIQUE (columns);

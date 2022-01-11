@@ -1,4 +1,4 @@
-import FormDTO from '../dto/FormDTO';
+import FormDTO from '../../domain/dto/FormDTO';
 import FormFieldDTO from '../dto/FormFieldDTO';
 
 export default interface FormDAO {

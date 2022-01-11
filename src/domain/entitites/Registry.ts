@@ -1,15 +1,14 @@
+import { FieldValue } from './Types';
 import Form from './Form';
-
-// isso aqui tá ruim, não existe essa de type na paçoca, criar um DTO aqui
-type FieldValue = string | string[];
+import FormField from './FormField';
 
 export default class Registry {
   values: { [key: string]: FieldValue } = {};
 
-  constructor(readonly form: Form, readonly inputs: FieldValue[]) {
+  constructor(readonly fields: FormField[], readonly inputs: FieldValue[]) {
     let index = 0;
-    for (const label in form.fields) {
-      this.values[label] = inputs[index++];
+    for (const field of fields) {
+      this.values[field.label] = inputs[index++];
     }
   }
 }

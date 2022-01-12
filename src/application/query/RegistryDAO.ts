@@ -1,5 +1,5 @@
 import RegistryDTO from '../../domain/dto/RegistryDTO';
 
 export default interface RegistryDAO {
-  getRegistries(): Promise<RegistryDTO[]>;
+  getRegistries(formId: number): Promise<RegistryDTO[]>;
 }

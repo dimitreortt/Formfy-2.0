@@ -1,6 +1,7 @@
 import DatabaseConnection from '../database/DatabaseConnection';
 import RegistryDAO from '../../application/query/RegistryDAO';
 import RegistryDTO from '../../domain/dto/RegistryDTO';
+import RegistryFieldDTO from '../../application/dto/RegistryFieldDTO';
 
 export default class RegistryDAODatabase implements RegistryDAO {
   constructor(readonly databaseConnection: DatabaseConnection) {}
@@ -11,5 +12,13 @@ export default class RegistryDAODatabase implements RegistryDAO {
       [formId]
     );
     return registriesData;
+  }
+
+  async getRegistryFields(registryId: number): Promise<RegistryFieldDTO[]> {
+    const registryFieldsData = await this.databaseConnection.query(
+      'select * from formfy.registry_field where registry_id = $1',
+      [registryId]
+    );
+    return registryFieldsData;
   }
 }

@@ -8,12 +8,20 @@ import Form from '../../src/domain/entitites/Form';
 import FormField from '../../src/domain/entitites/FormField';
 import RegistryRepositoryDatabase from '../../src/infra/repository/database/RegistryRepositoryDatabase';
 import FormDAODatabase from '../../src/infra/dao/FormDAODatabase';
+import FormDAO from '../../src/application/query/FormDAO';
 
 let databaseConnection: any;
 let formId: number;
+let registryRepositoryDatabase: RegistryRepositoryDatabase;
+let formDAO: FormDAO;
+let createRegistry: CreateRegistry;
 
 beforeAll(async () => {
   databaseConnection = await new DatabaseConnectionMock().build();
+  registryRepositoryDatabase = new RegistryRepositoryDatabase(databaseConnection);
+  formDAO = new FormDAODatabase(databaseConnection);
+  createRegistry = new CreateRegistry(registryRepositoryDatabase, formDAO);
+
   const formRepositoryDatabase = new FormRepositoryDatabase(databaseConnection);
   const createForm = new CreateForm(formRepositoryDatabase);
   const listSelectionOptions = ['Brazil', 'England'];
@@ -33,12 +41,17 @@ test('Should create a registry', async () => {
     'Brazil',
     checkBoxInputs,
   ]);
-  const registryRepositoryDatabase = new RegistryRepositoryDatabase(databaseConnection);
-  const formDAO = new FormDAODatabase(databaseConnection);
-  const createRegistry = new CreateRegistry(registryRepositoryDatabase, formDAO);
   const output = await createRegistry.execute(createRegistryInput);
-
   expect(typeof output.registryId).toBe('number');
 });
 
-test('Should throw error when trying to create a registry with input incompatible with formfields types', () => {});
+test('Should throw error when trying to create a registry with input incompatible with formfields types', async () => {
+  const wrongCheckBoxInputs = 'Yellow';
+  const createRegistryInput = new CreateRegistryInput('Subscription', formId, [
+    'Brazil',
+    wrongCheckBoxInputs,
+  ]);
+  await expect(async () => {
+    await createRegistry.execute(createRegistryInput);
+  }).rejects.toThrow(new Error('Invalid field value type in registry creation'));
+});

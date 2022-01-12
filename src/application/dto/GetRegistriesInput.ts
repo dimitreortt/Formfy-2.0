@@ -1,3 +1,3 @@
 export default class GetRegistriesInput {
-  constructor(readonly formName: string) {}
+  constructor(readonly formId: number) {}
 }

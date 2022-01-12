@@ -11,7 +11,10 @@ export default class RegistryDAODatabase implements RegistryDAO {
       'select * from formfy.registry where form_id = $1',
       [formId]
     );
-    return registriesData;
+    const registries = registriesData.map(
+      (registryData: any) => new RegistryDTO(registryData.id, registryData.form_id)
+    );
+    return registries;
   }
 
   async getRegistryFields(registryId: number): Promise<RegistryFieldDTO[]> {

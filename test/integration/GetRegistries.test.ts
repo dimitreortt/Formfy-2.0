@@ -45,9 +45,9 @@ test('Should get registries from form id', async () => {
   const getRegistries = new GetRegistries(registryDAO);
   const getRegistriesInput = new GetRegistriesInput(formId);
   const getRegistriesOutput = await getRegistries.execute(getRegistriesInput);
-  expect(getRegistriesOutput.registries).toHaveLength(2);
-  expect(getRegistriesOutput.registries[0].values['Number of patches']).toEqual('5');
-  expect(getRegistriesOutput.registries[0].values['Type']).toEqual('Small');
-  expect(getRegistriesOutput.registries[1].values['Number of patches']).toEqual('9');
-  expect(getRegistriesOutput.registries[1].values['Type']).toEqual('Big');
+  expect(getRegistriesOutput.output).toHaveLength(2);
+  expect(getRegistriesOutput.output[0].values['Number of patches']).toEqual('5');
+  expect(getRegistriesOutput.output[0].values['Type']).toEqual('Small');
+  expect(getRegistriesOutput.output[1].values['Number of patches']).toEqual('9');
+  expect(getRegistriesOutput.output[1].values['Type']).toEqual('Big');
 });

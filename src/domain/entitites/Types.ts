@@ -11,3 +11,5 @@ export type FieldType =
   | 'File';
 
 export type FieldValue = string | string[] | File | Date;
+
+export type RegistryValues = { [key: string]: FieldValue };

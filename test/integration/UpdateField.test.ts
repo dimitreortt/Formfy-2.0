@@ -24,23 +24,24 @@ beforeAll(async () => {
 });
 
 test('Should update a form field', async () => {
-  const field = new FormField('List Selection', 'Color', ['Yellow', 'Green', 'Blue']);
+  const oldListSelectionOptions = ['Yellow', 'Green', 'Blue'];
+  const field = new FormField('List Selection', 'Color', oldListSelectionOptions);
   const createFormInput = new CreateFormInput('Paint', [field]);
   const createFormOutput = await createForm.execute(createFormInput);
-  const newFieldListSelectionOptions = ['Yellow', 'Green', 'Blue', 'Marsala'];
+  const newListSelectionOptions = ['Yellow', 'Green', 'Blue', 'Marsala'];
   const updateFieldInput = new UpdateFieldInput(
     'Color',
     createFormOutput.formId,
     'List Selection',
     'Base Color',
-    newFieldListSelectionOptions
+    newListSelectionOptions
   );
   await updateField.execute(updateFieldInput);
   const getFormInput = new GetFormInput('Paint');
   const getFormOutput = await getForm.execute(getFormInput);
   expect(getFormOutput.formFields.length).toBe(1);
   expect(getFormOutput.formFields[0].label).toBe('Base Color');
-  expect(getFormOutput.formFields[0].options).toEqual(newFieldListSelectionOptions);
+  expect(getFormOutput.formFields[0].options).toEqual(newListSelectionOptions);
 });
 
 // fazer o caso de formulário não existe no GetFormTest

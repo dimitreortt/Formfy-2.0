@@ -12,6 +12,7 @@ import GetRegistries from '../../src/application/query/GetRegistries';
 import RegistryDAO from '../../src/application/query/RegistryDAO';
 import RegistryDAODatabase from '../../src/infra/dao/RegistryDAODatabase';
 import GetRegistriesInput from '../../src/application/dto/GetRegistriesInput';
+import UpdateRegistryInput from '../../src/application/dto/UpdateRegistryInput';
 
 let databaseConnection: any;
 let formRepositoryDatabase: FormRepositoryDatabase;
@@ -40,10 +41,12 @@ test('Should update a registry field, change chosen color from Yellow to Green i
   const createRegistryInput = new CreateRegistryInput('Subscription', createFormOutput.formId, [
     'Yellow',
   ]);
-  await createRegistry.execute(createRegistryInput);
+  const createRegistryOutput = await createRegistry.execute(createRegistryInput);
 
   const updateRegistry = new UpdateRegistry();
-  const updateRegistryInput = new UpdateRegistryInput();
+  const updateRegistryInput = new UpdateRegistryInput(createRegistryOutput.registryId, [
+    { fieldLabel: 'Color', newValue: 'Green' },
+  ]);
   await updateRegistry.execute(updateRegistryInput);
 
   const getRegistries = new GetRegistries(registryDAO);

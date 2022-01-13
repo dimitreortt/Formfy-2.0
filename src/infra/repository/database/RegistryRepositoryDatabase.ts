@@ -1,3 +1,4 @@
+import { FieldValue } from './../../../domain/entitites/Types';
 import RegistryRepository from '../../../domain/repository/RegistryRepository';
 import DatabaseConnection from '../../database/DatabaseConnection';
 import Registry from '../../../domain/entitites/Registry';
@@ -21,5 +22,12 @@ export default class RegistryRepositoryDatabase implements RegistryRepository {
       );
     }
     return new RegistryDTO(registryData.id, registryData.form_id);
+  }
+
+  async updateField(registryId: number, label: string, newValue: FieldValue): Promise<void> {
+    await this.databaseConnection.query(
+      'update formfy.registry_field set (value) = ($1) where registry_id = $2 and label = $3;',
+      [newValue, registryId, label]
+    );
   }
 }

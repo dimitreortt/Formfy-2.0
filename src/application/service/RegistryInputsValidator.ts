@@ -22,17 +22,12 @@ export default class RegistryInputsValidator {
           if (typeof input !== 'string') throw fieldValueTypeError;
           break;
         case 'Checkbox':
-          if (!isStringArray(input)) {
-            console.log('To lançando no Checkbox');
-            throw fieldValueTypeError;
-          }
+          if (!isStringArray(input)) throw fieldValueTypeError;
           break;
         case 'Date':
         case 'Date and Time':
-          if (!(input instanceof Date)) {
-            console.log('To lançando no Date');
-            throw fieldValueTypeError;
-          }
+          if (!(input instanceof Date)) throw fieldValueTypeError;
+
           break;
         case 'File':
           if (!(input instanceof File)) throw fieldValueTypeError;

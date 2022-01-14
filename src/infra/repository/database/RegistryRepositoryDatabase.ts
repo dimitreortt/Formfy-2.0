@@ -30,4 +30,15 @@ export default class RegistryRepositoryDatabase implements RegistryRepository {
       [newValue, registryId, label]
     );
   }
+
+  async delete(registryId: number): Promise<void> {
+    await this.databaseConnection.query('delete from formfy.registry where id = $1;', [registryId]);
+  }
+
+  async deleteFields(registryId: number): Promise<void> {
+    await this.databaseConnection.query(
+      'delete from formfy.registry_field where registry_id = $1;',
+      [registryId]
+    );
+  }
 }

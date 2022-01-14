@@ -17,7 +17,7 @@ export default class RegistryRepositoryDatabase implements RegistryRepository {
     for (const fieldLabel in registry.values) {
       if (!registry.values[fieldLabel]) continue;
       await this.databaseConnection.query(
-        'insert into formfy.registry_field (registry_id, label, value) values ($1, $2, $3);',
+        'insert into formfy.registry_field (registry_id, label, value) values ($1, $2, $3) returning *;',
         [registryData.id, fieldLabel, registry.values[fieldLabel]]
       );
     }

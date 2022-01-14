@@ -4,6 +4,7 @@ import GetRegistriesInput from '../dto/GetRegistriesInput';
 import GetRegistriesOutput from '../dto/GetRegistriesOutput';
 import RegistryDTO from '../../domain/dto/RegistryDTO';
 import GetRegistryOutput from '../dto/GetRegistryOutput';
+import RegistryValuesRetriever from '../service/RegistryValuesRetriever';
 
 export default class GetRegistries {
   constructor(readonly registryDAO: RegistryDAO) {}
@@ -13,10 +14,7 @@ export default class GetRegistries {
     const output: GetRegistryOutput[] = [];
     for (const registryData of registriesData) {
       const registryFieldsData = await this.registryDAO.getRegistryFields(registryData.registryId);
-      const values: RegistryValues = {};
-      for (const registryFieldData of registryFieldsData) {
-        values[registryFieldData.label] = registryFieldData.value;
-      }
+      const values: RegistryValues = RegistryValuesRetriever.retrieve(registryFieldsData);
       output.push(
         new GetRegistryOutput(new RegistryDTO(registryData.registryId, input.formId), values)
       );

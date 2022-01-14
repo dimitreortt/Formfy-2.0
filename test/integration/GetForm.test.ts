@@ -25,6 +25,7 @@ test('Should get a form from name', async () => {
   const getFormInput = new GetFormInput('Subscription');
   const output = await getForm.execute(getFormInput);
   expect(output.form.name).toBe('Subscription');
+  expect(typeof output.form.id).toBe('number');
 });
 
 test('Should get a form with two fields', async () => {

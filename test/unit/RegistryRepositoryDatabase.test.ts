@@ -39,4 +39,20 @@ test('Should save a registry', async () => {
   expect(registryFields[1].value).toBe('{Big,Yellow}');
 });
 
-// fazer o caso de formulário não existe no GetFormTest
+test('Should update a registry field', async () => {
+  const REGISTRY_ID = 101;
+  const oldSerialCode = '0101DPÇLPÇ1P1L';
+  await databaseConnection.query(
+    'insert into formfy.registry_field (registry_id, label, value) values ($1, $2, $3);',
+    [REGISTRY_ID, 'Serial Code', oldSerialCode]
+  );
+  const newSerialCode = '6743682AHISUDA';
+  await registryRepositoryDatabase.updateField(REGISTRY_ID, 'Serial Code', newSerialCode);
+  const registryFields = await databaseConnection.query(
+    'select * from formfy.registry_field where registry_id = $1;',
+    [REGISTRY_ID]
+  );
+  expect(registryFields).toHaveLength(1);
+  expect(registryFields[0].label).toEqual('Serial Code');
+  expect(registryFields[0].value).toEqual(newSerialCode);
+});

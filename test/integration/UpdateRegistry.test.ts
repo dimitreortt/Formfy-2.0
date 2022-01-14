@@ -42,9 +42,7 @@ test('Should update a registry field, change chosen color from Yellow to Green i
   const field = new FormField('List Selection', 'Color', listSelectionOptions);
   const createFormInput = new CreateFormInput('Paint', [field]);
   const createFormOutput = await createForm.execute(createFormInput);
-  const createRegistryInput = new CreateRegistryInput('Subscription', createFormOutput.formId, [
-    'Yellow',
-  ]);
+  const createRegistryInput = new CreateRegistryInput(createFormOutput.formId, ['Yellow']);
   const createRegistryOutput = await createRegistry.execute(createRegistryInput);
   const updateRegistryInput = new UpdateRegistryInput(createRegistryOutput.registryId, [
     { fieldLabel: 'Color', newValue: 'Green' },
@@ -67,13 +65,13 @@ test('Should update two registries, update two fields in each', async () => {
   const createFormOutput = await createForm.execute(createFormInput);
   const startDate1 = new Date('2021-08-15T00:00:00');
   const checkedOptions1 = ['Stress', 'Faith'];
-  const createRegistryInput1 = new CreateRegistryInput('Seminary', createFormOutput.formId, [
+  const createRegistryInput1 = new CreateRegistryInput(createFormOutput.formId, [
     startDate1,
     checkedOptions1,
   ]);
   const checkedOptions2 = ['Anatomy', 'Stress'];
   const startDate2 = new Date('2021-12-01T00:00:00');
-  const createRegistryInput2 = new CreateRegistryInput('Subscription', createFormOutput.formId, [
+  const createRegistryInput2 = new CreateRegistryInput(createFormOutput.formId, [
     startDate2,
     checkedOptions2,
   ]);

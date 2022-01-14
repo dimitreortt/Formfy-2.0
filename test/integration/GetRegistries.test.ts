@@ -38,8 +38,8 @@ beforeAll(async () => {
 });
 
 test('Should get registries from form id', async () => {
-  const createRegistryInput1 = new CreateRegistryInput('Stock Analysis', formId, ['5', 'Small']);
-  const createRegistryInput2 = new CreateRegistryInput('Stock Analysis', formId, ['9', 'Big']);
+  const createRegistryInput1 = new CreateRegistryInput(formId, ['5', 'Small']);
+  const createRegistryInput2 = new CreateRegistryInput(formId, ['9', 'Big']);
   await createRegistry.execute(createRegistryInput1);
   await createRegistry.execute(createRegistryInput2);
   const getRegistries = new GetRegistries(registryDAO);

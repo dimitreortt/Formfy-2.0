@@ -36,20 +36,14 @@ beforeAll(async () => {
 
 test('Should create a registry', async () => {
   const checkBoxInputs = ['Big', 'Yellow'];
-  const createRegistryInput = new CreateRegistryInput('Subscription', formId, [
-    'Brazil',
-    checkBoxInputs,
-  ]);
+  const createRegistryInput = new CreateRegistryInput(formId, ['Brazil', checkBoxInputs]);
   const output = await createRegistry.execute(createRegistryInput);
   expect(typeof output.registryId).toBe('number');
 });
 
 test('Should throw error when trying to create a registry with input incompatible with formfields types', async () => {
   const wrongCheckBoxInputs = 'Yellow';
-  const createRegistryInput1 = new CreateRegistryInput('Subscription', formId, [
-    'Brazil',
-    wrongCheckBoxInputs,
-  ]);
+  const createRegistryInput1 = new CreateRegistryInput(formId, ['Brazil', wrongCheckBoxInputs]);
   await expect(async () => {
     await createRegistry.execute(createRegistryInput1);
   }).rejects.toThrow(new Error('Invalid field value type in registry creation'));

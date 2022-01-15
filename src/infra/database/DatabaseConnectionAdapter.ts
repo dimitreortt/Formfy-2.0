@@ -9,6 +9,8 @@ export default class DatabaseConnectionAdapter implements DatabaseConnection {
   }
 
   query(statement: string, params?: any): Promise<any> {
-    return this.pgp.query(statement, params);
+    return this.pgp.query(statement, params).catch((error: any) => {
+      throw new Error("Impossible to run statement '" + statement + "': " + error.message);
+    });
   }
 }

@@ -7,6 +7,7 @@ import RegistryDAODatabase from '../dao/RegistryDAODatabase';
 import UpdateRegistry from '../../application/usecase/UpdateRegistry';
 import DeleteRegistry from '../../application/usecase/DeleteRegistry';
 import CreateRegistryInput from '../../application/dto/CreateRegistryInput';
+import GetRegistriesInput from '../../application/dto/GetRegistriesInput';
 
 export default class RegistriesController {
   constructor(readonly databaseConnection: DatabaseConnection) {}
@@ -21,9 +22,11 @@ export default class RegistriesController {
     return { status: 201, output };
   }
 
-  getRegistries(params: any, body: any) {
+  async getRegistries(params: any, body: any) {
     const getRegistries = new GetRegistries(new RegistryDAODatabase(this.databaseConnection));
-    return getRegistries.execute(body);
+    const getRegistriesInput = new GetRegistriesInput(body.formId);
+    const getRegistriesOutput = await getRegistries.execute(getRegistriesInput);
+    return { status: 200, output: { registries: getRegistriesOutput.output } };
   }
 
   updateRegistry(params: any, body: any) {

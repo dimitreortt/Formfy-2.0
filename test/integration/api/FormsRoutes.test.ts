@@ -1,3 +1,4 @@
+import { wipeDatabaseForms } from './utils/wipeDatabseForms';
 import Router from '../../../src/infra/http/Router';
 import ExpressAdapter from '../../../src/infra/http/ExpressAdapter';
 import DatabaseConnectionMock from '../../mocks/DatabaseConnectionMock';
@@ -24,15 +25,9 @@ beforeAll(async () => {
   app = request(router.http.getApp());
 });
 
-const wipeDatabaseForms = async () => {
-  const forms = await formDAO.getForms();
-  for (const form of forms) {
-    await formRepository.deleteFields(form.id);
-    await formRepository.delete(form.id);
-  }
-};
-
-afterEach(wipeDatabaseForms);
+afterEach(async () => {
+  await wipeDatabaseForms(formDAO, formRepository);
+});
 
 test('Should create a form', async () => {
   const body = {

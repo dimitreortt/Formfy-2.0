@@ -5,6 +5,14 @@ const isStringArray = (input: any) => {
   return Array.isArray(input) && input.every((e) => typeof e === 'string');
 };
 
+const isValidDate = (date: any) => {
+  if (date instanceof Date) return true;
+  if (typeof date !== 'string') return false;
+  const parsedDate = Date.parse(date);
+  if (isNaN(parsedDate)) return false;
+  return true;
+};
+
 export default class RegistryInputsValidator {
   static validate(formFields: FormField[], inputs: FieldValue[]) {
     if (formFields.length !== inputs.length) throw new Error('Registry values list is invalid');
@@ -26,8 +34,7 @@ export default class RegistryInputsValidator {
           break;
         case 'Date':
         case 'Date and Time':
-          if (!(input instanceof Date)) throw fieldValueTypeError;
-
+          if (!isValidDate(input)) throw fieldValueTypeError;
           break;
         case 'File':
           if (!(input instanceof File)) throw fieldValueTypeError;

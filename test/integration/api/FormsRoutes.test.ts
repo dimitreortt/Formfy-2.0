@@ -121,5 +121,7 @@ test('Should delete form', async () => {
   expect(res.statusCode).toEqual(204);
 
   const formData2 = await formDAO.getForm('Land Withdraw');
+  const formFieldsData = await formDAO.getFormFields(formData1.id);
   expect(formData2).toBeUndefined();
+  expect(formFieldsData).toEqual([]);
 });

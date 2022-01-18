@@ -8,6 +8,7 @@ import UpdateRegistry from '../../application/usecase/UpdateRegistry';
 import DeleteRegistry from '../../application/usecase/DeleteRegistry';
 import CreateRegistryInput from '../../application/dto/CreateRegistryInput';
 import GetRegistriesInput from '../../application/dto/GetRegistriesInput';
+import UpdateRegistryInput from '../../application/dto/UpdateRegistryInput';
 
 export default class RegistriesController {
   constructor(readonly databaseConnection: DatabaseConnection) {}
@@ -29,17 +30,20 @@ export default class RegistriesController {
     return { status: 200, output: { registries: getRegistriesOutput.output } };
   }
 
-  updateRegistry(params: any, body: any) {
+  async updateRegistry(params: any, body: any) {
     const updateRegistry = new UpdateRegistry(
       new RegistryRepositoryDatabase(this.databaseConnection)
     );
-    return updateRegistry.execute(body);
+    const updateRegistryInput = new UpdateRegistryInput(body.registryId, body.changes);
+    const output = await updateRegistry.execute(updateRegistryInput);
+    return { status: 204, output };
   }
 
-  deleteRegistry(params: any, body: any) {
+  async deleteRegistry(params: any, body: any) {
     const deleteRegistry = new DeleteRegistry(
       new RegistryRepositoryDatabase(this.databaseConnection)
     );
-    return deleteRegistry.execute(body);
+    await deleteRegistry.execute(body);
+    return { status: 204, output: {} };
   }
 }

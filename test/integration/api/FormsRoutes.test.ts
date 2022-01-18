@@ -92,7 +92,7 @@ test('Should get a form', async () => {
   expect(res.body.formFields[0].label).toBe('Address');
 });
 
-test('Should get forms', async () => {
+test('Should get the forms', async () => {
   const form1 = new Form('Environment Management Map');
   form1.addField(new FormField('Short Text', 'Area Code'));
   form1.addField(new FormField('Date', 'Last review'));

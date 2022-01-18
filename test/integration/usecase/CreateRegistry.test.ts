@@ -1,13 +1,13 @@
-import CreateForm from '../../src/application/usecase/CreateForm';
-import CreateRegistry from '../../src/application/usecase/CreateRegistry';
-import FormRepositoryDatabase from '../../src/infra/repository/database/FormRepositoryDatabase';
-import DatabaseConnectionMock from '../mocks/DatabaseConnectionMock';
-import CreateFormInput from '../../src/application/dto/CreateFormInput';
-import CreateRegistryInput from '../../src/application/dto/CreateRegistryInput';
-import FormField from '../../src/domain/entitites/FormField';
-import RegistryRepositoryDatabase from '../../src/infra/repository/database/RegistryRepositoryDatabase';
-import FormDAODatabase from '../../src/infra/dao/FormDAODatabase';
-import FormDAO from '../../src/application/query/FormDAO';
+import CreateForm from '../../../src/application/usecase/CreateForm';
+import CreateRegistry from '../../../src/application/usecase/CreateRegistry';
+import FormRepositoryDatabase from '../../../src/infra/repository/database/FormRepositoryDatabase';
+import DatabaseConnectionMock from '../../mocks/DatabaseConnectionMock';
+import CreateFormInput from '../../../src/application/dto/CreateFormInput';
+import CreateRegistryInput from '../../../src/application/dto/CreateRegistryInput';
+import FormField from '../../../src/domain/entitites/FormField';
+import RegistryRepositoryDatabase from '../../../src/infra/repository/database/RegistryRepositoryDatabase';
+import FormDAODatabase from '../../../src/infra/dao/FormDAODatabase';
+import FormDAO from '../../../src/application/query/FormDAO';
 
 let databaseConnection: any;
 let formId: number;

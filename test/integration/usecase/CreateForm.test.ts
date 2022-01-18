@@ -1,7 +1,7 @@
-import CreateFormInput from '../../src/application/dto/CreateFormInput';
-import CreateForm from '../../src/application/usecase/CreateForm';
-import FormRepositoryDatabase from '../../src/infra/repository/database/FormRepositoryDatabase';
-import DatabaseConnectionMock from '../mocks/DatabaseConnectionMock';
+import CreateFormInput from '../../../src/application/dto/CreateFormInput';
+import CreateForm from '../../../src/application/usecase/CreateForm';
+import FormRepositoryDatabase from '../../../src/infra/repository/database/FormRepositoryDatabase';
+import DatabaseConnectionMock from '../../mocks/DatabaseConnectionMock';
 
 let databaseConnection: any;
 

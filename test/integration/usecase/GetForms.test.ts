@@ -1,10 +1,10 @@
-import FormRepositoryMemory from '../../src/infra/repository/memory/FormRepositoryMemory';
-import CreateForm from '../../src/application/usecase/CreateForm';
-import CreateFormInput from '../../src/application/dto/CreateFormInput';
-import GetForms from '../../src/application/query/GetForms';
-import DatabaseConnectionMock from '../mocks/DatabaseConnectionMock';
-import FormDAODatabase from '../../src/infra/dao/FormDAODatabase';
-import FormRepositoryDatabase from '../../src/infra/repository/database/FormRepositoryDatabase';
+import FormRepositoryMemory from '../../../src/infra/repository/memory/FormRepositoryMemory';
+import CreateForm from '../../../src/application/usecase/CreateForm';
+import CreateFormInput from '../../../src/application/dto/CreateFormInput';
+import GetForms from '../../../src/application/query/GetForms';
+import DatabaseConnectionMock from '../../mocks/DatabaseConnectionMock';
+import FormDAODatabase from '../../../src/infra/dao/FormDAODatabase';
+import FormRepositoryDatabase from '../../../src/infra/repository/database/FormRepositoryDatabase';
 
 let databaseConnection: any;
 let formRepositoryDatabase: FormRepositoryDatabase;

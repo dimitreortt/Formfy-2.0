@@ -1,11 +1,11 @@
-import CreateForm from '../../src/application/usecase/CreateForm';
-import CreateFormInput from '../../src/application/dto/CreateFormInput';
-import GetForm from '../../src/application/query/GetForm';
-import FormDAODatabase from '../../src/infra/dao/FormDAODatabase';
-import GetFormInput from '../../src/application/dto/GetFormInput';
-import DatabaseConnectionMock from '../mocks/DatabaseConnectionMock';
-import FormRepositoryDatabase from '../../src/infra/repository/database/FormRepositoryDatabase';
-import FormField from '../../src/domain/entitites/FormField';
+import CreateForm from '../../../src/application/usecase/CreateForm';
+import CreateFormInput from '../../../src/application/dto/CreateFormInput';
+import GetForm from '../../../src/application/query/GetForm';
+import FormDAODatabase from '../../../src/infra/dao/FormDAODatabase';
+import GetFormInput from '../../../src/application/dto/GetFormInput';
+import DatabaseConnectionMock from '../../mocks/DatabaseConnectionMock';
+import FormRepositoryDatabase from '../../../src/infra/repository/database/FormRepositoryDatabase';
+import FormField from '../../../src/domain/entitites/FormField';
 
 let createForm: CreateForm;
 let formRepositoryDatabase: FormRepositoryDatabase;

@@ -6,16 +6,19 @@ import GetRegistries from '../../application/query/GetRegistries';
 import RegistryDAODatabase from '../dao/RegistryDAODatabase';
 import UpdateRegistry from '../../application/usecase/UpdateRegistry';
 import DeleteRegistry from '../../application/usecase/DeleteRegistry';
+import CreateRegistryInput from '../../application/dto/CreateRegistryInput';
 
 export default class RegistriesController {
   constructor(readonly databaseConnection: DatabaseConnection) {}
 
-  createRegistry(params: any, body: any) {
+  async createRegistry(params: any, body: any) {
     const createRegistry = new CreateRegistry(
       new RegistryRepositoryDatabase(this.databaseConnection),
       new FormDAODatabase(this.databaseConnection)
     );
-    return createRegistry.execute(body);
+    const createRegistryInput = new CreateRegistryInput(body.formId, body.values);
+    const output = await createRegistry.execute(createRegistryInput);
+    return { status: 201, output };
   }
 
   getRegistries(params: any, body: any) {

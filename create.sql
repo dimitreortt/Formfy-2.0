@@ -7,7 +7,6 @@ CREATE TABLE formfy.form (
   name text unique not null
 );
 
-
 CREATE TABLE formfy.form_field (
   id serial primary key,
   form_id integer not null,

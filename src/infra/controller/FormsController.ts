@@ -6,32 +6,55 @@ import FormRepositoryDatabase from '../repository/database/FormRepositoryDatabas
 import GetForms from '../../application/query/GetForms';
 import GetForm from '../../application/query/GetForm';
 import FormDAODatabase from '../dao/FormDAODatabase';
+import CreateFormInput from '../../application/dto/CreateFormInput';
+import UpdateFormInput from '../../application/dto/UpdateFormInput';
+import FormField from '../../domain/entitites/FormField';
+import GetFormInput from '../../application/dto/GetFormInput';
 
 export default class FormsController {
   constructor(readonly databaseConnection: DatabaseConnection) {}
 
-  createForm(params: any, body: any) {
+  async createForm(params: any, body: any) {
+    if (!body.fields) throw new Error('List of form fields cannot be empty');
     const createForm = new CreateForm(new FormRepositoryDatabase(this.databaseConnection));
-    return createForm.execute(body);
+    const fields: FormField[] = [];
+    for (const fieldData of body.fields) {
+      const formField = new FormField(fieldData.type, fieldData.label, fieldData.options);
+      fields.push(formField);
+    }
+    const createFormInput = new CreateFormInput(body.name, fields);
+    const output = await createForm.execute(createFormInput);
+    return { status: 201, output };
   }
 
-  getForms(params: any, body: any) {
+  async getForms(params: any, body: any) {
     const getForms = new GetForms(new FormDAODatabase(this.databaseConnection));
-    return getForms.execute();
+    const forms = await getForms.execute();
+    return {
+      status: 200,
+      output: {
+        forms,
+      },
+    };
   }
 
-  getForm(params: any, body: any) {
+  async getForm(params: any, body: any) {
     const getForm = new GetForm(new FormDAODatabase(this.databaseConnection));
-    return getForm.execute(body);
+    const getFormInput = new GetFormInput(body.name);
+    const output = await getForm.execute(getFormInput);
+    return { status: 200, output };
   }
 
-  updateForm(params: any, body: any) {
+  async updateForm(params: any, body: any) {
     const updateForm = new UpdateForm(new FormRepositoryDatabase(this.databaseConnection));
-    return updateForm.execute(body);
+    const updateFormInput = new UpdateFormInput(body.name, body.newName);
+    const output = await updateForm.execute(updateFormInput);
+    return { status: 204, output };
   }
 
-  deleteForm(params: any, body: any) {
+  async deleteForm(params: any, body: any) {
     const deleteForm = new DeleteForm(new FormRepositoryDatabase(this.databaseConnection));
-    return deleteForm.execute(body);
+    await deleteForm.execute(body);
+    return { status: 204, output: {} };
   }
 }

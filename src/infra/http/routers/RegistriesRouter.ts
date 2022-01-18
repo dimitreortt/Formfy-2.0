@@ -18,7 +18,7 @@ export default class Router {
       return registriesController.createRegistry(params, body);
     });
 
-    this.http.on('/registry', 'update', async (params: any, body: any) => {
+    this.http.on('/registry', 'patch', async (params: any, body: any) => {
       const registriesController = new RegistriesController(this.databaseConnection);
       return registriesController.updateRegistry(params, body);
     });

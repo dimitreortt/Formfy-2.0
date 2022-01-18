@@ -40,6 +40,7 @@ bower_components
 
 # IDE - VSCode
 .vscode/*
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -60,6 +61,7 @@ yarn-error.log*
 
 # Dependency directories
 node_modules/
+client/node_modules/
 jspm_packages/
 
 # Optional npm cache directory

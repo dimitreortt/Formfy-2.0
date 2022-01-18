@@ -23,7 +23,7 @@ export default class FormsRouter {
       return formsController.createForm(params, body);
     });
 
-    this.http.on('/form', 'update', async (params: any, body: any) => {
+    this.http.on('/form', 'patch', async (params: any, body: any) => {
       const formsController = new FormsController(this.databaseConnection);
       return formsController.updateForm(params, body);
     });

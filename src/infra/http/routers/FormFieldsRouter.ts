@@ -8,12 +8,12 @@ export default class FormsFieldsRouter {
   }
 
   configure() {
-    this.http.on('/form', 'patch', async (params: any, body: any) => {
+    this.http.on('/formField', 'patch', async (params: any, body: any) => {
       const formsFieldsController = new FormFieldsController(this.databaseConnection);
       return formsFieldsController.updateField(params, body);
     });
 
-    this.http.on('/form', 'delete', async (params: any, body: any) => {
+    this.http.on('/formField', 'delete', async (params: any, body: any) => {
       const formsFieldsController = new FormFieldsController(this.databaseConnection);
       return formsFieldsController.deleteField(params, body);
     });

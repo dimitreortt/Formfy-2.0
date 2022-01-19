@@ -42,4 +42,8 @@ test('Should update a form field', async () => {
   };
   const res = await app.patch('/formField').send(body);
   expect(res.statusCode).toBe(204);
+
+  const formFieldsData = await formDAO.getFormFields(formData.id);
+  expect(formFieldsData[0].label).toBe('Base Color');
+  expect(formFieldsData[0].options).toEqual(newListSelectionOptions);
 });

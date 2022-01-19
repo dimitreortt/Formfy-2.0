@@ -7,6 +7,9 @@ export default class UpdateField {
 
   async execute(input: UpdateFieldInput): Promise<void> {
     const newField = new FormField(input.newType, input.newLabel, input.newOptions);
+
+    // console.log('newField', newField);
+
     await this.formRepository.updateField(input.formId, input.label, newField);
   }
 }

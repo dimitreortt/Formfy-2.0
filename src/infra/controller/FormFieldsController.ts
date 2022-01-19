@@ -11,7 +11,7 @@ export default class FormFieldsController {
     const updateField = new UpdateField(new FormRepositoryDatabase(this.databaseConnection));
 
     const updateFieldInput = new UpdateFieldInput(
-      body.label,
+      body.fieldLabel,
       body.formId,
       body.newType,
       body.newLabel,

@@ -25,6 +25,10 @@ beforeAll(async () => {
   app = request(router.http.getApp());
 });
 
+afterEach(async () => {
+  await wipeDatabaseForms(formDAO, formRepository);
+});
+
 test('Should update a form field', async () => {
   const form = new Form('Paint');
   const oldListSelectionOptions = ['Yellow', 'Green', 'Blue'];
@@ -46,4 +50,23 @@ test('Should update a form field', async () => {
   const formFieldsData = await formDAO.getFormFields(formData.id);
   expect(formFieldsData[0].label).toBe('Base Color');
   expect(formFieldsData[0].options).toEqual(newListSelectionOptions);
+});
+
+test('Should delete a form field', async () => {
+  const form = new Form('Paint');
+  const oldListSelectionOptions = ['Yellow', 'Green', 'Blue'];
+  const field = new FormField('List Selection', 'Color', oldListSelectionOptions);
+  form.addField(field);
+  const formData = await formRepository.save(form);
+
+  const body = {
+    formId: formData.id,
+    fieldLabel: 'Color',
+  };
+
+  const res = await app.delete('/formField').send(body);
+  expect(res.statusCode).toBe(204);
+
+  const formFieldsData = await formDAO.getFormFields(formData.id);
+  expect(formFieldsData).toHaveLength(0);
 });

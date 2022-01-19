@@ -3,6 +3,8 @@ import DeleteForm from '../../application/usecase/DeleteForm';
 import FormRepositoryDatabase from '../repository/database/FormRepositoryDatabase';
 import UpdateField from '../../application/usecase/UpdateField';
 import UpdateFieldInput from '../../application/dto/UpdateFieldInput';
+import DeleteField from '../../application/usecase/DeleteField';
+import DeleteFieldInput from '../../application/dto/DeleteFieldInput';
 
 export default class FormFieldsController {
   constructor(readonly databaseConnection: DatabaseConnection) {}
@@ -22,8 +24,9 @@ export default class FormFieldsController {
   }
 
   async deleteField(params: any, body: any) {
-    const deleteForm = new DeleteForm(new FormRepositoryDatabase(this.databaseConnection));
-    await deleteForm.execute(body);
+    const deleteField = new DeleteField(new FormRepositoryDatabase(this.databaseConnection));
+    const deleteFieldInput = new DeleteFieldInput(body.formId, body.fieldLabel);
+    await deleteField.execute(deleteFieldInput);
     return { status: 204, output: {} };
   }
 }

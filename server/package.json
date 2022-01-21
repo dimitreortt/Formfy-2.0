@@ -16,8 +16,7 @@
       "/node_modules/"
     ],
     "projects": [
-      "./",
-      "./client/"
+      "./dist"
     ]
   },
   "author": "Dimitre Ortt",

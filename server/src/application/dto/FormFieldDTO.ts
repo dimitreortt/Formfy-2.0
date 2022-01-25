@@ -1,4 +1,4 @@
-import { FieldType } from '../../domain/entitites/Types';
+import { FieldType } from '../../domain/Types';
 
 export default class FormFieldDTO {
   constructor(

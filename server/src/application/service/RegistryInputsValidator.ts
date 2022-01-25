@@ -1,4 +1,4 @@
-import { FieldValue } from '../../domain/entitites/Types';
+import { FieldValue } from '../../domain/Types';
 import FormField from '../../domain/entitites/FormField';
 
 const isStringArray = (input: any) => {

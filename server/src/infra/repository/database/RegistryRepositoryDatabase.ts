@@ -1,4 +1,4 @@
-import { FieldValue } from '../../../domain/entitites/Types';
+import { FieldValue } from '../../../domain/Types';
 import RegistryRepository from '../../../domain/repository/RegistryRepository';
 import DatabaseConnection from '../../database/DatabaseConnection';
 import Registry from '../../../domain/entitites/Registry';

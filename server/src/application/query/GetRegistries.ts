@@ -1,4 +1,4 @@
-import { FieldValue, RegistryValues } from '../../domain/entitites/Types';
+import { FieldValue, RegistryValues } from '../../domain/Types';
 import RegistryDAO from './RegistryDAO';
 import GetRegistriesInput from '../dto/GetRegistriesInput';
 import GetRegistriesOutput from '../dto/GetRegistriesOutput';

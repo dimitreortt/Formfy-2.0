@@ -1,4 +1,4 @@
-import { RegistryValues } from '../../domain/entitites/Types';
+import { RegistryValues } from '../../domain/Types';
 import RegistryDTO from '../../domain/dto/RegistryDTO';
 
 export default class GetRegistryOutput {

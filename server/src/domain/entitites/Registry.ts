@@ -1,4 +1,4 @@
-import { FieldValue, RegistryValues } from './Types';
+import { FieldValue, RegistryValues } from '../Types';
 import FormField from './FormField';
 
 export default class Registry {

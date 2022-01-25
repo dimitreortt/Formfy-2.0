@@ -1,5 +1,5 @@
-import { FieldValue } from '../../domain/entitites/Types';
-import { FieldType } from '../../domain/entitites/Types';
+import { FieldValue } from '../../domain/Types';
+import { FieldType } from '../../domain/Types';
 
 export default class RegistryFieldDTO {
   constructor(readonly registryId: number, readonly label: string, readonly value: FieldValue) {}

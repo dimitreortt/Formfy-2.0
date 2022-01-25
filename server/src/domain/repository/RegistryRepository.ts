@@ -1,4 +1,4 @@
-import { FieldValue } from '../entitites/Types';
+import { FieldValue } from '../Types';
 import Registry from '../entitites/Registry';
 import RegistryDTO from '../dto/RegistryDTO';
 

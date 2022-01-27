@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { within, getByText, findByText } from '@testing-library/dom';
-import App from '../components/App';
+import App from '../views/components/App';
 
 describe('App', () => {
   //(???)

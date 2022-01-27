@@ -7,8 +7,14 @@ type Form = {
 type SliceState = {
   forms: 'not_initialized' | Form[];
   loadingForms: boolean;
+  loadFormsFail: boolean;
 };
-const initialState: SliceState = { forms: 'not_initialized', loadingForms: false };
+
+const initialState: SliceState = {
+  forms: 'not_initialized',
+  loadingForms: false,
+  loadFormsFail: false,
+};
 
 const formsSlice = createSlice({
   name: 'forms',
@@ -18,23 +24,20 @@ const formsSlice = createSlice({
       const forms = action.payload;
       state.forms = forms;
     },
-    setLoadingForms: (state, action: PayloadAction<boolean>) => {
-      state.loadingForms = action.payload;
+    setLoadingForms: (state) => {
+      state.loadingForms = true;
     },
-    loadFormsSuccess: (state) => {
-      state.loadingForms = false;
-    },
-    getFormsFail: (state) => {
+    setLoadFormsSuccess: (state) => {
       state.loadingForms = false;
     },
     setLoadFormsFail: (state) => {
       state.loadingForms = false;
+      state.loadFormsFail = true;
     },
   },
 });
 
-const { setForms } = formsSlice.actions;
-export type setFormsType = typeof setForms;
 export const formsActions = formsSlice.actions;
-console.log(formsActions);
+export const { setForms } = formsSlice.actions;
+export type setFormsType = typeof setForms;
 export default formsSlice.reducer;

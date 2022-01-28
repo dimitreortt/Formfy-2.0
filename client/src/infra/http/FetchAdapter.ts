@@ -1,6 +1,6 @@
 import HttpClient from './HttpClient';
 
-type HttpRequestMethod = 'POST' | 'GET' | 'UPDATE' | 'DELETE';
+type HttpRequestMethod = 'POST' | 'GET' | 'PATCH' | 'DELETE';
 
 export class FetchAdapter implements HttpClient {
   request(url: string, method: HttpRequestMethod, data?: object): Promise<any> {

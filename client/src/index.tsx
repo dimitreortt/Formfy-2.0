@@ -1,11 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import App from './views/components/App';
 import reportWebVitals from './reportWebVitals';
+import { store } from './application/store/configureStore';
+import { Provider } from 'react-redux';
+import { ApplicationContext } from './application/contexts/ApplicationContext';
+import { FetchAdapter } from './infra/http/FetchAdapter';
+import { theme } from './views/materialUI/theme';
+import { ThemeProvider } from '@mui/system';
+import { AppRouter } from './routers/AppRouter';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <ApplicationContext.Provider value={{ httpClient: new FetchAdapter() }}>
+        <ThemeProvider theme={theme}>
+          <AppRouter />
+        </ThemeProvider>
+      </ApplicationContext.Provider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

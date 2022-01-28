@@ -34,6 +34,7 @@ const formsSlice = createSlice({
       state.loadingForms = false;
       state.loadFormsFail = true;
     },
+    getForms: () => {},
   },
 });
 

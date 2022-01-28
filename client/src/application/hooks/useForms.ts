@@ -1,6 +1,6 @@
+import { FormsGateway } from '../../infra/api/FormsGateway';
 import { FormsAssembler } from './../service/FormsAssembler';
 import { ApplicationContext } from './../contexts/ApplicationContext';
-import { FormsDAO } from '../../infra/dao/FormsDAO';
 import { useActions } from '../hooks/useActions';
 import { RootState } from '../store/configureStore';
 import { useSelector } from 'react-redux';
@@ -10,11 +10,11 @@ export const useForms = () => {
   const { forms, loadingForms, loadFormsFail } = useSelector((state: RootState) => state.forms);
   const { setForms, setLoadingForms, setLoadFormsSuccess, setLoadFormsFail } = useActions();
   const { httpClient } = useContext(ApplicationContext);
-  const formsDAO = new FormsDAO(httpClient);
+  const formsGateway = new FormsGateway(httpClient);
 
   if (forms === 'not_initialized' && !loadFormsFail && !loadingForms) {
     setLoadingForms();
-    formsDAO
+    formsGateway
       .getForms()
       .then((response: any) => {
         console.log('aoei');

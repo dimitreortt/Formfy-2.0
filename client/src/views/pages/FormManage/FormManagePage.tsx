@@ -1,5 +1,11 @@
 import React from 'react';
+import { FormManageNavbar } from './FormManageNavbar';
 
 export const FormManagePage = () => {
-  return <div>this is supposed to be a form management Page</div>;
+  return (
+    <div>
+      <FormManageNavbar />
+      this is supposed to be a form management Page
+    </div>
+  );
 };

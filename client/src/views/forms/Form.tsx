@@ -40,7 +40,7 @@ export const Form: FunctionComponent<Props> = ({ form }) => {
         >
           <Button
             component={Link}
-            to={`formManage/${form.id}`}
+            to={`/fillForm/${form.id}`}
             variant='text'
             sx={{ color: 'yellow', width: '100%', justifyContent: 'left' }}
           >
@@ -50,7 +50,7 @@ export const Form: FunctionComponent<Props> = ({ form }) => {
         <Box sx={{ marginY: 1 }}>
           <Divider />
         </Box>
-        <Button component={Link} to={`formManage/${form.id}`} variant='contained' color='success'>
+        <Button component={Link} to={`/formManage/${form.id}`} variant='contained' color='success'>
           Manage
         </Button>
         <Button variant='contained' color='info'>

@@ -15,7 +15,7 @@ export const Sidebar = (props: any) => {
   };
 
   return (
-    <div data-testid='collapsible-sidebar'>
+    <Box data-testid='collapsible-sidebar'>
       <div>
         {/* <Button onClick={toggleDrawer}>lalala</Button> */}
         <IconButton
@@ -40,6 +40,6 @@ export const Sidebar = (props: any) => {
           <FormsList />
         </Drawer>
       </div>
-    </div>
+    </Box>
   );
 };

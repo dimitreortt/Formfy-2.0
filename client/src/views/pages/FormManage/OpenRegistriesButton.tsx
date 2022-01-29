@@ -18,7 +18,7 @@ export const OpenRegistriesButton = () => {
     <div>
       <Button variant='contained' color='success'>
         {' '}
-        Registries {registriesCount}
+        Registries {registriesCount | 0}
       </Button>
     </div>
   );

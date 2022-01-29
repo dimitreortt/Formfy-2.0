@@ -1,7 +1,8 @@
 import React from 'react';
 import { BaseAppBar } from '../../components/BaseAppBar';
-import { Button, Box, IconButton } from '@mui/material';
+import { Button, Box } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
+import { OpenRegistriesButton } from './OpenRegistriesButton';
 
 export const FormManageNavbar = () => {
   return (
@@ -12,10 +13,7 @@ export const FormManageNavbar = () => {
             <Button variant='contained' color='error'>
               Fill Form
             </Button>
-            <Button variant='contained' color='success'>
-              {' '}
-              Registries 15
-            </Button>
+            <OpenRegistriesButton />
             <Button variant='contained'>
               <ClearIcon />
             </Button>

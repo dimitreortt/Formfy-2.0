@@ -2,13 +2,13 @@ import { RegistryValues, RegistryFieldChange } from './../../domain/Registry';
 import HttpClient from '../http/HttpClient';
 
 export class RegistriesGateway {
-  serverBaseUrl = 'http://localhost:4000/';
+  serverBaseUrl = 'http://localhost:4000';
   constructor(readonly httpClient: HttpClient) {}
 
   getRegistries(formId: number) {
     const url = `${this.serverBaseUrl}/registries`;
     const data = { formId };
-    return this.httpClient.request(url, 'PATCH', data);
+    return this.httpClient.request(url, 'GET');
   }
 
   postRegistry(formId: number, values: RegistryValues) {

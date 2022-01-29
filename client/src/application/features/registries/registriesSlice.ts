@@ -21,7 +21,7 @@ const registriesSlice = createSlice({
       const registries = action.payload;
       state.registries = registries;
     },
-    setLoadingRegistries: (state) => {
+    loadingRegistries: (state) => {
       state.loadingRegistries = true;
     },
     setLoadRegistriesSuccess: (state) => {
@@ -31,7 +31,7 @@ const registriesSlice = createSlice({
       state.loadingRegistries = false;
       state.loadRegistriesFail = true;
     },
-    getForms: () => {},
+    getRegistries: () => {},
   },
 });
 

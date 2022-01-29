@@ -1,11 +1,8 @@
+import { IForm } from './../../../domain/Form';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type Form = {
-  name: string;
-};
-
 type SliceState = {
-  forms: 'not_initialized' | Form[];
+  forms: 'not_initialized' | IForm[];
   loadingForms: boolean;
   loadFormsFail: boolean;
 };
@@ -20,17 +17,17 @@ const formsSlice = createSlice({
   name: 'forms',
   initialState,
   reducers: {
-    setForms: (state, action: PayloadAction<Form[]>) => {
+    setForms: (state, action: PayloadAction<IForm[]>) => {
       const forms = action.payload;
       state.forms = forms;
     },
-    setLoadingForms: (state) => {
+    loadingForms: (state) => {
       state.loadingForms = true;
     },
-    setLoadFormsSuccess: (state) => {
+    loadFormsSuccess: (state) => {
       state.loadingForms = false;
     },
-    setLoadFormsFail: (state) => {
+    loadFormsFail: (state) => {
       state.loadingForms = false;
       state.loadFormsFail = true;
     },

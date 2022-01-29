@@ -8,25 +8,25 @@ import { useContext } from 'react';
 
 export const useForms = () => {
   const { forms, loadingForms, loadFormsFail } = useSelector((state: RootState) => state.forms);
-  const { setForms, setLoadingForms, setLoadFormsSuccess, setLoadFormsFail } = useActions();
-  const { httpClient } = useContext(ApplicationContext);
-  const formsGateway = new FormsGateway(httpClient);
+  // const { setForms, setLoadingForms, setLoadFormsSuccess, setLoadFormsFail } = useActions();
+  // const { httpClient } = useContext(ApplicationContext);
+  // const formsGateway = new FormsGateway(httpClient);
 
-  if (forms === 'not_initialized' && !loadFormsFail && !loadingForms) {
-    setLoadingForms();
-    formsGateway
-      .getForms()
-      .then((response: any) => {
-        console.log('aoei');
-        const forms = FormsAssembler.assembly(response);
-        setLoadFormsSuccess();
-        setForms(forms);
-      })
-      .catch((error: any) => {
-        console.log(error.message);
-        setLoadFormsFail();
-      });
-  }
+  // if (forms === 'not_initialized' && !loadFormsFail && !loadingForms) {
+  //   setLoadingForms();
+  //   formsGateway
+  //     .getForms()
+  //     .then((response: any) => {
+  //       console.log('aoei');
+  //       const forms = FormsAssembler.assembly(response);
+  //       setLoadFormsSuccess();
+  //       setForms(forms);
+  //     })
+  //     .catch((error: any) => {
+  //       console.log(error.message);
+  //       setLoadFormsFail();
+  //     });
+  // }
 
   return { forms, loadingForms, loadFormsFail };
 };

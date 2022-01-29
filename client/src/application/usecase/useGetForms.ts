@@ -7,9 +7,10 @@ import { useActions } from '../hooks/useActions';
 export const useGetForms = () => {
   const {
     getForms: getFormsAction,
-    setLoadFormsSuccess,
+    loadFormsSuccess,
     setForms,
-    setLoadFormsFail,
+    loadFormsFail,
+    loadingForms,
   } = useActions();
 
   const { httpClient } = useContext(ApplicationContext);
@@ -18,12 +19,13 @@ export const useGetForms = () => {
   const getForms = async () => {
     getFormsAction();
     try {
+      loadingForms();
       const response = await formsGateway.getForms();
       const forms = FormsAssembler.assembly(response);
-      setLoadFormsSuccess();
+      loadFormsSuccess();
       setForms(forms);
     } catch (error) {
-      setLoadFormsFail();
+      loadFormsFail();
     }
   };
 

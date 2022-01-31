@@ -15,5 +15,6 @@ export type FormFieldValue = string | string[] | File | Date;
 export type IFormField = {
   label: string;
   type: FormFieldType;
+  id: number;
   options?: string[];
 };

@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import TextField from '@mui/material/TextField';
-import { FormFielStrategyProps } from './Types';
+import { FormFieldStrategyProps } from './Types';
 
-export const ShortTextFormField: FunctionComponent<FormFielStrategyProps> = ({
+export const ShortTextFormField: FunctionComponent<FormFieldStrategyProps> = ({
   label,
   onChange,
 }) => {

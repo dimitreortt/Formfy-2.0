@@ -1,6 +1,6 @@
 import { FormFieldValue } from './../../../domain/FormField';
 
-export type FormFielStrategyProps = {
+export type FormFieldStrategyProps = {
   label: string;
   onChange: (label: string, value: FormFieldValue) => void;
 };

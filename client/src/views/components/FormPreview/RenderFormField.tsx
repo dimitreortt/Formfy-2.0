@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useState } from 'react';
 import { IFormField, FormFieldValue } from '../../../domain/FormField';
-import { Test } from './Test';
-import { Test2 } from './Test2';
 import { RenderStrategy } from './RenderStrategy';
 import { ShortTextFormField } from './ShortTextFormField';
+import { LongTextFormField } from './LongTextFormField';
+import { NotImplementedFormFieldError } from './NotImplementedFormFieldError';
 
 type Props = {
   field: IFormField;
@@ -23,10 +23,10 @@ export const RenderFormField: FunctionComponent<Props> = ({ field }) => {
       case 'Short Text':
         return ShortTextFormField;
       case 'Long Text':
-        return Test2;
+        return LongTextFormField;
       //...
       default:
-        return Test2;
+        return NotImplementedFormFieldError;
     }
   };
 

@@ -1,7 +1,7 @@
 //code from https://gist.github.com/alexbruno/6623b5afa847f891de9cb6f704d86d02
 
 //@ts-nocheck
-export function isValidCNPJ(value: string) {
+export const isValidCNPJ = (value: string) => {
   if (!value) return false;
 
   // Aceita receber o valor como string, número ou array com todos os dígitos
@@ -22,9 +22,7 @@ export function isValidCNPJ(value: string) {
     const validFormat = /^\d{2}.\d{3}.\d{3}\/\d{4}-\d{2}$/.test(value);
 
     // Se o formato é válido, usa um truque para seguir o fluxo da validação
-    if (digitsOnly || validFormat) true;
-    // Se não, retorna inválido
-    else return false;
+    if (!(digitsOnly || validFormat)) return false;
   }
 
   // Guarda um array com todos os dígitos do valor
@@ -65,6 +63,6 @@ export function isValidCNPJ(value: string) {
   // Valida 2o. dígito verificador
   const digit1 = calc(13);
   return digit1 === digits[1];
-}
+};
 
 // Referência: https://pt.wikipedia.org/wiki/Cadastro_Nacional_da_Pessoa_Jur%C3%ADdica

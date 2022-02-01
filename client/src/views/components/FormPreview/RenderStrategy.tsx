@@ -1,10 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { FormFieldType, IFormField } from '../../../domain/FormField';
-
-type ChildProps = { type: FormFieldType; label: string; onChange: any };
+import { FormFieldStrategyProps } from './Types';
 
 type Props = {
-  strategyComponent: FunctionComponent<ChildProps>;
+  strategyComponent: FunctionComponent<FormFieldStrategyProps>;
   field: IFormField;
   onChange: any;
 };
@@ -14,5 +13,5 @@ export const RenderStrategy: FunctionComponent<Props> = ({
   field,
   onChange,
 }) => {
-  return <Component label={field.label} type={field.type} onChange={onChange} />;
+  return <Component label={field.label} options={field.options} onChange={onChange} />;
 };

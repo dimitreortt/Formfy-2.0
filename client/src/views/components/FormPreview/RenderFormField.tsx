@@ -4,6 +4,9 @@ import { RenderStrategy } from './RenderStrategy';
 import { ShortTextFormField } from './ShortTextFormField';
 import { LongTextFormField } from './LongTextFormField';
 import { DateFormField } from './DateFormField';
+import { EmailFormField } from './EmailFormField';
+import { CheckboxFormField } from './CheckboxFormField';
+import { DateAndTimeFormField } from './DateAndTimeFormField';
 import { NotImplementedFormFieldError } from './NotImplementedFormFieldError';
 
 type Props = {
@@ -26,7 +29,13 @@ export const RenderFormField: FunctionComponent<Props> = ({ field }) => {
       case 'Long Text':
         return LongTextFormField;
       case 'Date':
-      return DateFormField;
+        return DateFormField;
+      case 'Date and Time':
+        return DateAndTimeFormField;
+      case 'Email':
+        return EmailFormField;
+      case 'Checkbox':
+        return CheckboxFormField;
       //...
       default:
         return NotImplementedFormFieldError;

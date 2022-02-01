@@ -9,6 +9,7 @@ import { CheckboxFormField } from './CheckboxFormField';
 import { ListSelectionFormField } from './ListSelectionFormField';
 import { DateAndTimeFormField } from './DateAndTimeFormField';
 import { PhoneNumberFormField } from './PhoneNumberFormField';
+import { CPFFormField } from './CPFFormField';
 import { NotImplementedFormFieldError } from './NotImplementedFormFieldError';
 
 type Props = {
@@ -42,7 +43,9 @@ export const RenderFormField: FunctionComponent<Props> = ({ field }) => {
         return ListSelectionFormField;
       case 'Phone Number':
         return PhoneNumberFormField;
-      //...
+      case 'CPF':
+        return CPFFormField;
+
       default:
         return NotImplementedFormFieldError;
     }

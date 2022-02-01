@@ -6,6 +6,7 @@ import { LongTextFormField } from './LongTextFormField';
 import { DateFormField } from './DateFormField';
 import { EmailFormField } from './EmailFormField';
 import { CheckboxFormField } from './CheckboxFormField';
+import { ListSelectionFormField } from './ListSelectionFormField';
 import { DateAndTimeFormField } from './DateAndTimeFormField';
 import { NotImplementedFormFieldError } from './NotImplementedFormFieldError';
 
@@ -36,6 +37,8 @@ export const RenderFormField: FunctionComponent<Props> = ({ field }) => {
         return EmailFormField;
       case 'Checkbox':
         return CheckboxFormField;
+      case 'List Selection':
+        return ListSelectionFormField;
       //...
       default:
         return NotImplementedFormFieldError;

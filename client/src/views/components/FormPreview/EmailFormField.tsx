@@ -22,7 +22,7 @@ export const EmailFormField: FunctionComponent<FormFieldStrategyProps> = ({ labe
       error={!!helperText}
       label={label}
       onChange={handleChange}
-      variant='filled'
+      variant='outlined'
       fullWidth
     />
   );

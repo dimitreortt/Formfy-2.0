@@ -10,7 +10,7 @@ export const LongTextFormField: FunctionComponent<FormFieldStrategyProps> = ({
     <TextField
       label={label}
       multiline
-      rows={4}
+      rows={2}
       onChange={(e) => onChange(label, e.target.value)}
       variant='outlined'
       fullWidth

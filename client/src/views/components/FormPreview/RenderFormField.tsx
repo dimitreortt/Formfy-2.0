@@ -3,6 +3,7 @@ import { IFormField, FormFieldValue } from '../../../domain/FormField';
 import { RenderStrategy } from './RenderStrategy';
 import { ShortTextFormField } from './ShortTextFormField';
 import { LongTextFormField } from './LongTextFormField';
+import { DateFormField } from './DateFormField';
 import { NotImplementedFormFieldError } from './NotImplementedFormFieldError';
 
 type Props = {
@@ -24,6 +25,8 @@ export const RenderFormField: FunctionComponent<Props> = ({ field }) => {
         return ShortTextFormField;
       case 'Long Text':
         return LongTextFormField;
+      case 'Date':
+      return DateFormField;
       //...
       default:
         return NotImplementedFormFieldError;

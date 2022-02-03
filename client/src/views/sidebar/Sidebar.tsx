@@ -3,7 +3,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import { IconButton } from '@mui/material';
-import { Paper } from '@mui/material';
+// import { Paper } from '@mui/material';
 import { FormsList } from '../forms/FormsList';
 import { SidebarHeader } from './SidebarHeader';
 

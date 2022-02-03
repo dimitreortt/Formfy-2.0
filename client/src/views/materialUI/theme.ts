@@ -1,5 +1,8 @@
 import { createTheme } from '@mui/material';
 // import { createTheme } from '@mui/system';
+import { alpha } from '@mui/material/styles';
+
+const PRIMARY = '#21336E';
 
 export const theme = createTheme({
   palette: {
@@ -17,7 +20,8 @@ export const theme = createTheme({
     //   dark: '#009688',
     // },
     primary: {
-      main: '#21336E',
+      main: PRIMARY,
+      light: alpha(PRIMARY, 0.5),
     },
   },
 });

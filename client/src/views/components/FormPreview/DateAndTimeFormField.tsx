@@ -12,7 +12,7 @@ export const DateAndTimeFormField: FunctionComponent<FormFieldStrategyProps> = (
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DateTimePicker
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => <TextField {...params} fullWidth />}
         value={new Date()}
         onChange={(newValue) => {
           onChange(label, newValue ? newValue : new Date());

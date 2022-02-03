@@ -14,7 +14,7 @@ export const FormsList = (props: any) => {
   useEffect(() => {
     pageLoaded();
     getForms();
-  }, []);
+  }, [getForms, pageLoaded]);
 
   return (
     <Box data-testid='forms-list' sx={{}}>

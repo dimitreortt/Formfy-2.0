@@ -15,16 +15,17 @@ import { NotImplementedFormFieldError } from './NotImplementedFormFieldError';
 
 type Props = {
   field: IFormField;
+  onChange: (label: string, value: FormFieldValue) => void;
 };
 
-export const RenderFormField: FunctionComponent<Props> = ({ field }) => {
+export const RenderFormField: FunctionComponent<Props> = ({ field, onChange }) => {
   const [state, setState] = useState<any>({});
 
-  const onChange = (label: string, value: FormFieldValue) => {
-    setState({ ...state, [label]: value });
+  // const onChange = (label: string, value: FormFieldValue) => {
+  //   setState({ ...state, [label]: value });
 
-    console.log(state);
-  };
+  //   console.log(state);
+  // };
 
   const getStrategyComponent = (type: string) => {
     switch (type) {

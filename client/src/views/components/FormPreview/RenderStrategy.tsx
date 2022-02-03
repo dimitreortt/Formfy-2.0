@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react';
-import { FormFieldType, IFormField } from '../../../domain/FormField';
+import { FormFieldType, IFormField, FormFieldValue } from '../../../domain/FormField';
 import { FormFieldStrategyProps } from './Types';
 
 type Props = {
   strategyComponent: FunctionComponent<FormFieldStrategyProps>;
   field: IFormField;
-  onChange: any;
+  onChange: (label: string, value: FormFieldValue) => void;
 };
 
 export const RenderStrategy: FunctionComponent<Props> = ({

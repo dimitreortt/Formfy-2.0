@@ -1,18 +1,8 @@
 import React from 'react';
 import { FunctionComponent } from 'react';
 import { IForm } from '../../domain/Form';
-import {
-  Link as MuiLink,
-  Paper,
-  createStyles,
-  Box,
-  Typography,
-  Divider,
-  Button,
-} from '@mui/material';
+import { Paper, Box, Typography, Divider, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-
-import { styled } from '@mui/system';
 
 type Props = { form: IForm };
 

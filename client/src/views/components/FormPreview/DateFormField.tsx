@@ -16,7 +16,7 @@ export const DateFormField: FunctionComponent<FormFieldStrategyProps> = ({ label
         onChange={(newValue) => {
           onChange(label, newValue ? newValue : new Date());
         }}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => <TextField {...params} fullWidth />}
       />
     </LocalizationProvider>
   );

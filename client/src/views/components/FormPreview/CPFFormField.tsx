@@ -27,6 +27,7 @@ export const CPFFormField: FunctionComponent<FormFieldStrategyProps> = ({ label,
       helperText={helperText}
       error={!!helperText}
       onBlur={handleLoseFocus}
+      fullWidth
     />
   );
 };

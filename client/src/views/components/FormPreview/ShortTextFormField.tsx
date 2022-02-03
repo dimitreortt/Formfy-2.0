@@ -7,6 +7,11 @@ export const ShortTextFormField: FunctionComponent<FormFieldStrategyProps> = ({
   onChange,
 }) => {
   return (
-    <TextField label={label} variant='outlined' onChange={(e) => onChange(label, e.target.value)} />
+    <TextField
+      label={label}
+      variant='outlined'
+      onChange={(e) => onChange(label, e.target.value)}
+      fullWidth
+    />
   );
 };

@@ -20,7 +20,7 @@ export const ListSelectionFormField: FunctionComponent<FormFieldStrategyProps> =
   };
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }}>
+    <FormControl sx={{ m: 1, minWidth: 120 }} fullWidth>
       <InputLabel id='demo-simple-select-helper-label'>{label}</InputLabel>
       <Select
         labelId='demo-simple-select-helper-label'

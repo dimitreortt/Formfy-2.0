@@ -20,7 +20,7 @@ test('Should create a form', async () => {
   expect(typeof output.formId).toBe('number');
 });
 
-test('Should create a form with one field, and this fields index must be auto-generated', async () => {
+test("Should create a form with one field, and this field's index must be auto-generated", async () => {
   const fields = [new FormField('Short Text', 'Number of patches')];
   const createFormInput = new CreateFormInput('Stock Analysis', fields);
   const createForm = new CreateForm(formRepositoryDatabase);

@@ -9,7 +9,7 @@ export default class FormRepositoryMemory implements FormRepository {
 
   async save(form: Form): Promise<FormDTO> {
     this.forms.push(form);
-    return new FormDTO(form.name, 1);
+    return new FormDTO(form.name, 1, []);
   }
 
   update(formName: string, newForm: Form): Promise<FormDTO> {

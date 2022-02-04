@@ -16,14 +16,33 @@ export default class FormRepositoryDatabase implements FormRepository {
       [form.name]
     );
     // pesquisar forma de integrar um performance booster tipo o PgArrayFormatter sem quebrar a hierarquia das camadas de DDD
+
+    let fields: FormField[] = [];
+    for (const field in form.fields) {
+      fields.push(form.fields[field]);
+    }
+    fields.sort((fieldA, fieldB) => {
+      if (!fieldB.index) return 1;
+      if (!fieldA.index) return -1;
+      return fieldA.index - fieldB.index;
+    });
+
     for (const label in form.fields) {
+      let index = form.fields[label].index;
+      if (!index) {
+        const count = await this.formFieldsCount(formData.id);
+        // console.log(count);
+        index = count;
+      }
+      console.log('index', index);
       await this.databaseConnection.query(
-        'insert into formfy.form_field (form_id, label, type, options) values ($1, $2, $3, $4);',
+        'insert into formfy.form_field (form_id, label, type, options, index) values ($1, $2, $3, $4, $5);',
         [
           formData.id,
           label,
           form.fields[label].type,
           FormFieldOptionsFormatter.format(form.fields[label].options),
+          index,
         ]
       );
     }
@@ -54,12 +73,14 @@ export default class FormRepositoryDatabase implements FormRepository {
   }
 
   async updateField(formId: number, fieldLabel: string, newField: FormField): Promise<void> {
+    console.log('newField.index', newField.index);
     await this.databaseConnection.query(
-      'update formfy.form_field set (label, type, options) = ($1, $2, $3) where form_id = $4 and label = $5;',
+      'update formfy.form_field set (label, type, options, index) = ($1, $2, $3, $4) where form_id = $5 and label = $6;',
       [
         newField.label,
         newField.type,
         FormFieldOptionsFormatter.format(newField.options),
+        newField.index,
         formId,
         fieldLabel,
       ]
@@ -71,5 +92,16 @@ export default class FormRepositoryDatabase implements FormRepository {
       'delete from formfy.form_field where form_id = $1 and label = $2;',
       [formId, label]
     );
+  }
+
+  async formFieldsCount(formId: number) {
+    const [
+      data,
+    ] = await this.databaseConnection.query(
+      `select count(form_id) from formfy.form_field where form_id = $1;`,
+      [formId]
+    );
+
+    return data ? data.count : 0;
   }
 }

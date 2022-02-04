@@ -14,6 +14,7 @@ CREATE TABLE formfy.form_field (
   type text not null,
   options text,
   index integer not null,
+  unique(form_id, index),
   unique (form_id, label)
 );
 
@@ -28,4 +29,3 @@ CREATE TABLE formfy.registry_field (
   value text not null,
   unique (registry_id, label)
 );
-

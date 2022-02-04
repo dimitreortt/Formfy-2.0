@@ -2,7 +2,7 @@ import FormDAO from '../../application/query/FormDAO';
 import DatabaseConnection from '../database/DatabaseConnection';
 import FormField from '../../domain/entitites/FormField';
 import FormDTO from '../../domain/dto/FormDTO';
-import FormFieldDTO from '../../application/dto/FormFieldDTO';
+import FormFieldDTO from '../../domain/dto/FormFieldDTO';
 import FormFieldOptionsParser from '../service/FormFieldOptionsParser';
 
 export default class FormDAODatabase implements FormDAO {

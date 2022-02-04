@@ -10,7 +10,7 @@ export default interface FormRepository {
   updateField(formId: number, fieldName: string, newField: FormField): Promise<void>;
   deleteField(formId: number, label: string): Promise<void>;
   formFieldsCount(formId: number): Promise<number>;
-  swapIndexes(formId: number, index: number): Promise<void>;
+  swapIndexes(formId: number, index: number, indexB: number): Promise<void>;
 
   // getByName(name: string): Promise<Form>;
 }

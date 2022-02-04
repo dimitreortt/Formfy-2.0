@@ -110,8 +110,11 @@ export default class FormRepositoryDatabase implements FormRepository {
     return data ? data.count : 0;
   }
 
-  async swapIndexes(formId: number, index: number) {
-    if (index <= 0) throw new Error('Cannot swap form_field with index 0');
+  async swapIndexes(formId: number, indexA: number, indexB: number) {
+    if (indexA < 0 || indexB < 0) throw new Error('Cannot swap form_field with index less than 0');
+    const difference = indexA - indexB;
+    if (difference !== 1 && difference !== -1)
+      throw new Error('form_fields have to have difference of 1 or -1 to be swapped!');
     await this.databaseConnection.query(
       `
     update formfy.form_field
@@ -121,7 +124,7 @@ export default class FormRepositoryDatabase implements FormRepository {
     end
     where index in ($1,$2) and form_id = $3;
     `,
-      [index, index - 1, formId]
+      [indexA, indexB, formId]
     );
   }
 }

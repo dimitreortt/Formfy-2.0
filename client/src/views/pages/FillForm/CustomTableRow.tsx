@@ -41,8 +41,10 @@ export const CustomTableRow: FunctionComponent<Props> = ({
       }}
       className={classes.row}
     >
-      <Box flexGrow={2}>{field.label}</Box>
-      <Box flexGrow={2}>{field.options?.join(', ')}</Box>
+      <Box flexGrow={1}>{field.label}</Box>
+      <Box flexGrow={1}>{field.type}</Box>
+      <Box flexGrow={1}>index, tirar! kk {field.index}</Box>
+      <Box flexGrow={1}>{field.options?.join(', ')}</Box>
       {/* <Box flexGrow={3}>oi3</Box>
       <Box flexGrow={6}>oi4</Box> */}
       <Button onClick={handleMoveDown}>down</Button>

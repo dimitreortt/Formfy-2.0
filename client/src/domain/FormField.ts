@@ -16,5 +16,6 @@ export type IFormField = {
   label: string;
   type: FormFieldType;
   id: number;
+  index: number;
   options?: string[];
 };

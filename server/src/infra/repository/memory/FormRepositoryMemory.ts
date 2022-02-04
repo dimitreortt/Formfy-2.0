@@ -3,6 +3,12 @@ import Form from '../../../domain/entitites/Form';
 import FormDTO from '../../../domain/dto/FormDTO';
 
 export default class FormRepositoryMemory implements FormRepository {
+  formFieldsCount(formId: number): Promise<number> {
+    throw new Error('Method not implemented.');
+  }
+  swapIndexes(formId: number, index: number): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
   forms: Form[] = [];
 
   constructor() {}

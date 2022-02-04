@@ -111,16 +111,20 @@ test("Should swap a field's index with the field with previous index", async () 
 
   await formRepository.swapIndexes(FORM_ID, secondFieldIndex);
 
-  const fieldData = await databaseConnection.query(
+  const [
+    fieldData,
+  ] = await databaseConnection.query(
     'select * from formfy.form_field where form_id = $1 and index = $2;',
     [FORM_ID, secondFieldIndex]
   );
   expect(fieldData.label).toBe('Color');
 
-  const fieldDat2 = await databaseConnection.query(
+  const [
+    fieldData2,
+  ] = await databaseConnection.query(
     'select * from formfy.form_field where form_id = $1 and index = $2;',
     [FORM_ID, firstFieldIndex]
   );
-  expect(fieldData.label).toBe('Darkness');
+  expect(fieldData2.label).toBe('Darkness');
 });
 //fazer o caso de formulário não existe no GetFormTest

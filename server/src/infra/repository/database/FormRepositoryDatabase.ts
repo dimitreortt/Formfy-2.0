@@ -109,4 +109,19 @@ export default class FormRepositoryDatabase implements FormRepository {
 
     return data ? data.count : 0;
   }
+
+  async swapIndexes(formId: number, index: number) {
+    if (index <= 0) throw new Error('Cannot swap form_field with index 0');
+    await this.databaseConnection.query(
+      `
+    update formfy.form_field
+    set index = case index
+    when $1 then ($2)
+    when $2 then ($1)
+    end
+    where index in ($1,$2) and form_id = $3;
+    `,
+      [index, index - 1, formId]
+    );
+  }
 }

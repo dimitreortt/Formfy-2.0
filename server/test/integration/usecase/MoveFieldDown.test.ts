@@ -1,3 +1,4 @@
+import { wipeDatabaseForms } from './../api/utils/wipeDatabseForms';
 import FormField from '../../../src/domain/entitites/FormField';
 import CreateFormInput from '../../../src/application/dto/CreateFormInput';
 import CreateForm from '../../../src/application/usecase/CreateForm';
@@ -22,10 +23,16 @@ beforeAll(async () => {
   formDAO = new FormDAODatabase(databaseConnection);
 });
 
+afterEach(async () => {
+  await wipeDatabaseForms(formDAO, formRepositoryDatabase);
+});
+
 test("Should move a field down, meaning exchanging it's index with the field with posterior index", async () => {
+  const firstIndex = 0;
+  const lastIndex = 1;
   const fields = [
-    new FormField('Short Text', 'Number of patches', undefined, 0),
-    new FormField('Short Text', 'Name', undefined, 1),
+    new FormField('Short Text', 'Number of patches', undefined, firstIndex),
+    new FormField('Short Text', 'Name', undefined, lastIndex),
   ];
   const createFormInput = new CreateFormInput('Stock Analysis', fields);
   const createFormOutput = await createForm.execute(createFormInput);
@@ -38,4 +45,17 @@ test("Should move a field down, meaning exchanging it's index with the field wit
   expect(nameFormField.index).toBe(0);
 });
 
-// test('Should not move a field down if it is the last one', async () => {});
+test('Should not move a field down if it is the last one', async () => {
+  const firstIndex = 0;
+  const lastIndex = 1;
+  const fields = [
+    new FormField('Short Text', 'Number of patches', undefined, firstIndex),
+    new FormField('Short Text', 'Name', undefined, lastIndex),
+  ];
+  const createFormInput = new CreateFormInput('Stock Analysis', fields);
+  const createFormOutput = await createForm.execute(createFormInput);
+  const moveFieldDownInput = new MoveFieldDownInput(createFormOutput.formId, lastIndex);
+  await expect(async () => {
+    await moveFieldDown.execute(moveFieldDownInput);
+  }).rejects.toThrow();
+});

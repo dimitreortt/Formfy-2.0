@@ -127,4 +127,24 @@ test("Should swap a field's index with the field with previous index", async () 
   );
   expect(fieldData2.label).toBe('Darkness');
 });
+
+test('Should not swap a form_field with index 0', async () => {
+  const FORM_ID = 4;
+  const fieldIndex = 0;
+  const field = {
+    formId: FORM_ID,
+    label: 'Color',
+    type: 'Short Text',
+    index: fieldIndex,
+  };
+  await databaseConnection.query(
+    'insert into formfy.form_field (form_id, label, type, index) values ($1, $2, $3, $4);',
+    [field.formId, field.label, field.type, field.index]
+  );
+
+  await expect(async () => {
+    await formRepository.swapIndexes(FORM_ID, fieldIndex);
+  }).rejects.toThrow(new Error('Cannot swap form_field with index 0'));
+});
+
 //fazer o caso de formulário não existe no GetFormTest

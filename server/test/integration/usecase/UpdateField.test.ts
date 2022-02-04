@@ -25,7 +25,8 @@ beforeAll(async () => {
 
 test('Should update a form field', async () => {
   const oldListSelectionOptions = ['Yellow', 'Green', 'Blue'];
-  const field = new FormField('List Selection', 'Color', oldListSelectionOptions);
+  const fieldIndex = 0;
+  const field = new FormField('List Selection', 'Color', oldListSelectionOptions, fieldIndex);
   const createFormInput = new CreateFormInput('Paint', [field]);
   const createFormOutput = await createForm.execute(createFormInput);
   const newListSelectionOptions = ['Yellow', 'Green', 'Blue', 'Marsala'];
@@ -34,6 +35,7 @@ test('Should update a form field', async () => {
     createFormOutput.formId,
     'List Selection',
     'Base Color',
+    fieldIndex,
     newListSelectionOptions
   );
   await updateField.execute(updateFieldInput);

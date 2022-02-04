@@ -17,6 +17,7 @@ export default class FormFieldsController {
       body.formId,
       body.newType,
       body.newLabel,
+      body.newIndex,
       body.newOptions
     );
     const output = await updateField.execute(updateFieldInput);

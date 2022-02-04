@@ -12,6 +12,6 @@ export default class CreateForm {
       form.addField(field);
     }
     const formData = await this.formRepository.save(form);
-    return new CreateFormOutput(formData.name, formData.id);
+    return new CreateFormOutput(formData.name, formData.id, formData.fields);
   }
 }

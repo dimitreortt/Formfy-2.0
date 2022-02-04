@@ -6,6 +6,7 @@ export default class UpdateFieldInput {
     readonly formId: number,
     readonly newType: FieldType,
     readonly newLabel: string,
+    readonly newIndex: number,
     readonly newOptions?: string[]
   ) {}
 }

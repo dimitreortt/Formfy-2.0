@@ -4,6 +4,7 @@ import DatabaseConnection from '../../database/DatabaseConnection';
 import FormDTO from '../../../domain/dto/FormDTO';
 import FormFieldOptionsFormatter from '../../service/FormFieldOptionsFormatter';
 import FormField from '../../../domain/entitites/FormField';
+import FormFieldDTO from '../../../domain/dto/FormFieldDTO';
 
 export default class FormRepositoryDatabase implements FormRepository {
   constructor(private databaseConnection: DatabaseConnection) {}
@@ -27,6 +28,8 @@ export default class FormRepositoryDatabase implements FormRepository {
       return fieldA.index - fieldB.index;
     });
 
+    let formFieldsData: FormFieldDTO[] = [];
+
     for (const label in form.fields) {
       let index = form.fields[label].index;
       if (!index) {
@@ -34,9 +37,10 @@ export default class FormRepositoryDatabase implements FormRepository {
         // console.log(count);
         index = count;
       }
-      console.log('index', index);
-      await this.databaseConnection.query(
-        'insert into formfy.form_field (form_id, label, type, options, index) values ($1, $2, $3, $4, $5);',
+      const [
+        formFieldData,
+      ] = await this.databaseConnection.query(
+        'insert into formfy.form_field (form_id, label, type, options, index) values ($1, $2, $3, $4, $5) returning *;',
         [
           formData.id,
           label,
@@ -45,8 +49,10 @@ export default class FormRepositoryDatabase implements FormRepository {
           index,
         ]
       );
+      formFieldsData.push(formFieldData);
     }
-    return formData;
+
+    return new FormDTO(formData.name, formData.id, formFieldsData);
   }
 
   async update(formName: string, newForm: Form): Promise<FormDTO> {
@@ -73,7 +79,6 @@ export default class FormRepositoryDatabase implements FormRepository {
   }
 
   async updateField(formId: number, fieldLabel: string, newField: FormField): Promise<void> {
-    console.log('newField.index', newField.index);
     await this.databaseConnection.query(
       'update formfy.form_field set (label, type, options, index) = ($1, $2, $3, $4) where form_id = $5 and label = $6;',
       [

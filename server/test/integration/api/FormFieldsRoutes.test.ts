@@ -32,7 +32,8 @@ afterEach(async () => {
 test('Should update a form field', async () => {
   const form = new Form('Paint');
   const oldListSelectionOptions = ['Yellow', 'Green', 'Blue'];
-  const field = new FormField('List Selection', 'Color', oldListSelectionOptions);
+  const fieldIndex = 0;
+  const field = new FormField('List Selection', 'Color', oldListSelectionOptions, fieldIndex);
   form.addField(field);
   const formData = await formRepository.save(form);
 
@@ -42,6 +43,7 @@ test('Should update a form field', async () => {
     formId: formData.id,
     newType: 'List Selection',
     newLabel: 'Base Color',
+    newIndex: fieldIndex,
     newOptions: newListSelectionOptions,
   };
   const res = await app.patch('/formField').send(body);

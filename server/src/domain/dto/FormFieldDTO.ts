@@ -6,6 +6,7 @@ export default class FormFieldDTO {
     readonly id: number,
     readonly label: string,
     readonly type: FieldType,
+    readonly index: number,
     readonly options?: string[]
   ) {}
 }

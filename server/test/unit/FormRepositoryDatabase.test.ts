@@ -109,7 +109,7 @@ test("Should swap a field's index with the field with previous index", async () 
     );
   }
 
-  await formRepository.swapIndexes(FORM_ID, secondFieldIndex);
+  await formRepository.swapIndexes(FORM_ID, secondFieldIndex, firstFieldIndex);
 
   const [
     fieldData,
@@ -128,7 +128,7 @@ test("Should swap a field's index with the field with previous index", async () 
   expect(fieldData2.label).toBe('Darkness');
 });
 
-test('Should not swap a form_field with index 0', async () => {
+test('Should not swap a form_field with itself', async () => {
   const FORM_ID = 4;
   const fieldIndex = 0;
   const field = {
@@ -143,8 +143,8 @@ test('Should not swap a form_field with index 0', async () => {
   );
 
   await expect(async () => {
-    await formRepository.swapIndexes(FORM_ID, fieldIndex);
-  }).rejects.toThrow(new Error('Cannot swap form_field with index 0'));
+    await formRepository.swapIndexes(FORM_ID, fieldIndex, fieldIndex);
+  }).rejects.toThrow();
 });
 
 //fazer o caso de formulário não existe no GetFormTest

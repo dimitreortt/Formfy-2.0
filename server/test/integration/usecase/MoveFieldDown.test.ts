@@ -1,36 +1,36 @@
 import FormField from '../../../src/domain/entitites/FormField';
 import CreateFormInput from '../../../src/application/dto/CreateFormInput';
 import CreateForm from '../../../src/application/usecase/CreateForm';
-import MoveFieldUp from '../../../src/application/usecase/MoveFieldUp';
+import MoveFieldDown from '../../../src/application/usecase/MoveFieldDown';
 import FormRepositoryDatabase from '../../../src/infra/repository/database/FormRepositoryDatabase';
 import DatabaseConnectionMock from '../../mocks/DatabaseConnectionMock';
 import FormDAO from '../../../src/application/query/FormDAO';
 import FormDAODatabase from '../../../src/infra/dao/FormDAODatabase';
-import MoveFieldUpInput from '../../../src/application/dto/MoveFieldUpInput';
+import MoveFieldDownInput from '../../../src/application/dto/MoveFieldDownInput';
 
 let databaseConnection: any;
 let formRepositoryDatabase: FormRepositoryDatabase;
 let createForm: CreateForm;
-let moveFieldUp: MoveFieldUp;
+let moveFieldDown: MoveFieldDown;
 let formDAO: FormDAO;
 
 beforeAll(async () => {
   databaseConnection = await new DatabaseConnectionMock().build();
   formRepositoryDatabase = new FormRepositoryDatabase(databaseConnection);
   createForm = new CreateForm(formRepositoryDatabase);
-  moveFieldUp = new MoveFieldUp(formRepositoryDatabase);
+  moveFieldDown = new MoveFieldDown(formRepositoryDatabase);
   formDAO = new FormDAODatabase(databaseConnection);
 });
 
-test("Should move a field up, meaning exchanging it's index with the field with previous index", async () => {
+test("Should move a field down, meaning exchanging it's index with the field with posterior index", async () => {
   const fields = [
     new FormField('Short Text', 'Number of patches', undefined, 0),
     new FormField('Short Text', 'Name', undefined, 1),
   ];
   const createFormInput = new CreateFormInput('Stock Analysis', fields);
   const createFormOutput = await createForm.execute(createFormInput);
-  const moveFieldUpInput = new MoveFieldUpInput(createFormOutput.formId, 1);
-  const moveFieldUpOutput = await moveFieldUp.execute(moveFieldUpInput);
+  const moveFieldDownInput = new MoveFieldDownInput(createFormOutput.formId, 0);
+  const moveFieldDownOutput = await moveFieldDown.execute(moveFieldDownInput);
   const formFields = await formDAO.getFormFields(createFormOutput.formId);
   const numberOfPatchesFormField = formFields[0];
   expect(numberOfPatchesFormField.index).toBe(1);
@@ -38,4 +38,4 @@ test("Should move a field up, meaning exchanging it's index with the field with 
   expect(nameFormField.index).toBe(0);
 });
 
-// test('Should not move a field up if it is the first one', async () => {});
+// test('Should not move a field down if it is the last one', async () => {});

@@ -13,8 +13,7 @@ CREATE TABLE formfy.form_field (
   label text not null,
   type text not null,
   options text,
-  index integer not null,
-  unique(form_id, index),
+  index integer not null,  
   unique (form_id, label)
 );
 

@@ -6,6 +6,7 @@ import FormRepositoryDatabase from '../../../src/infra/repository/database/FormR
 import DatabaseConnectionMock from '../../mocks/DatabaseConnectionMock';
 import FormDAO from '../../../src/application/query/FormDAO';
 import FormDAODatabase from '../../../src/infra/dao/FormDAODatabase';
+import MoveFieldUpInput from '../../../src/application/dto/MoveFieldUpInput';
 
 let databaseConnection: any;
 let formRepositoryDatabase: FormRepositoryDatabase;
@@ -23,20 +24,19 @@ beforeAll(async () => {
 
 test("Should move a field up, meaning exchanging it's index with the field with previous index", async () => {
   const fields = [
-    new FormField('Short Text', 'Number of patches'),
-    new FormField('Short Text', 'Name'),
+    new FormField('Short Text', 'Number of patches', undefined, 0),
+    new FormField('Short Text', 'Name', undefined, 1),
   ];
   const createFormInput = new CreateFormInput('Stock Analysis', fields);
   const createFormOutput = await createForm.execute(createFormInput);
 
-  const moveFieldUpInput = new MoveFieldUpInput(createFormOutput.formId, 'Name');
+  const moveFieldUpInput = new MoveFieldUpInput(createFormOutput.formId, 1);
   const moveFieldUpOutput = await moveFieldUp.execute(moveFieldUpInput);
 
   const formFields = await formDAO.getFormFields(createFormOutput.formId);
 
   const numberOfPatchesFormField = formFields[0];
   expect(numberOfPatchesFormField.index).toBe(1);
-
   const nameFormField = formFields[1];
   expect(nameFormField.index).toBe(0);
 });

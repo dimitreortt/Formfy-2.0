@@ -27,8 +27,7 @@ export default class DatabaseConnectionMock implements DatabaseConnection {
       label text not null,
       type text not null,
       options text,
-      index integer not null,
-      unique(form_id, index),
+      index integer not null,      
       unique (form_id, label)
     );
     

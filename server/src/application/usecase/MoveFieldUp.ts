@@ -4,5 +4,7 @@ import MoveFieldUpInput from '../dto/MoveFieldUpInput';
 export default class MoveFieldUp {
   constructor(readonly formRepository: FormRepository) {}
 
-  execute(input: MoveFieldUpInput) {}
+  async execute(input: MoveFieldUpInput) {
+    await this.formRepository.swapIndexes(input.formId, input.fieldIndex);
+  }
 }

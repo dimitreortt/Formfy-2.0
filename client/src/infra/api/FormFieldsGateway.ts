@@ -2,7 +2,7 @@ import { FormFieldType } from './../../domain/FormField';
 import HttpClient from '../http/HttpClient';
 
 export class FormFieldsGateway {
-  serverBaseUrl = 'http://localhost:4000/';
+  serverBaseUrl = 'http://localhost:4000';
   constructor(readonly httpClient: HttpClient) {}
 
   updateFormField(

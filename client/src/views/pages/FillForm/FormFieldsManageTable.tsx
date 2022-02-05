@@ -7,9 +7,14 @@ import { CustomTableRow } from './CustomTableRow';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../application/store/configureStore';
 import { useParams } from 'react-router-dom';
+import { useMoveFieldUp } from '../../../application/usecase/useMoveFieldUp';
+
+type Params = {
+  formId: string;
+};
 
 export const FormFieldsManageTable = () => {
-  const { formId } = useParams();
+  const { formId } = useParams<Params>();
   const forms = useSelector((state: RootState) => state.forms.forms);
   const selectForm = () => {
     if (forms === 'not_initialized') return;
@@ -17,7 +22,7 @@ export const FormFieldsManageTable = () => {
   };
   const form = selectForm();
 
-  const moveFieldUp = useMoveFieldUp(formId);
+  const { moveFieldUp } = useMoveFieldUp(parseInt(formId || '0'));
 
   // const reAddFruit = (prevState: any, index: number, item: string) => {
   //   let newState = [...prevState];
@@ -28,7 +33,7 @@ export const FormFieldsManageTable = () => {
   //   }, 250);
   // };
 
-  const handleMoveUp = () => {
+  const handleMoveUp = (fieldIndex: number) => {
     // let newFruitsInBasket = [...fruitsInBasket];
     // const clickedFruitIndex = newFruitsInBasket.indexOf(item);
 
@@ -36,6 +41,7 @@ export const FormFieldsManageTable = () => {
     // setFruitsInBasket((prev: any) => [...prev.filter((i: any) => i !== item)]);
     // reAddFruit(fruitsInBasket, clickedFruitIndex, item);
     console.log('i clicked move up');
+    moveFieldUp(fieldIndex);
   };
 
   const handleMoveDown = () => {

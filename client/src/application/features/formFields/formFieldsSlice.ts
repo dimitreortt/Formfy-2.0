@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type SliceState = {
   awaitingMoveUp: boolean;
+  moveUpSuccess: boolean;
   moveUpFail: boolean;
   awaitingMoveDown: boolean;
   moveDownFail: boolean;
@@ -9,6 +10,7 @@ type SliceState = {
 
 const initialState: SliceState = {
   awaitingMoveUp: false,
+  moveUpSuccess: false,
   moveUpFail: false,
   awaitingMoveDown: false,
   moveDownFail: false,
@@ -22,6 +24,12 @@ const formFieldsSlice = createSlice({
     moveFieldDown: () => {},
     awaitingMoveUp: (state) => {
       state.awaitingMoveUp = true;
+      state.moveUpSuccess = false;
+      state.moveUpFail = false;
+    },
+    moveUpSuccess: (state) => {
+      state.moveUpSuccess = true;
+      state.awaitingMoveUp = false;
     },
     moveUpFail: (state) => {
       state.moveUpFail = true;

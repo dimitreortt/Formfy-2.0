@@ -3,18 +3,11 @@ import { Paper, Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../application/store/configureStore';
 import { useGetForms } from '../../application/usecase/useGetForms';
-import { Form } from './Form';
 import { useActions } from '../../application/hooks/useActions';
+import { Form } from './Form';
 
 export const FormsList = (props: any) => {
   const { forms, loadingForms, loadFormsFail } = useSelector((state: RootState) => state.forms);
-  const { getForms } = useGetForms();
-  const { pageLoaded } = useActions();
-
-  useEffect(() => {
-    pageLoaded();
-    getForms();
-  }, [getForms, pageLoaded]);
 
   return (
     <Box data-testid='forms-list' sx={{}}>

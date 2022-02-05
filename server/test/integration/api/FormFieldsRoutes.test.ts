@@ -100,3 +100,31 @@ test('Should move a field up', async () => {
   expect(newFirstField.label).toBe(secondField.label);
   expect(newSecondField.label).toBe(firstField.label);
 });
+
+test('Should move a field down', async () => {
+  const firstIndex = 0;
+  const secondIndex = 1;
+  const firstField = new FormField('Short Text', 'Number of patches', undefined, firstIndex);
+  const secondField = new FormField('Short Text', 'Name', undefined, secondIndex);
+  const fields = [firstField, secondField];
+  const form = new Form('Stock Analysis');
+  for (const field of fields) {
+    form.addField(field);
+  }
+  const formData = await formRepository.save(form);
+
+  const body = {
+    formId: formData.id,
+    index: firstIndex,
+  };
+  const res = await app.patch('/formField/moveDown').send(body);
+  expect(res.statusCode).toBe(204);
+
+  const formFieldsData = await formDAO.getFormFields(formData.id);
+  const newFirstField = formFieldsData.find((field) => field.index === firstIndex);
+  const newSecondField = formFieldsData.find((field) => field.index === secondIndex);
+
+  if (!newFirstField || !newSecondField) throw new Error('News fields cannot be undefined!');
+  expect(newFirstField.label).toBe(secondField.label);
+  expect(newSecondField.label).toBe(firstField.label);
+});

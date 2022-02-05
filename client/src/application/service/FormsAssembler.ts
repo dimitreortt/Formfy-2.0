@@ -1,7 +1,6 @@
 export class FormsAssembler {
   static assembly(rawResponse: any) {
     // API Specific conversion
-    console.log(rawResponse);
     return rawResponse.forms.map((formData: any) => {
       const { form, formFields } = formData;
       return {

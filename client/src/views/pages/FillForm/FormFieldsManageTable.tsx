@@ -11,15 +11,14 @@ import { useParams } from 'react-router-dom';
 export const FormFieldsManageTable = () => {
   const { formId } = useParams();
   const forms = useSelector((state: RootState) => state.forms.forms);
-
   const selectForm = () => {
     if (forms === 'not_initialized') return;
     return forms.find((form) => form.id.toString() === formId);
   };
-
   const form = selectForm();
 
-  console.log(form);
+  const moveFieldUp = useMoveFieldUp(formId);
+
   // const reAddFruit = (prevState: any, index: number, item: string) => {
   //   let newState = [...prevState];
   //   newState.splice(index - 1, 0, item);

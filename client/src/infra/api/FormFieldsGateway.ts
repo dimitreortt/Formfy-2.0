@@ -31,4 +31,13 @@ export class FormFieldsGateway {
     };
     return this.httpClient.request(url, 'DELETE', data);
   }
+
+  moveFieldUp(formId: number, index: number) {
+    const url = `${this.serverBaseUrl}/formField/moveUp`;
+    const data = {
+      formId,
+      index,
+    };
+    return this.httpClient.request(url, 'PATCH', data);
+  }
 }

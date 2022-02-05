@@ -17,5 +17,10 @@ export default class FormsFieldsRouter {
       const formsFieldsController = new FormFieldsController(this.databaseConnection);
       return formsFieldsController.deleteField(params, body);
     });
+
+    this.http.on('/formField/moveUp', 'patch', async (params: any, body: any) => {
+      const formsFieldsController = new FormFieldsController(this.databaseConnection);
+      return formsFieldsController.moveFieldUp(params, body);
+    });
   }
 }

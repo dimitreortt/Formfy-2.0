@@ -7,6 +7,8 @@ import DeleteField from '../../application/usecase/DeleteField';
 import DeleteFieldInput from '../../application/dto/DeleteFieldInput';
 import MoveFieldUp from '../../application/usecase/MoveFieldUp';
 import MoveFieldUpInput from '../../application/dto/MoveFieldUpInput';
+import MoveFieldDown from '../../application/usecase/MoveFieldDown';
+import MoveFieldDownInput from '../../application/dto/MoveFieldDownInput';
 
 export default class FormFieldsController {
   constructor(readonly databaseConnection: DatabaseConnection) {}
@@ -36,7 +38,14 @@ export default class FormFieldsController {
   async moveFieldUp(params: any, body: any) {
     const moveFieldUp = new MoveFieldUp(new FormRepositoryDatabase(this.databaseConnection));
     const moveFieldUpInput = new MoveFieldUpInput(body.formId, body.index);
-    await moveFieldUp.execute(moveFieldUpInput)
-    return {status: 204, output: {}}
+    await moveFieldUp.execute(moveFieldUpInput);
+    return { status: 204, output: {} };
+  }
+
+  async moveFieldDown(params: any, body: any) {
+    const moveFieldDown = new MoveFieldDown(new FormRepositoryDatabase(this.databaseConnection));
+    const moveFieldDownInput = new MoveFieldDownInput(body.formId, body.index);
+    await moveFieldDown.execute(moveFieldDownInput);
+    return { status: 204, output: {} };
   }
 }

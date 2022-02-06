@@ -8,6 +8,12 @@ export default class FormsFieldsRouter {
   }
 
   configure() {
+    this.http.on('/formField/moveUp', 'patch', async (params: any, body: any) => {
+      console.log(body);
+      const formsFieldsController = new FormFieldsController(this.databaseConnection);
+      return formsFieldsController.moveFieldUp(params, body);
+    });
+
     this.http.on('/formField', 'patch', async (params: any, body: any) => {
       const formsFieldsController = new FormFieldsController(this.databaseConnection);
       return formsFieldsController.updateField(params, body);
@@ -16,11 +22,6 @@ export default class FormsFieldsRouter {
     this.http.on('/formField', 'delete', async (params: any, body: any) => {
       const formsFieldsController = new FormFieldsController(this.databaseConnection);
       return formsFieldsController.deleteField(params, body);
-    });
-
-    this.http.on('/formField/moveUp', 'patch', async (params: any, body: any) => {
-      const formsFieldsController = new FormFieldsController(this.databaseConnection);
-      return formsFieldsController.moveFieldUp(params, body);
     });
 
     this.http.on('/formField/moveDown', 'patch', async (params: any, body: any) => {

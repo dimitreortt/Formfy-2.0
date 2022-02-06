@@ -7,8 +7,7 @@
     "test": "tsc && jest ./dist --forceExit",
     "coverage": "tsc && jest ./dist --coverage",
     "main": "tsc && node ./dist/src/main",
-    "main-watch": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/src/main\"",
-    "lala": "jest"
+    "main-watch": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/src/main\""
   },
   "jest": {
     "testEnvironment": "node",
@@ -19,7 +18,7 @@
       "./dist"
     ]
   },
-  "author": "Dimitre Ortt",
+  "author": "Dimitre Ortt https://github.com/dimitreortt/Formfy-2.0",
   "license": "ISC",
   "dependencies": {
     "@types/jest": "^27.0.3",

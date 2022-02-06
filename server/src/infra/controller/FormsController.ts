@@ -19,6 +19,7 @@ export default class FormsController {
     const createForm = new CreateForm(new FormRepositoryDatabase(this.databaseConnection));
     const fields: FormField[] = [];
     for (const fieldData of body.fields) {
+      //TODO: Validação do fieldData.type
       const formField = new FormField(fieldData.type, fieldData.label, fieldData.options);
       fields.push(formField);
     }

@@ -56,15 +56,17 @@ export const FormFieldsManageTable = () => {
         <List>
           <TransitionGroup>
             {form &&
-              form.fields.map((field) => (
-                <Collapse key={field.label}>
-                  <CustomTableRow
-                    field={field}
-                    handleMoveUp={handleMoveUp}
-                    handleMoveDown={handleMoveDown}
-                  />
-                </Collapse>
-              ))}
+              [...form.fields]
+                .sort((fieldA, fieldB) => fieldA.index - fieldB.index)
+                .map((field) => (
+                  <Collapse key={field.label}>
+                    <CustomTableRow
+                      field={field}
+                      handleMoveUp={handleMoveUp}
+                      handleMoveDown={handleMoveDown}
+                    />
+                  </Collapse>
+                ))}
           </TransitionGroup>
         </List>
       </Box>

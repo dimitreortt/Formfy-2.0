@@ -20,14 +20,13 @@ export default class DatabaseConnectionMock implements DatabaseConnection {
       name text unique not null
     );
     
-    
     CREATE TABLE formfy.form_field (
       id serial primary key,
       form_id integer not null,
       label text not null,
       type text not null,
       options text,
-      index integer not null,      
+      index integer not null,  
       unique (form_id, label)
     );
     

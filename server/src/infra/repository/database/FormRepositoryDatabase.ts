@@ -113,6 +113,8 @@ export default class FormRepositoryDatabase implements FormRepository {
   async swapIndexes(formId: number, indexA: number, indexB: number) {
     if (indexA < 0 || indexB < 0) throw new Error('Cannot swap form_field with index less than 0');
     const difference = indexA - indexB;
+    console.log(indexA);
+    console.log(indexB);
     if (difference !== 1 && difference !== -1)
       throw new Error('form_fields have to have difference of 1 or -1 to be swapped!');
     await this.databaseConnection.query(

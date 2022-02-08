@@ -1,6 +1,6 @@
-import Http from './Http';
-import express, { Application } from 'express';
-import cors from 'cors';
+import Http from "./Http";
+import express, { Application } from "express";
+import cors from "cors";
 
 export default class ExpressAdapter implements Http {
   private app: any;
@@ -19,13 +19,13 @@ export default class ExpressAdapter implements Http {
         })
         .catch((error: any) => {
           console.log(error.message);
-          res.status(400).json('Error!! ' + error.message);
+          res.status(400).json("Error!! " + error.message);
         });
     });
   }
 
   listen(port: number): void {
-    console.log('App running on port ' + port);
+    console.log("App running on port " + port);
     this.app.listen(port);
   }
 

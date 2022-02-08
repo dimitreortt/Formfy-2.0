@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../application/store/configureStore";
 import { useParams } from "react-router-dom";
 import { useMoveFieldUp } from "../../../application/usecase/useMoveFieldUp";
-import { IForm } from "../../../domain/Form";
 import { IFormField } from "../../../domain/FormField";
 import { useActions } from "../../../application/hooks/useActions";
 
@@ -17,7 +16,6 @@ type Params = {
 };
 
 export const FormFieldsManageTable = () => {
-  const { setForms } = useActions();
   const { formId } = useParams<Params>();
   const forms = useSelector((state: RootState) => state.forms.forms);
   const selectForm = () => {
@@ -25,18 +23,29 @@ export const FormFieldsManageTable = () => {
     return forms.find((form) => form.id.toString() === formId);
   };
   const form = selectForm();
+  const { awaitingMoveUp, moveUpFail, moveUpSuccess } = useSelector(
+    (state: RootState) => state.formFields
+  );
 
   const { moveFieldUp } = useMoveFieldUp(parseInt(formId || "0"));
 
   const [formFields, setFormFields] = useState<IFormField[] | null>(null);
+  const [lastMoveUpClicked, setLastMoveUpClicked] = useState<IFormField>();
 
   useEffect(() => {
     if (!form) return;
-    // if (formFields) return;
+    if (formFields) return;
     setFormFields(
       [...form.fields].sort((fieldA, fieldB) => fieldA.index - fieldB.index)
     );
   }, [form]);
+
+  useEffect(() => {
+    if (awaitingMoveUp) return;
+    if (moveUpFail) return;
+    if (!moveUpSuccess) return;
+    execMoveUpTransition(lastMoveUpClicked!);
+  }, [awaitingMoveUp]);
 
   const getPrevious = (clickedField: IFormField) => {
     return { ...formFields![clickedField.index - 1] };
@@ -68,47 +77,42 @@ export const FormFieldsManageTable = () => {
     state[field.index] = field;
   };
 
-  const handleMoveUp = (clickedField: IFormField) => {
-    if (!formFields) return;
-    if (clickedField.index <= 0) return;
+  const isFirstField = (field: IFormField) => field.index <= 0;
 
+  const handleMoveUp = (clickedField: IFormField) => {
+    if (isFirstField(clickedField)) return;
+    setLastMoveUpClicked(clickedField);
+    moveFieldUp(clickedField.index);
+  };
+
+  const execMoveUpTransition = (clickedField: IFormField) => {
+    if (!formFields) return;
     let previous = getPrevious(clickedField);
     const withoutClicked = removeClicked(clickedField);
-
     setFormFields(withoutClicked);
-
     let newClicked = { ...clickedField };
     swapIndexes(newClicked, previous);
-
     let newState = reInsertClicked(withoutClicked, newClicked);
-
     ratifyFieldInState(newState, previous);
-
     setTimeout(() => {
       setFormFields([...newState]);
     }, 300);
   };
 
-  const getNext = (clickedField: IFormField) => {
-    return { ...formFields![clickedField.index + 1] };
-  };
+  const getNext = (clickedField: IFormField) => ({
+    ...formFields![clickedField.index + 1],
+  });
 
   const handleMoveDown = (clickedField: IFormField) => {
     if (!formFields) return;
     if (clickedField.index >= formFields.length - 1) return;
-
     let next = getNext(clickedField);
     const withoutClicked = removeClicked(clickedField);
-
     setFormFields(withoutClicked);
-
     let newClicked = { ...clickedField };
     swapIndexes(newClicked, next);
-
     let newState = reInsertClicked(withoutClicked, newClicked);
-
     ratifyFieldInState(newState, next);
-
     setTimeout(() => {
       setFormFields([...newState]);
     }, 300);
@@ -120,17 +124,15 @@ export const FormFieldsManageTable = () => {
         <List>
           <TransitionGroup>
             {formFields &&
-              [...formFields]
-                // .sort((fieldA, fieldB) => fieldA.index - fieldB.index)
-                .map((field) => (
-                  <Collapse key={field.label}>
-                    <CustomTableRow
-                      field={field}
-                      handleMoveUp={handleMoveUp}
-                      handleMoveDown={handleMoveDown}
-                    />
-                  </Collapse>
-                ))}
+              [...formFields].map((field) => (
+                <Collapse key={field.label}>
+                  <CustomTableRow
+                    field={field}
+                    handleMoveUp={handleMoveUp}
+                    handleMoveDown={handleMoveDown}
+                  />
+                </Collapse>
+              ))}
           </TransitionGroup>
         </List>
       </Box>

@@ -29,9 +29,8 @@ export const CustomTableRow: FunctionComponent<Props> = ({
   handleMoveDown,
 }) => {
   const classes = useStyles();
-  const { awaitingMoveUp, moveUpFail, moveUpSuccess } = useSelector(
-    (state: RootState) => state.formFields
-  );
+  const { awaitingMoveUp, moveUpFail, awaitingMoveDown, moveDownFail } =
+    useSelector((state: RootState) => state.formFields);
   const [rowAwaiting, setRowAwaiting] = useState(false);
 
   useEffect(() => {
@@ -45,9 +44,27 @@ export const CustomTableRow: FunctionComponent<Props> = ({
     setRowAwaiting(false);
   }, [awaitingMoveUp]);
 
+  useEffect(() => {
+    if (!rowAwaiting) return;
+    if (awaitingMoveDown) return;
+    if (moveDownFail) {
+      // show message for few seconds then come back to previous
+      alert("Move down failed!");
+    }
+
+    setRowAwaiting(false);
+  }, [awaitingMoveDown]);
+
   const moveUp = () => {
+    if (rowAwaiting) return;
     setRowAwaiting(true);
     handleMoveUp(field);
+  };
+
+  const moveDown = () => {
+    if (rowAwaiting) return;
+    setRowAwaiting(true);
+    handleMoveDown(field);
   };
 
   return (
@@ -71,7 +88,7 @@ export const CustomTableRow: FunctionComponent<Props> = ({
           <Box flexGrow={1}>{field.type}</Box>
           <Box flexGrow={1}>index, tirar! kk {field.index}</Box>
           <Box flexGrow={1}>{field.options?.join(", ")}</Box>
-          <Button onClick={() => handleMoveDown(field)}>down</Button>
+          <Button onClick={moveDown}>down</Button>
           <Button onClick={moveUp}>up</Button>
         </>
       )}

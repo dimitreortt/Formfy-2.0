@@ -7,7 +7,7 @@
     "test": "tsc && jest ./dist --forceExit",
     "coverage": "tsc && jest ./dist --coverage",
     "main": "tsc && node ./dist/src/main",
-    "main-watch": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/src/main\""
+    "main-dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/src/main\""
   },
   "jest": {
     "testEnvironment": "node",

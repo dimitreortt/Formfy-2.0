@@ -49,20 +49,23 @@ export const FormFieldsManageTable = () => {
     return without;
   };
 
-  const updateIndexes = (newClicked: IFormField, previous: IFormField) => {
-    newClicked.index -= 1;
-    previous.index += 1;
+  const swapIndexes = (field1: IFormField, field2: IFormField) => {
+    let temp = field1.index;
+    field1.index = field2.index;
+    field2.index = temp;
   };
 
-  const reInsertClickedAndPrevious = (
+  const reInsertClicked = (
     withoutClicked: IFormField[],
-    newClicked: IFormField,
-    previous: IFormField
+    newClicked: IFormField
   ) => {
     const newState = [...withoutClicked];
     newState.splice(newClicked.index, 0, newClicked);
-    newState[previous.index] = previous;
     return newState;
+  };
+
+  const ratifyFieldInState = (state: IFormField[], field: IFormField) => {
+    state[field.index] = field;
   };
 
   const handleMoveUp = (clickedField: IFormField) => {
@@ -75,21 +78,23 @@ export const FormFieldsManageTable = () => {
     setFormFields(withoutClicked);
 
     let newClicked = { ...clickedField };
-    updateIndexes(newClicked, previous);
+    swapIndexes(newClicked, previous);
 
-    let newState = reInsertClickedAndPrevious(
-      withoutClicked,
-      newClicked,
-      previous
-    );
+    let newState = reInsertClicked(withoutClicked, newClicked);
+
+    ratifyFieldInState(newState, previous);
 
     setTimeout(() => {
       setFormFields([...newState]);
-    }, 500);
+    }, 300);
   };
 
-  const handleMoveDown = () => {
-    console.log("i clicked move down");
+  const getNext = (clickedField: IFormField) => {
+    return { ...formFields![clickedField.index + 1] };
+  };
+
+  const handleMoveDown = (item: any) => {
+    console.log("clicked move down");
   };
 
   return (

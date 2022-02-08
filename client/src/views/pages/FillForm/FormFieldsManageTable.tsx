@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../application/store/configureStore";
 import { useParams } from "react-router-dom";
 import { useMoveFieldUp } from "../../../application/usecase/useMoveFieldUp";
+import { useMoveFieldDown } from "../../../application/usecase/useMoveFieldDown";
 import { IFormField } from "../../../domain/FormField";
 import { useActions } from "../../../application/hooks/useActions";
 
@@ -23,14 +24,21 @@ export const FormFieldsManageTable = () => {
     return forms.find((form) => form.id.toString() === formId);
   };
   const form = selectForm();
-  const { awaitingMoveUp, moveUpFail, moveUpSuccess } = useSelector(
-    (state: RootState) => state.formFields
-  );
+  const {
+    awaitingMoveUp,
+    moveUpFail,
+    moveUpSuccess,
+    awaitingMoveDown,
+    moveDownFail,
+    moveDownSuccess,
+  } = useSelector((state: RootState) => state.formFields);
 
   const { moveFieldUp } = useMoveFieldUp(parseInt(formId || "0"));
+  const { moveFieldDown } = useMoveFieldDown(parseInt(formId || "0"));
 
   const [formFields, setFormFields] = useState<IFormField[] | null>(null);
   const [lastMoveUpClicked, setLastMoveUpClicked] = useState<IFormField>();
+  const [lastMoveDownClicked, setLastMoveDownClicked] = useState<IFormField>();
 
   useEffect(() => {
     if (!form) return;
@@ -46,6 +54,13 @@ export const FormFieldsManageTable = () => {
     if (!moveUpSuccess) return;
     execMoveUpTransition(lastMoveUpClicked!);
   }, [awaitingMoveUp]);
+
+  useEffect(() => {
+    if (awaitingMoveDown) return;
+    if (moveDownFail) return;
+    if (!moveDownSuccess) return;
+    execMoveDownTransition(lastMoveDownClicked!);
+  }, [awaitingMoveDown]);
 
   const getPrevious = (clickedField: IFormField) => {
     return { ...formFields![clickedField.index - 1] };
@@ -103,9 +118,16 @@ export const FormFieldsManageTable = () => {
     ...formFields![clickedField.index + 1],
   });
 
+  const isLastField = (field: IFormField) =>
+    field.index >= formFields!.length - 1;
+
   const handleMoveDown = (clickedField: IFormField) => {
-    if (!formFields) return;
-    if (clickedField.index >= formFields.length - 1) return;
+    if (isLastField(clickedField)) return;
+    setLastMoveDownClicked(clickedField);
+    moveFieldDown(clickedField.index);
+  };
+
+  const execMoveDownTransition = (clickedField: IFormField) => {
     let next = getNext(clickedField);
     const withoutClicked = removeClicked(clickedField);
     setFormFields(withoutClicked);

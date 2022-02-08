@@ -93,8 +93,25 @@ export const FormFieldsManageTable = () => {
     return { ...formFields![clickedField.index + 1] };
   };
 
-  const handleMoveDown = (item: any) => {
-    console.log("clicked move down");
+  const handleMoveDown = (clickedField: IFormField) => {
+    if (!formFields) return;
+    if (clickedField.index >= formFields.length - 1) return;
+
+    let next = getNext(clickedField);
+    const withoutClicked = removeClicked(clickedField);
+
+    setFormFields(withoutClicked);
+
+    let newClicked = { ...clickedField };
+    swapIndexes(newClicked, next);
+
+    let newState = reInsertClicked(withoutClicked, newClicked);
+
+    ratifyFieldInState(newState, next);
+
+    setTimeout(() => {
+      setFormFields([...newState]);
+    }, 300);
   };
 
   return (

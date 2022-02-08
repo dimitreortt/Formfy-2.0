@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type Props = {
   handleMoveUp: (clickedField: IFormField) => void;
-  handleMoveDown: () => void;
+  handleMoveDown: (clickedField: IFormField) => void;
   field: IFormField;
 };
 
@@ -47,7 +47,7 @@ export const CustomTableRow: FunctionComponent<Props> = ({
       <Box flexGrow={1}>{field.options?.join(", ")}</Box>
       {/* <Box flexGrow={3}>oi3</Box>
       <Box flexGrow={6}>oi4</Box> */}
-      <Button onClick={handleMoveDown}>down</Button>
+      <Button onClick={() => handleMoveDown(field)}>down</Button>
       <Button onClick={() => handleMoveUp(field)}>up</Button>
     </Box>
   );

@@ -1,10 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type SliceState = {
   awaitingMoveUp: boolean;
   moveUpSuccess: boolean;
   moveUpFail: boolean;
   awaitingMoveDown: boolean;
+  moveDownSuccess: boolean;
   moveDownFail: boolean;
 };
 
@@ -13,11 +14,12 @@ const initialState: SliceState = {
   moveUpSuccess: false,
   moveUpFail: false,
   awaitingMoveDown: false,
+  moveDownSuccess: false,
   moveDownFail: false,
 };
 
 const formFieldsSlice = createSlice({
-  name: 'formFields',
+  name: "formFields",
   initialState,
   reducers: {
     moveFieldUp: () => {},
@@ -37,6 +39,12 @@ const formFieldsSlice = createSlice({
     },
     awaitingMoveDown: (state) => {
       state.awaitingMoveDown = true;
+      state.moveDownSuccess = false;
+      state.moveDownFail = false;
+    },
+    moveDownSuccess: (state) => {
+      state.moveDownSuccess = true;
+      state.awaitingMoveDown = false;
     },
     moveDownFail: (state) => {
       state.moveDownFail = true;

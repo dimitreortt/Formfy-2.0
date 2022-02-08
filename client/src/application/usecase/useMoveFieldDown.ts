@@ -5,26 +5,26 @@ import { useContext } from "react";
 import { FormsGateway } from "../../infra/api/FormsGateway";
 import { useActions } from "../hooks/useActions";
 
-export const useMoveFieldUp = (formId: number) => {
+export const useMoveFieldDown = (formId: number) => {
   const {
-    moveFieldUp: moveFieldUpAction,
-    moveUpFail,
-    awaitingMoveUp,
-    moveUpSuccess,
+    moveFieldDown: moveFieldDownAction,
+    awaitingMoveDown,
+    moveDownSuccess,
+    moveDownFail,
   } = useActions();
   const { httpClient } = useContext(ApplicationContext);
   const formFieldsGateway = new FormFieldsGateway(httpClient);
 
-  const moveFieldUp = async (index: number) => {
-    moveFieldUpAction();
+  const moveFieldDown = async (index: number) => {
+    moveFieldDownAction();
     try {
-      awaitingMoveUp();
-      await formFieldsGateway.moveFieldUp(formId, index);
-      moveUpSuccess();
+      awaitingMoveDown();
+      await formFieldsGateway.moveFieldDown(formId, index);
+      moveDownSuccess();
     } catch (error) {
-      moveUpFail();
+      moveDownFail();
     }
   };
 
-  return { moveFieldUp };
+  return { moveFieldDown };
 };

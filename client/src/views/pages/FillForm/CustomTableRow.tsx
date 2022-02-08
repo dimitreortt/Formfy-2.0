@@ -1,10 +1,12 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material/styles";
 import { alpha } from "@mui/material/styles";
 import { IFormField } from "../../../domain/FormField";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../application/store/configureStore";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,6 +29,26 @@ export const CustomTableRow: FunctionComponent<Props> = ({
   handleMoveDown,
 }) => {
   const classes = useStyles();
+  const { awaitingMoveUp, moveUpFail, moveUpSuccess } = useSelector(
+    (state: RootState) => state.formFields
+  );
+  const [rowAwaiting, setRowAwaiting] = useState(false);
+
+  useEffect(() => {
+    if (!rowAwaiting) return;
+    if (awaitingMoveUp) return;
+    if (moveUpFail) {
+      // show message for few seconds then come back to previous
+      alert("Move up failed!");
+    }
+
+    setRowAwaiting(false);
+  }, [awaitingMoveUp]);
+
+  const moveUp = () => {
+    setRowAwaiting(true);
+    handleMoveUp(field);
+  };
 
   return (
     <Box
@@ -41,14 +63,18 @@ export const CustomTableRow: FunctionComponent<Props> = ({
       }}
       className={classes.row}
     >
-      <Box flexGrow={1}>{field.label}</Box>
-      <Box flexGrow={1}>{field.type}</Box>
-      <Box flexGrow={1}>index, tirar! kk {field.index}</Box>
-      <Box flexGrow={1}>{field.options?.join(", ")}</Box>
-      {/* <Box flexGrow={3}>oi3</Box>
-      <Box flexGrow={6}>oi4</Box> */}
-      <Button onClick={() => handleMoveDown(field)}>down</Button>
-      <Button onClick={() => handleMoveUp(field)}>up</Button>
+      {awaitingMoveUp && rowAwaiting ? (
+        <div>Spinner</div>
+      ) : (
+        <>
+          <Box flexGrow={1}>{field.label}</Box>
+          <Box flexGrow={1}>{field.type}</Box>
+          <Box flexGrow={1}>index, tirar! kk {field.index}</Box>
+          <Box flexGrow={1}>{field.options?.join(", ")}</Box>
+          <Button onClick={() => handleMoveDown(field)}>down</Button>
+          <Button onClick={moveUp}>up</Button>
+        </>
+      )}
     </Box>
   );
 };

@@ -1,12 +1,14 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { createStyles, makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material/styles";
 import { alpha } from "@mui/material/styles";
 import { IFormField } from "../../../domain/FormField";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../application/store/configureStore";
+import { SimpleDialog } from "./TableRowOptionsDialog";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,6 +34,9 @@ export const CustomTableRow: FunctionComponent<Props> = ({
   const { awaitingMoveUp, moveUpFail, awaitingMoveDown, moveDownFail } =
     useSelector((state: RootState) => state.formFields);
   const [rowAwaiting, setRowAwaiting] = useState(false);
+  const [optionsDialogOpen, setOptionsDialogOpen] = useState(false);
+
+  const toggleOptionsDialog = () => setOptionsDialogOpen((prev) => !prev);
 
   useEffect(() => {
     if (!rowAwaiting) return;
@@ -80,7 +85,7 @@ export const CustomTableRow: FunctionComponent<Props> = ({
       }}
       className={classes.row}
     >
-      {awaitingMoveUp && rowAwaiting ? (
+      {(awaitingMoveUp || awaitingMoveDown) && rowAwaiting ? (
         <div>Spinner</div>
       ) : (
         <>
@@ -90,6 +95,14 @@ export const CustomTableRow: FunctionComponent<Props> = ({
           <Box flexGrow={1}>{field.options?.join(", ")}</Box>
           <Button onClick={moveDown}>down</Button>
           <Button onClick={moveUp}>up</Button>
+          <IconButton color="secondary" onClick={toggleOptionsDialog}>
+            <MoreHorizIcon />
+          </IconButton>
+          <SimpleDialog
+            open={optionsDialogOpen}
+            selectedValue={""}
+            onClose={toggleOptionsDialog}
+          />
         </>
       )}
     </Box>

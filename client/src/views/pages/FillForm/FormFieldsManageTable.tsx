@@ -24,43 +24,30 @@ export const FormFieldsManageTable = () => {
     return forms.find((form) => form.id.toString() === formId);
   };
   const form = selectForm();
-  const {
-    awaitingMoveUp,
-    moveUpFail,
-    moveUpSuccess,
-    awaitingMoveDown,
-    moveDownFail,
-    moveDownSuccess,
-  } = useSelector((state: RootState) => state.formFields);
 
   const { moveFieldUp } = useMoveFieldUp(parseInt(formId || "0"));
   const { moveFieldDown } = useMoveFieldDown(parseInt(formId || "0"));
 
   const [formFields, setFormFields] = useState<IFormField[] | null>(null);
-  const [lastMoveUpClicked, setLastMoveUpClicked] = useState<IFormField>();
-  const [lastMoveDownClicked, setLastMoveDownClicked] = useState<IFormField>();
+  const [lastClicked, setLastClicked] = useState<IFormField>();
+  const [transitionAwaiting, setTransitionAwaiting] = useState<
+    "delete" | "moveUp" | "moveDown"
+  >();
+
+  const startFormFields = (fields: IFormField[]) =>
+    setFormFields(
+      [...fields].sort((fieldA, fieldB) => fieldA.index - fieldB.index)
+    );
 
   useEffect(() => {
     if (!form) return;
-    if (formFields) return;
-    setFormFields(
-      [...form.fields].sort((fieldA, fieldB) => fieldA.index - fieldB.index)
-    );
-  }, [form]);
-
-  useEffect(() => {
-    if (awaitingMoveUp) return;
-    if (moveUpFail) return;
-    if (!moveUpSuccess) return;
-    execMoveUpTransition(lastMoveUpClicked!);
-  }, [awaitingMoveUp]);
-
-  useEffect(() => {
-    if (awaitingMoveDown) return;
-    if (moveDownFail) return;
-    if (!moveDownSuccess) return;
-    execMoveDownTransition(lastMoveDownClicked!);
-  }, [awaitingMoveDown]);
+    if (!formFields) return startFormFields(form.fields);
+    if (transitionAwaiting === "moveUp")
+      return execMoveUpTransition(lastClicked!);
+    if (transitionAwaiting === "moveDown")
+      return execMoveDownTransition(lastClicked!);
+    startFormFields(form.fields);
+  }, [form?.fields]);
 
   const getPrevious = (clickedField: IFormField) => {
     return { ...formFields![clickedField.index - 1] };
@@ -96,7 +83,8 @@ export const FormFieldsManageTable = () => {
 
   const handleMoveUp = (clickedField: IFormField) => {
     if (isFirstField(clickedField)) return;
-    setLastMoveUpClicked(clickedField);
+    setLastClicked(clickedField);
+    setTransitionAwaiting("moveUp");
     moveFieldUp(clickedField.index);
   };
 
@@ -112,6 +100,7 @@ export const FormFieldsManageTable = () => {
     setTimeout(() => {
       setFormFields([...newState]);
     }, 300);
+    setTransitionAwaiting(undefined);
   };
 
   const getNext = (clickedField: IFormField) => ({
@@ -123,7 +112,8 @@ export const FormFieldsManageTable = () => {
 
   const handleMoveDown = (clickedField: IFormField) => {
     if (isLastField(clickedField)) return;
-    setLastMoveDownClicked(clickedField);
+    setLastClicked(clickedField);
+    setTransitionAwaiting("moveDown");
     moveFieldDown(clickedField.index);
   };
 
@@ -138,6 +128,7 @@ export const FormFieldsManageTable = () => {
     setTimeout(() => {
       setFormFields([...newState]);
     }, 300);
+    setTransitionAwaiting(undefined);
   };
 
   return (

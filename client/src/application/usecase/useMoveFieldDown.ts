@@ -11,16 +11,18 @@ export const useMoveFieldDown = (formId: number) => {
     awaitingMoveDown,
     moveDownSuccess,
     moveDownFail,
+    swapFieldsIndexes,
   } = useActions();
   const { httpClient } = useContext(ApplicationContext);
   const formFieldsGateway = new FormFieldsGateway(httpClient);
 
-  const moveFieldDown = async (index: number) => {
+  const moveFieldDown = async (fieldIndex: number) => {
     moveFieldDownAction();
     try {
       awaitingMoveDown();
-      await formFieldsGateway.moveFieldDown(formId, index);
+      await formFieldsGateway.moveFieldDown(formId, fieldIndex);
       moveDownSuccess();
+      swapFieldsIndexes([formId, fieldIndex, fieldIndex + 1]);
     } catch (error) {
       moveDownFail();
     }

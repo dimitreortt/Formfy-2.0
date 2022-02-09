@@ -4,5 +4,7 @@ import { AddFormFieldInput } from "../dto/AddFormFieldInput";
 export class AddFormField {
   constructor(readonly formRepository: FormRepository) {}
 
-  async execute(input: AddFormFieldInput) {}
+  execute(input: AddFormFieldInput) {
+    return this.formRepository.addField(input.formId, input.field);
+  }
 }

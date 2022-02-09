@@ -1,19 +1,17 @@
-import FormRepository from '../../../domain/repository/FormRepository';
-import Form from '../../../domain/entitites/Form';
-import DatabaseConnection from '../../database/DatabaseConnection';
-import FormDTO from '../../../domain/dto/FormDTO';
-import FormFieldOptionsFormatter from '../../service/FormFieldOptionsFormatter';
-import FormField from '../../../domain/entitites/FormField';
-import FormFieldDTO from '../../../domain/dto/FormFieldDTO';
+import FormRepository from "../../../domain/repository/FormRepository";
+import Form from "../../../domain/entitites/Form";
+import DatabaseConnection from "../../database/DatabaseConnection";
+import FormDTO from "../../../domain/dto/FormDTO";
+import FormFieldOptionsFormatter from "../../service/FormFieldOptionsFormatter";
+import FormField from "../../../domain/entitites/FormField";
+import FormFieldDTO from "../../../domain/dto/FormFieldDTO";
 
 export default class FormRepositoryDatabase implements FormRepository {
   constructor(private databaseConnection: DatabaseConnection) {}
 
   async save(form: Form): Promise<FormDTO> {
-    const [
-      formData,
-    ] = await this.databaseConnection.query(
-      'insert into formfy.form (name) values ($1) returning *;',
+    const [formData] = await this.databaseConnection.query(
+      "insert into formfy.form (name) values ($1) returning *;",
       [form.name]
     );
     // pesquisar forma de integrar um performance booster tipo o PgArrayFormatter sem quebrar a hierarquia das camadas de DDD
@@ -34,13 +32,10 @@ export default class FormRepositoryDatabase implements FormRepository {
       let index = form.fields[label].index;
       if (!index) {
         const count = await this.formFieldsCount(formData.id);
-        // console.log(count);
         index = count;
       }
-      const [
-        formFieldData,
-      ] = await this.databaseConnection.query(
-        'insert into formfy.form_field (form_id, label, type, options, index) values ($1, $2, $3, $4, $5) returning *;',
+      const [formFieldData] = await this.databaseConnection.query(
+        "insert into formfy.form_field (form_id, label, type, options, index) values ($1, $2, $3, $4, $5) returning *;",
         [
           formData.id,
           label,
@@ -56,31 +51,34 @@ export default class FormRepositoryDatabase implements FormRepository {
   }
 
   async update(formName: string, newForm: Form): Promise<FormDTO> {
-    const [
-      formData,
-    ] = await this.databaseConnection.query(
-      'update formfy.form set name = $1 where name = $2 returning *;',
+    const [formData] = await this.databaseConnection.query(
+      "update formfy.form set name = $1 where name = $2 returning *;",
       [newForm.name, formName]
     );
     return formData;
   }
 
   async delete(formId: number): Promise<void> {
-    await this.databaseConnection.query('delete from formfy.form where id = $1 returning *;', [
-      formId,
-    ]);
-  }
-
-  async deleteFields(formId: number): Promise<void> {
     await this.databaseConnection.query(
-      'delete from formfy.form_field where form_id = $1 returning *;',
+      "delete from formfy.form where id = $1 returning *;",
       [formId]
     );
   }
 
-  async updateField(formId: number, fieldLabel: string, newField: FormField): Promise<void> {
+  async deleteFields(formId: number): Promise<void> {
     await this.databaseConnection.query(
-      'update formfy.form_field set (label, type, options, index) = ($1, $2, $3, $4) where form_id = $5 and label = $6;',
+      "delete from formfy.form_field where form_id = $1 returning *;",
+      [formId]
+    );
+  }
+
+  async updateField(
+    formId: number,
+    fieldLabel: string,
+    newField: FormField
+  ): Promise<void> {
+    await this.databaseConnection.query(
+      "update formfy.form_field set (label, type, options, index) = ($1, $2, $3, $4) where form_id = $5 and label = $6;",
       [
         newField.label,
         newField.type,
@@ -94,15 +92,13 @@ export default class FormRepositoryDatabase implements FormRepository {
 
   async deleteField(formId: number, label: string): Promise<void> {
     await this.databaseConnection.query(
-      'delete from formfy.form_field where form_id = $1 and label = $2;',
+      "delete from formfy.form_field where form_id = $1 and label = $2;",
       [formId, label]
     );
   }
 
   async formFieldsCount(formId: number) {
-    const [
-      data,
-    ] = await this.databaseConnection.query(
+    const [data] = await this.databaseConnection.query(
       `select count(form_id) from formfy.form_field where form_id = $1;`,
       [formId]
     );
@@ -111,12 +107,13 @@ export default class FormRepositoryDatabase implements FormRepository {
   }
 
   async swapIndexes(formId: number, indexA: number, indexB: number) {
-    if (indexA < 0 || indexB < 0) throw new Error('Cannot swap form_field with index less than 0');
+    if (indexA < 0 || indexB < 0)
+      throw new Error("Cannot swap form_field with index less than 0");
     const difference = indexA - indexB;
-    console.log(indexA);
-    console.log(indexB);
     if (difference !== 1 && difference !== -1)
-      throw new Error('form_fields have to have difference of 1 or -1 to be swapped!');
+      throw new Error(
+        "form_fields have to have difference of 1 or -1 to be swapped!"
+      );
     await this.databaseConnection.query(
       `
     update formfy.form_field
@@ -128,5 +125,22 @@ export default class FormRepositoryDatabase implements FormRepository {
     `,
       [indexA, indexB, formId]
     );
+  }
+
+  async addField(formId: number, field: FormField): Promise<FormFieldDTO> {
+    let index = field.index;
+    if (!index) index = await this.formFieldsCount(formId);
+
+    const [formFieldData] = await this.databaseConnection.query(
+      "insert into formfy.form_field (form_id, label, type, options, index) values ($1, $2, $3, $4, $5) returning *;",
+      [
+        formId,
+        field.label,
+        field.type,
+        FormFieldOptionsFormatter.format(field.options),
+        index,
+      ]
+    );
+    return formFieldData;
   }
 }

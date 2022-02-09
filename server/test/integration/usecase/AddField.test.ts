@@ -1,3 +1,5 @@
+import { AddFormField } from "./../../../src/application/usecase/AddFormField";
+import { AddFormFieldInput } from "./../../../src/application/dto/AddFormFieldInput";
 import { FormFieldType } from "./../../../../client/src/domain/FormField";
 import CreateFormInput from "../../../src/application/dto/CreateFormInput";
 import GetFormInput from "../../../src/application/dto/GetFormInput";
@@ -24,14 +26,14 @@ beforeAll(async () => {
 test("Should add a field", async () => {
   const createForm = new CreateForm(formRepository);
   const createFormInput = new CreateFormInput("Subscription", []);
-  const createFormOutput = await createForm.execute(createFormInput);
+  const { formId } = await createForm.execute(createFormInput);
 
   const fieldType: FormFieldType = "Short Text";
   const fieldLabel = "Name";
   const field = new FormField(fieldType, fieldLabel);
 
   const addFormField = new AddFormField(formRepository);
-  const addFormFieldInput = new FormFieldInput(field);
+  const addFormFieldInput = new AddFormFieldInput(formId, field);
   await addFormField.execute(addFormFieldInput);
 
   const getForm = new GetForm(formDAO);
@@ -41,7 +43,4 @@ test("Should add a field", async () => {
   expect(getFormOutput.formFields).toHaveLength(1);
   expect(getFormOutput.formFields[0].label).toBe(fieldLabel);
   expect(getFormOutput.formFields[0].type).toBe(fieldType);
-  // add a fieldS
-  // getForm
-  // expect it has the field added
 });

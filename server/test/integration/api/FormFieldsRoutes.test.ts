@@ -175,6 +175,7 @@ test("Should add a form field", async () => {
   const label = "Name";
   const type = "Short Text";
   const body = {
+    formId: formData.id,
     label,
     type,
   };

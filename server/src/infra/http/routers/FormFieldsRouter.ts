@@ -11,6 +11,24 @@ export default class FormsFieldsRouter {
   }
 
   configure() {
+    this.http.on("/formField", "post", async (params: any, body: any) => {
+      const formsFieldsController = new FormFieldsController(
+        this.databaseConnection
+      );
+      return formsFieldsController.addField(params, body);
+    });
+
+    this.http.on(
+      "/formField/moveDown",
+      "patch",
+      async (params: any, body: any) => {
+        const formsFieldsController = new FormFieldsController(
+          this.databaseConnection
+        );
+        return formsFieldsController.moveFieldDown(params, body);
+      }
+    );
+
     this.http.on(
       "/formField/moveUp",
       "patch",
@@ -26,7 +44,6 @@ export default class FormsFieldsRouter {
       "/formField/moveDown",
       "patch",
       async (params: any, body: any) => {
-        console.log(body);
         const formsFieldsController = new FormFieldsController(
           this.databaseConnection
         );

@@ -8,7 +8,7 @@ import { alpha } from "@mui/material/styles";
 import { IFormField } from "../../../domain/FormField";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../application/store/configureStore";
-import { SimpleDialog } from "./TableRowOptionsDialog";
+import { TableRowOptionsPopover } from "./TableRowOptionsPopover";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -98,11 +98,7 @@ export const CustomTableRow: FunctionComponent<Props> = ({
           <IconButton color="secondary" onClick={toggleOptionsDialog}>
             <MoreHorizIcon />
           </IconButton>
-          <SimpleDialog
-            open={optionsDialogOpen}
-            selectedValue={""}
-            onClose={toggleOptionsDialog}
-          />
+          <TableRowOptionsPopover />
         </>
       )}
     </Box>

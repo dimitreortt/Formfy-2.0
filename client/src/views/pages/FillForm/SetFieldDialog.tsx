@@ -24,6 +24,7 @@ import {
 } from "@mui/material";
 import { FormFieldType } from "../../../domain/FormField";
 import { Box } from "@mui/system";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const typeOptions: FormFieldType[] = [
   "Short Text",
@@ -49,6 +50,8 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
   const [type, setType] = useState("");
   const [label, setLabel] = useState("");
   const [newFieldOption, setNewFieldOption] = useState("");
+  const [newFieldOptions, setNewFieldOptions] = useState<string[]>([]);
+  const [onAddFieldOption, setOnAddFieldOption] = useState(false);
 
   const handleClose = () => {
     onClose(selectedValue);
@@ -62,20 +65,37 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
     setLabel(event.target.value);
   };
 
+  const handleNewFieldOptionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setNewFieldOption(event.target.value);
+  };
+
+  const handleNewFieldOptionAdded = (option: string) => {
+    if (!option) return;
+    const temp = [...newFieldOptions];
+    temp.push(option);
+    const unique = [...new Set(temp)];
+    setNewFieldOptions(unique);
+    setNewFieldOption("");
+  };
+
+  console.log(newFieldOptions);
+
   return (
     <Dialog
       onClose={handleClose}
       open={open}
       PaperProps={{ sx: { width: 300 } }}
     >
-      <DialogTitle sx={{ backgroundColor: "transparent" }}>
+      <DialogTitle sx={{ backgroundColor: "transparent", border: 0.1, m: 0.3 }}>
         Field Setup
       </DialogTitle>
       {/* <div>Field Setup</div> */}
       <DialogContent
         sx={{
           "& *": {
-            mb: 0.7,
+            // mb: 0.7,
           },
         }}
       >
@@ -87,7 +107,7 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
           onChange={handleLabelChange}
           fullWidth
         />
-        <FormControl sx={{ m: 0, minWidth: 220 }} fullWidth>
+        <FormControl sx={{ m: 0, minWidth: 220, mt: 1 }} fullWidth>
           <InputLabel id="select-label">Type</InputLabel>
           <Select
             labelId="select-label"
@@ -108,19 +128,69 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
           </Select>
           {/* <FormHelperText>With label + helper text</FormHelperText> */}
         </FormControl>
-        {/* {(type === "List Selection" || type === "Checkbox") && (
-          <Box>
-            <div>adder de options</div>
-            <IconButton
-              aria-describedby={"add-field-option"}
-              color="secondary"
-              // onClick={toggleOpen}
-            >
-              <AddIcon />
-            </IconButton>
+        {(type === "List Selection" || type === "Checkbox") && (
+          <Box sx={{ mt: 1 }}>
+            {/* <Box>
+              {newFieldOptions.map((option) => (
+                <Box key={option} sx={{ border: 0.1, padding: 0.5 }}>
+                  {option}
+                </Box>
+              ))}
+            </Box> */}
+            {onAddFieldOption && (
+              <Box>
+                <TextField
+                  sx={{ mt: 0.7, border: 0.0, mb: 0, pb: 0 }}
+                  id="add-field-option"
+                  label="Option"
+                  value={newFieldOption}
+                  onChange={handleNewFieldOptionChange}
+                  fullWidth
+                />
+              </Box>
+            )}
+            {/* <Box sx={{ display: "flex" }}>
+              {onAddFieldOption && (
+                <Box sx={{ flexGrow: 1 }}>
+                  <Button
+                    sx={{
+                      display: "inline-block",
+                      py: 0.2,
+                      px: 0.7,
+                      minHeight: 0,
+                      minWidth: 0,
+                    }}
+                    onClick={() => handleNewFieldOptionAdded(newFieldOption)}
+                  >
+                    Confirm
+                  </Button>
+                </Box>
+              )}
+              <IconButton
+                sx={{
+                  display: "inline-block",
+                  py: 0.2,
+                  px: 0.7,
+                  minHeight: 0,
+                  minWidth: 0,
+                }}
+                aria-describedby={"add-field-option"}
+                color="secondary"
+                onClick={() => setOnAddFieldOption((prev) => !prev)}
+              >
+                {onAddFieldOption ? <CancelIcon /> : <AddIcon />}
+              </IconButton>
+            </Box> */}
           </Box>
-        )} */}
+        )}
       </DialogContent>
+      {/* <DialogContent
+        sx={{
+          "& *": {
+            mb: 0.7,
+          },
+        }}
+      ></DialogContent> */}
     </Dialog>
   );
 };

@@ -149,7 +149,7 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
                 />
               </Box>
             )}
-            {/* <Box sx={{ display: "flex" }}>
+            <Box sx={{ display: "flex" }}>
               {onAddFieldOption && (
                 <Box sx={{ flexGrow: 1 }}>
                   <Button
@@ -180,7 +180,7 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
               >
                 {onAddFieldOption ? <CancelIcon /> : <AddIcon />}
               </IconButton>
-            </Box> */}
+            </Box>
           </Box>
         )}
       </DialogContent>

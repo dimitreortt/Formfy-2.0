@@ -1,31 +1,29 @@
-import React, { FunctionComponent } from 'react';
-import TextField from '@mui/material/TextField';
-import { FormFieldStrategyProps } from './Types';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import React, { FunctionComponent } from "react";
+import TextField from "@mui/material/TextField";
+import { FormFieldStrategyProps } from "./Types";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-export const ListSelectionFormField: FunctionComponent<FormFieldStrategyProps> = ({
-  label,
-  options,
-  onChange,
-}) => {
-  const [age, setAge] = React.useState('');
+export const ListSelectionFormField: FunctionComponent<
+  FormFieldStrategyProps
+> = ({ label, options, onChange }) => {
+  const [value, setValue] = React.useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value);
+    setValue(event.target.value);
     onChange(label, event.target.value);
   };
 
   return (
     <FormControl sx={{ m: 1, minWidth: 120 }} fullWidth>
-      <InputLabel id='demo-simple-select-helper-label'>{label}</InputLabel>
+      <InputLabel id="demo-simple-select-helper-label">{label}</InputLabel>
       <Select
-        labelId='demo-simple-select-helper-label'
-        id='demo-simple-select-helper'
-        value={age}
+        labelId="demo-simple-select-helper-label"
+        id="demo-simple-select-helper"
+        value={value}
         label={label}
         onChange={handleChange}
         fullWidth

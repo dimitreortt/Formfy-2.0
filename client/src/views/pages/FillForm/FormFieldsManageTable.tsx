@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { useMoveFieldUp } from "../../../application/usecase/useMoveFieldUp";
 import { useMoveFieldDown } from "../../../application/usecase/useMoveFieldDown";
 import { IFormField } from "../../../domain/FormField";
-import { useActions } from "../../../application/hooks/useActions";
+import { AddField } from "./AddField";
 
 type Params = {
   formId: string;
@@ -148,6 +148,7 @@ export const FormFieldsManageTable = () => {
               ))}
           </TransitionGroup>
         </List>
+        <AddField />
       </Box>
     </div>
   );

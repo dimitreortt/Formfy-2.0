@@ -1,8 +1,8 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
-import { IForm } from '../../../domain/Form';
-import { IFormField, FormFieldValue } from '../../../domain/FormField';
-import { RenderFormField } from './RenderFormField';
-import { Card, Box } from '@mui/material';
+import React, { FunctionComponent, useState, useEffect } from "react";
+import { IForm } from "../../../domain/Form";
+import { IFormField, FormFieldValue } from "../../../domain/FormField";
+import { RenderFormField } from "./RenderFormField";
+import { Card, Box } from "@mui/material";
 
 type Props = {
   form: IForm | undefined;
@@ -11,7 +11,7 @@ type Props = {
 const makeInitialFormState = (formFields: IFormField[]) => {
   let state: any = {};
   for (const field of formFields) {
-    state[field.label] = '';
+    state[field.label] = "";
   }
   return state;
 };
@@ -31,7 +31,7 @@ export const Preview: FunctionComponent<Props> = ({ form }) => {
   };
 
   return (
-    <Card sx={{ width: '400px', padding: '10px' }}>
+    <Card sx={{ width: "400px", padding: "10px" }}>
       {!form ? (
         <div>No form to preview</div>
       ) : (
@@ -41,7 +41,7 @@ export const Preview: FunctionComponent<Props> = ({ form }) => {
           </div>
           {form.fields.map((field: IFormField) => {
             return (
-              <Box sx={{ mb: '10px' }} key={field.id}>
+              <Box sx={{ mb: "10px" }} key={field.id}>
                 {/* <div>
                   <b>{field.label}</b>
                 </div> */}

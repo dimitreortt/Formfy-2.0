@@ -1,6 +1,6 @@
+import { FieldType } from "./../../../src/domain/Types";
 import { AddFormField } from "./../../../src/application/usecase/AddFormField";
 import { AddFormFieldInput } from "./../../../src/application/dto/AddFormFieldInput";
-import { FormFieldType } from "./../../../../client/src/domain/FormField";
 import CreateFormInput from "../../../src/application/dto/CreateFormInput";
 import GetFormInput from "../../../src/application/dto/GetFormInput";
 import FormDAO from "../../../src/application/query/FormDAO";
@@ -28,7 +28,7 @@ test("Should add a field", async () => {
   const createFormInput = new CreateFormInput("Subscription", []);
   const { formId } = await createForm.execute(createFormInput);
 
-  const fieldType: FormFieldType = "Short Text";
+  const fieldType: FieldType = "Short Text";
   const fieldLabel = "Name";
   const field = new FormField(fieldType, fieldLabel);
 

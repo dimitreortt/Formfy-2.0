@@ -1,4 +1,4 @@
-import { FormFieldType } from "./../../../client/src/domain/FormField";
+import { FieldType } from "./../../src/domain/Types";
 import { wipeDatabaseForms } from "./../integration/api/utils/wipeDatabseForms";
 import FormRepositoryDatabase from "../../src/infra/repository/database/FormRepositoryDatabase";
 import DatabaseConnectionMock from "../mocks/DatabaseConnectionMock";
@@ -152,7 +152,7 @@ test("Should not swap a form_field with itself", async () => {
 
 test("Should add a form field", async () => {
   const FORM_ID = 6;
-  const fieldType: FormFieldType = "Short Text";
+  const fieldType: FieldType = "Short Text";
   const fieldLabel = "Name";
   const field = new FormField(fieldType, fieldLabel);
 

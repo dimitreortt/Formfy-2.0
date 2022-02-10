@@ -25,6 +25,7 @@ import {
 import { FormFieldType } from "../../../domain/FormField";
 import { Box } from "@mui/system";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { FieldOptionsList } from "./FieldOptionsList";
 
 const typeOptions: FormFieldType[] = [
   "Short Text",
@@ -130,19 +131,15 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
         </FormControl>
         {(type === "List Selection" || type === "Checkbox") && (
           <Box sx={{ mt: 1 }}>
-            {/* <Box>
-              {newFieldOptions.map((option) => (
-                <Box key={option} sx={{ border: 0.1, padding: 0.5 }}>
-                  {option}
-                </Box>
-              ))}
-            </Box> */}
+            <FieldOptionsList options={newFieldOptions} />
+
             {onAddFieldOption && (
               <Box>
                 <TextField
                   sx={{ mt: 0.7, border: 0.0, mb: 0, pb: 0 }}
                   id="add-field-option"
                   label="Option"
+                  size="small"
                   value={newFieldOption}
                   onChange={handleNewFieldOptionChange}
                   fullWidth

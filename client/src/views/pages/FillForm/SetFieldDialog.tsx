@@ -79,14 +79,14 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
           },
         }}
       >
-        {/* <TextField
+        <TextField
           sx={{ mt: 0.7 }}
           id="set-field-label"
           label="Label"
           value={label}
           onChange={handleLabelChange}
           fullWidth
-        /> */}
+        />
         <FormControl sx={{ m: 0, minWidth: 220 }} fullWidth>
           <InputLabel id="select-label">Type</InputLabel>
           <Select

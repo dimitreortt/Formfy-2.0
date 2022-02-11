@@ -12,6 +12,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Typography from "@mui/material/Typography";
 import { blue } from "@mui/material/colors";
 import {
+  DialogActions,
   DialogContent,
   FormControl,
   FormHelperText,
@@ -26,6 +27,7 @@ import { FormFieldType } from "../../../domain/FormField";
 import { Box } from "@mui/system";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { FieldOptionsList } from "./FieldOptionsList";
+import { NewFieldParams } from "./AddField";
 
 const typeOptions: FormFieldType[] = [
   "Short Text",
@@ -43,6 +45,7 @@ export interface SimpleDialogProps {
   open: boolean;
   selectedValue: string;
   onClose: (value: string) => void;
+  onSetFieldSubmit: (field: NewFieldParams) => void;
 }
 
 export const SetFieldDialog = (props: SimpleDialogProps) => {
@@ -81,7 +84,16 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
     setNewFieldOption("");
   };
 
-  console.log(newFieldOptions);
+  const submitField = () => {
+    resetState();
+  };
+
+  const resetState = () => {
+    setNewFieldOption("");
+    setNewFieldOptions([]);
+    setType("");
+    setLabel("");
+  };
 
   return (
     <Dialog
@@ -181,6 +193,17 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
           </Box>
         )}
       </DialogContent>
+      <DialogActions>
+        <Button
+          variant="outlined"
+          color="primary"
+          sx={{ mx: 3 }}
+          fullWidth
+          onClick={submitField}
+        >
+          submit
+        </Button>
+      </DialogActions>
       {/* <DialogContent
         sx={{
           "& *": {

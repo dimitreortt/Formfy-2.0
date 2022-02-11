@@ -39,7 +39,6 @@ export const AddField: FunctionComponent<Props> = ({ formId }) => {
       <SetFieldDialog
         onClose={toggleOpen}
         open={open}
-        selectedValue="username@gmail.com"
         onSetFieldSubmit={onSetFieldSubmit}
       />
       <AlertSnackbar

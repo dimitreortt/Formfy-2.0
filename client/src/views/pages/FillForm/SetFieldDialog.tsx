@@ -1,16 +1,9 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemText from "@mui/material/ListItemText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
-import PersonIcon from "@mui/icons-material/Person";
 import AddIcon from "@mui/icons-material/Add";
-import Typography from "@mui/material/Typography";
-import { blue } from "@mui/material/colors";
 import {
   DialogActions,
   DialogContent,
@@ -28,6 +21,7 @@ import { Box } from "@mui/system";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { FieldOptionsList } from "./FieldOptionsList";
 import { NewFieldParams } from "./AddField";
+import { AlertSnackbar } from "./AlertSnackbar";
 
 const typeOptions: FormFieldType[] = [
   "Short Text",
@@ -41,25 +35,21 @@ const typeOptions: FormFieldType[] = [
   "Phone Number",
 ];
 
-export interface SimpleDialogProps {
+export interface SetDialogProps {
   open: boolean;
-  selectedValue: string;
-  onClose: (args: any) => void;
+  onClose: () => void;
   onSetFieldSubmit: (field: NewFieldParams) => void;
 }
 
-export const SetFieldDialog = (props: SimpleDialogProps) => {
-  const { onClose, selectedValue, open, onSetFieldSubmit } = props;
+export const SetFieldDialog = (props: SetDialogProps) => {
+  const { onClose, open, onSetFieldSubmit } = props;
 
   const [type, setType] = useState<FormFieldType | "">("");
   const [label, setLabel] = useState("");
   const [newFieldOption, setNewFieldOption] = useState("");
   const [newFieldOptions, setNewFieldOptions] = useState<string[]>([]);
   const [onAddFieldOption, setOnAddFieldOption] = useState(false);
-
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
+  const [error, setError] = useState<string>();
 
   const handleTypeChange = (event: SelectChangeEvent) => {
     //@ts-ignore
@@ -86,10 +76,10 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
   };
 
   const submitField = () => {
-    if (!type || !label) return alert("Type and label cannot be empty!");
+    if (!type || !label) return setError("Type and label cannot be empty!");
     onSetFieldSubmit({ label, type, options: newFieldOptions });
     resetState();
-    onClose("");
+    onClose();
   };
 
   const resetState = () => {
@@ -100,11 +90,7 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
   };
 
   return (
-    <Dialog
-      onClose={handleClose}
-      open={open}
-      PaperProps={{ sx: { width: 300 } }}
-    >
+    <Dialog onClose={onClose} open={open} PaperProps={{ sx: { width: 300 } }}>
       <DialogTitle sx={{ backgroundColor: "transparent", border: 0.1, m: 0.3 }}>
         Field Setup
       </DialogTitle>
@@ -199,6 +185,7 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
       </DialogContent>
       <DialogActions>
         <Button
+          role="submit-button"
           variant="outlined"
           color="primary"
           sx={{ mx: 3 }}
@@ -208,13 +195,13 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
           submit
         </Button>
       </DialogActions>
-      {/* <DialogContent
-        sx={{
-          "& *": {
-            mb: 0.7,
-          },
-        }}
-      ></DialogContent> */}
+      <AlertSnackbar
+        open={!!error}
+        onClose={() => setError(undefined)}
+        severity="warning"
+      >
+        {error}
+      </AlertSnackbar>
     </Dialog>
   );
 };

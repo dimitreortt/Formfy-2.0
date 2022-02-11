@@ -11,7 +11,6 @@ import { useMoveFieldUp } from "../../../application/usecase/useMoveFieldUp";
 import { useMoveFieldDown } from "../../../application/usecase/useMoveFieldDown";
 import { IFormField } from "../../../domain/FormField";
 import { AddField } from "./AddField";
-import { AlertBox } from "./AlertBox";
 
 type Params = {
   formId: string;
@@ -150,7 +149,6 @@ export const FormFieldsManageTable = () => {
           </TransitionGroup>
         </List>
         <AddField formId={parseInt(formId || "-1")} />
-        <AlertBox message={"error"} />
       </Box>
     </div>
   );

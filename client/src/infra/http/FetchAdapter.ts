@@ -18,7 +18,6 @@ export class FetchAdapter implements HttpClient {
         const data = isJson ? await response.json() : null;
 
         if (!response.ok) {
-          // get error message from body or default to response status
           const error = (data && data.message) || response.status;
           return Promise.reject(error);
         }

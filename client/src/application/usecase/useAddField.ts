@@ -24,12 +24,9 @@ export const useAddField = (formId: number) => {
     try {
       awaitingAddField();
       const response = await formFieldsGateway.add(formId, field);
-      console.log(response);
       addFieldSuccess();
       insertAddedField([formId, { ...field, index: response.index }]);
     } catch (error: any) {
-      console.log(error);
-      console.log(error.message);
       addFieldFail();
       return error.message;
     }

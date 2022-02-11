@@ -4,13 +4,25 @@ import Typography from "@mui/material/Typography";
 import { Button, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { SetFieldDialog } from "./SetFieldDialog";
+import { FormFieldType, IFormField } from "../../../domain/FormField";
+import { useAddField } from "../../../application/usecase/useAddField";
 
-type Props = {};
+type Props = {
+  formId: number;
+};
 
-export const AddField: FunctionComponent<Props> = () => {
+export type NewFieldParams = Pick<IFormField, "label" | "type" | "options">;
+
+export const AddField: FunctionComponent<Props> = ({ formId }) => {
   const [open, setOpen] = useState(false);
 
   const toggleOpen = () => setOpen((prev) => !prev);
+  const { addField } = useAddField(formId);
+
+  const onSetFieldSubmit = (field: NewFieldParams) => {
+    // addField({ label, type, options });
+    console.log(field);
+  };
 
   return (
     <div>
@@ -25,6 +37,7 @@ export const AddField: FunctionComponent<Props> = () => {
         onClose={toggleOpen}
         open={open}
         selectedValue="username@gmail.com"
+        onSetFieldSubmit={onSetFieldSubmit}
       />
       {/* <Popover
         id={id}

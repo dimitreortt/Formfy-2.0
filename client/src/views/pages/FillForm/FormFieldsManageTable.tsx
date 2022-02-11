@@ -148,7 +148,7 @@ export const FormFieldsManageTable = () => {
               ))}
           </TransitionGroup>
         </List>
-        <AddField />
+        <AddField formId={parseInt(formId || "-1")} />
       </Box>
     </div>
   );

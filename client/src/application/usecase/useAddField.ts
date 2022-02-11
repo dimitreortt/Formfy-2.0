@@ -17,15 +17,21 @@ export const useAddField = (formId: number) => {
   const { httpClient } = useContext(ApplicationContext);
   const formFieldsGateway = new FormFieldsGateway(httpClient);
 
-  const addField = async (field: IFormField) => {
+  const addField = async (
+    field: Pick<IFormField, "label" | "type" | "options">
+  ) => {
     addFieldAction();
     try {
       awaitingAddField();
       const response = await formFieldsGateway.add(formId, field);
+      console.log(response);
       addFieldSuccess();
       insertAddedField([formId, { ...field, index: response.index }]);
-    } catch (error) {
+    } catch (error: any) {
+      console.log(error);
+      console.log(error.message);
       addFieldFail();
+      return error.message;
     }
   };
 

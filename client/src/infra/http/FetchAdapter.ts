@@ -10,7 +10,23 @@ export class FetchAdapter implements HttpClient {
       body: data ? JSON.stringify(data) : undefined,
     };
     return fetch(url, options)
-      .then((res: Response) => res.text())
-      .then((data: string) => (data ? JSON.parse(data) : {}));
+      .then(async (response: Response) => {
+        const isJson = response.headers
+          .get("content-type")
+          ?.includes("application/json");
+
+        const data = isJson ? await response.json() : null;
+
+        if (!response.ok) {
+          // get error message from body or default to response status
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+
+        return data;
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
   }
 }

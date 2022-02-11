@@ -44,14 +44,14 @@ const typeOptions: FormFieldType[] = [
 export interface SimpleDialogProps {
   open: boolean;
   selectedValue: string;
-  onClose: (value: string) => void;
+  onClose: (args: any) => void;
   onSetFieldSubmit: (field: NewFieldParams) => void;
 }
 
 export const SetFieldDialog = (props: SimpleDialogProps) => {
-  const { onClose, selectedValue, open } = props;
+  const { onClose, selectedValue, open, onSetFieldSubmit } = props;
 
-  const [type, setType] = useState("");
+  const [type, setType] = useState<FormFieldType | "">("");
   const [label, setLabel] = useState("");
   const [newFieldOption, setNewFieldOption] = useState("");
   const [newFieldOptions, setNewFieldOptions] = useState<string[]>([]);
@@ -62,6 +62,7 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
   };
 
   const handleTypeChange = (event: SelectChangeEvent) => {
+    //@ts-ignore
     setType(event.target.value);
   };
 
@@ -85,7 +86,10 @@ export const SetFieldDialog = (props: SimpleDialogProps) => {
   };
 
   const submitField = () => {
+    if (!type || !label) return alert("Type and label cannot be empty!");
+    onSetFieldSubmit({ label, type, options: newFieldOptions });
     resetState();
+    onClose("");
   };
 
   const resetState = () => {

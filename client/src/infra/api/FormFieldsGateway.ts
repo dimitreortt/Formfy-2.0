@@ -5,7 +5,7 @@ export class FormFieldsGateway {
   serverBaseUrl = "http://localhost:4000";
   constructor(readonly httpClient: HttpClient) {}
 
-  add(formId: number, field: IFormField) {
+  add(formId: number, field: Pick<IFormField, "label" | "type" | "options">) {
     const data = {
       formId,
       type: field.type,
@@ -13,7 +13,7 @@ export class FormFieldsGateway {
       options: field.options,
     };
     const url = `${this.serverBaseUrl}/formField`;
-    return this.httpClient.request(url, "PATCH", data);
+    return this.httpClient.request(url, "POST", data);
   }
 
   updateFormField(

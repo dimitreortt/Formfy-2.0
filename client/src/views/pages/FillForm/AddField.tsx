@@ -19,8 +19,9 @@ export const AddField: FunctionComponent<Props> = ({ formId }) => {
   const toggleOpen = () => setOpen((prev) => !prev);
   const { addField } = useAddField(formId);
 
-  const onSetFieldSubmit = (field: NewFieldParams) => {
-    // addField({ label, type, options });
+  const onSetFieldSubmit = async (field: NewFieldParams) => {
+    const error = await addField(field);
+    if (error) alert(error);
     console.log(field);
   };
 
@@ -43,7 +44,7 @@ export const AddField: FunctionComponent<Props> = ({ formId }) => {
         id={id}
         open={open}
         anchorEl={anchorEl}
-        onClose={handleClose}
+        onClose={handleClose}       
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left",

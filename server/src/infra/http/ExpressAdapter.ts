@@ -19,7 +19,7 @@ export default class ExpressAdapter implements Http {
         })
         .catch((error: any) => {
           console.log(error.message);
-          res.status(400).json("Error!! " + error.message);
+          res.status(400).json({ message: "Error!! " + error.message });
         });
     });
   }

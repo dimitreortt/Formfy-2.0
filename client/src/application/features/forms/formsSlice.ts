@@ -1,3 +1,4 @@
+import { IFormField } from "./../../../domain/FormField";
 import { IForm } from "./../../../domain/Form";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -48,6 +49,14 @@ const formsSlice = createSlice({
       );
     },
     getForms: () => {},
+    insertAddedField: (state, action: PayloadAction<[number, IFormField]>) => {
+      const [formId, newField] = action.payload;
+      if (state.forms === "not_initialized") return;
+      const formIndex = state.forms.findIndex((form) => form.id === formId);
+
+      const previousState = state.forms[formIndex].fields;
+      state.forms[formIndex].fields = previousState.concat([newField]);
+    },
   },
 });
 

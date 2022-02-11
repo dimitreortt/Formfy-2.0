@@ -7,6 +7,9 @@ type SliceState = {
   awaitingMoveDown: boolean;
   moveDownSuccess: boolean;
   moveDownFail: boolean;
+  awaitingAddField: boolean;
+  addFieldSuccess: boolean;
+  addFieldFail: boolean;
 };
 
 const initialState: SliceState = {
@@ -16,6 +19,9 @@ const initialState: SliceState = {
   awaitingMoveDown: false,
   moveDownSuccess: false,
   moveDownFail: false,
+  awaitingAddField: false,
+  addFieldSuccess: false,
+  addFieldFail: false,
 };
 
 const formFieldsSlice = createSlice({
@@ -23,7 +29,6 @@ const formFieldsSlice = createSlice({
   initialState,
   reducers: {
     moveFieldUp: () => {},
-    moveFieldDown: () => {},
     awaitingMoveUp: (state) => {
       state.awaitingMoveUp = true;
       state.moveUpSuccess = false;
@@ -37,6 +42,7 @@ const formFieldsSlice = createSlice({
       state.moveUpFail = true;
       state.awaitingMoveUp = false;
     },
+    moveFieldDown: () => {},
     awaitingMoveDown: (state) => {
       state.awaitingMoveDown = true;
       state.moveDownSuccess = false;
@@ -49,6 +55,18 @@ const formFieldsSlice = createSlice({
     moveDownFail: (state) => {
       state.moveDownFail = true;
       state.awaitingMoveDown = false;
+    },
+    addField: (state) => {},
+    awaitingAddField: (state) => {
+      state.awaitingAddField = true;
+    },
+    addFieldSuccess: (state) => {
+      state.awaitingAddField = false;
+      state.addFieldSuccess = true;
+    },
+    addFieldFail: (state) => {
+      state.awaitingAddField = false;
+      state.addFieldFail = true;
     },
   },
 });

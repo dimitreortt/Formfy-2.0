@@ -1,9 +1,20 @@
-import { FormFieldType } from "./../../domain/FormField";
+import { FormFieldType, IFormField } from "./../../domain/FormField";
 import HttpClient from "../http/HttpClient";
 
 export class FormFieldsGateway {
   serverBaseUrl = "http://localhost:4000";
   constructor(readonly httpClient: HttpClient) {}
+
+  add(formId: number, field: IFormField) {
+    const data = {
+      formId,
+      type: field.type,
+      label: field.label,
+      options: field.options,
+    };
+    const url = `${this.serverBaseUrl}/formField`;
+    return this.httpClient.request(url, "PATCH", data);
+  }
 
   updateFormField(
     label: string,

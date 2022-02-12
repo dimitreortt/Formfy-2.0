@@ -116,7 +116,7 @@ export const SetFieldDialog = (props: SetDialogProps) => {
             labelId="select-label"
             id="select-id"
             value={type}
-            label={"Type"}
+            // label={"Type"}
             onChange={handleTypeChange}
             fullWidth
           >

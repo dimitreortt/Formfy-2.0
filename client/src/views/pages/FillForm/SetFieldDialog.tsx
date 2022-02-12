@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -22,6 +22,8 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { FieldOptionsList } from "./FieldOptionsList";
 import { NewFieldParams } from "./AddField";
 import { AlertSnackbar } from "./AlertSnackbar";
+import { AddOptionButton } from "./AddOptionButton";
+import { CloseAddOptionButton } from "./CloseAddOptionButton";
 
 const typeOptions: FormFieldType[] = [
   "Short Text",
@@ -39,10 +41,11 @@ export interface SetDialogProps {
   open: boolean;
   onClose: () => void;
   onSetFieldSubmit: (field: NewFieldParams) => void;
+  initialField?: NewFieldParams;
 }
 
 export const SetFieldDialog = (props: SetDialogProps) => {
-  const { onClose, open, onSetFieldSubmit } = props;
+  const { onClose, open, onSetFieldSubmit, initialField } = props;
 
   const [type, setType] = useState<FormFieldType | "">("");
   const [label, setLabel] = useState("");
@@ -50,6 +53,16 @@ export const SetFieldDialog = (props: SetDialogProps) => {
   const [newFieldOptions, setNewFieldOptions] = useState<string[]>([]);
   const [onAddFieldOption, setOnAddFieldOption] = useState(false);
   const [error, setError] = useState<string>();
+
+  const startState = (initialField: NewFieldParams) => {
+    setType(initialField.type);
+    setLabel(initialField.label);
+    setNewFieldOptions(initialField.options || []);
+  };
+
+  useEffect(() => {
+    if (initialField) startState(initialField);
+  }, []);
 
   const handleTypeChange = (event: SelectChangeEvent) => {
     //@ts-ignore
@@ -165,7 +178,17 @@ export const SetFieldDialog = (props: SetDialogProps) => {
                   </Button>
                 </Box>
               )}
-              <IconButton
+
+              {onAddFieldOption ? (
+                <CloseAddOptionButton
+                  onClick={() => setOnAddFieldOption((prev) => !prev)}
+                />
+              ) : (
+                <AddOptionButton
+                  onClick={() => setOnAddFieldOption((prev) => !prev)}
+                />
+              )}
+              {/* <IconButton
                 sx={{
                   display: "inline-block",
                   py: 0.2,
@@ -173,12 +196,12 @@ export const SetFieldDialog = (props: SetDialogProps) => {
                   minHeight: 0,
                   minWidth: 0,
                 }}
+                role="add-option-button"
                 aria-describedby={"add-field-option"}
                 color="secondary"
                 onClick={() => setOnAddFieldOption((prev) => !prev)}
               >
-                {onAddFieldOption ? <CancelIcon /> : <AddIcon />}
-              </IconButton>
+              </IconButton> */}
             </Box>
           </Box>
         )}

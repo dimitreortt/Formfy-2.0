@@ -17,6 +17,15 @@ const setup = () => {
   return { submitFn, utils };
 };
 
+test("Should render with default state", async () => {
+  setup();
+  const labelInput = screen.getByLabelText("Label");
+  const typeSelectInput = screen.getByTestId("select-type");
+
+  expect(labelInput.value).toBe("");
+  expect(typeSelectInput.value).toBe("");
+});
+
 test("Should display error when submiting without correct label argument", async () => {
   setup();
   expect(screen.queryByRole("alert")).not.toBeInTheDocument();
@@ -182,6 +191,38 @@ test("Should display added option", async () => {
 
   expect(screen.getByText("Sedan")).toBeInTheDocument();
   expect(screen.getByText("Coupe")).toBeInTheDocument();
+});
+
+test("Should submit defined field with correct options", async () => {
+  const submitFn = jest.fn();
+
+  const initialField: NewFieldParams = {
+    label: "Category",
+    type: "List Selection",
+    options: ["Sedan", "Coupe", "Sports Car"],
+  };
+  render(
+    <SetFieldDialog
+      open={true}
+      onClose={() => {}}
+      onSetFieldSubmit={submitFn}
+      initialField={initialField}
+    />
+  );
+
+  fireEvent.click(screen.getByRole("add-option-button"));
+  fireEvent.change(screen.getByTestId("add-option-input"), {
+    target: { value: "Coupe" },
+  });
+  fireEvent.click(screen.getByRole("submit-option-button"));
+
+  fireEvent.click(screen.getByRole("submit-button"));
+  expect(submitFn).toHaveBeenCalled();
+  expect(submitFn).toHaveBeenCalledWith({
+    label: "Category",
+    type: "List Selection",
+    options: ["Sedan", "Coupe", "Sports Car"],
+  });
 });
 
 test("Should display a remove button for every option displayed", async () => {

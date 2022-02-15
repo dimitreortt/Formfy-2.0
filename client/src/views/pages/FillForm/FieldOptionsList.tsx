@@ -4,9 +4,13 @@ import Button from "@mui/material/Button";
 
 type Props = {
   options: string[];
+  onRemove: (option: string) => void;
 };
 
-export const FieldOptionsList: FunctionComponent<Props> = ({ options }) => {
+export const FieldOptionsList: FunctionComponent<Props> = ({
+  options,
+  onRemove,
+}) => {
   return (
     <Box>
       {options.map((option) => (
@@ -16,6 +20,7 @@ export const FieldOptionsList: FunctionComponent<Props> = ({ options }) => {
             data-testid="remove-option-button"
             variant="contained"
             color="primary"
+            onClick={() => onRemove(option)}
           >
             remove
           </Button>

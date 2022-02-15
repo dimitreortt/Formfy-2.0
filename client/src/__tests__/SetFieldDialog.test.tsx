@@ -202,3 +202,23 @@ test("Should display a remove button for every option displayed", async () => {
   const removeButtons = screen.getAllByTestId("remove-option-button");
   expect(removeButtons).toHaveLength(2);
 });
+
+test("Should remove an option from options list", async () => {
+  const initialField: NewFieldParams = {
+    label: "Category",
+    type: "List Selection",
+    options: ["Sedan", "Coupe"],
+  };
+  render(
+    <SetFieldDialog
+      open={true}
+      onClose={() => {}}
+      onSetFieldSubmit={() => {}}
+      initialField={initialField}
+    />
+  );
+
+  const removeButtons = screen.getAllByTestId("remove-option-button");
+  fireEvent.click(removeButtons[0]);
+  expect(screen.queryByText("Sedan")).not.toBeInTheDocument();
+});

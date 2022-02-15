@@ -90,6 +90,14 @@ export const SetFieldDialog = (props: SetFieldProps) => {
     setNewFieldOption("");
   };
 
+  const handleRemoveOption = (optionToBeRemoved: string) => {
+    if (!optionToBeRemoved) return;
+    const filtered = newFieldOptions.filter(
+      (option) => option !== optionToBeRemoved
+    );
+    setNewFieldOptions(filtered);
+  };
+
   const submitField = () => {
     if (!type || !label) return setError("Type and label cannot be empty!");
     onSetFieldSubmit({ label, type, options: newFieldOptions });
@@ -149,7 +157,10 @@ export const SetFieldDialog = (props: SetFieldProps) => {
         </FormControl>
         {(type === "List Selection" || type === "Checkbox") && (
           <Box sx={{ mt: 1 }}>
-            <FieldOptionsList options={newFieldOptions} />
+            <FieldOptionsList
+              options={newFieldOptions}
+              onRemove={handleRemoveOption}
+            />
 
             {onAddFieldOption && (
               <AddOptionInput

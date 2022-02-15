@@ -23,7 +23,9 @@ import { FieldOptionsList } from "./FieldOptionsList";
 import { NewFieldParams } from "./AddField";
 import { AlertSnackbar } from "./AlertSnackbar";
 import { AddOptionButton } from "./AddOptionButton";
+import { AddOptionConfirmButton } from "./AddOptionConfirmButton";
 import { CloseAddOptionButton } from "./CloseAddOptionButton";
+import { AddOptionInput } from "./AddOptionInput";
 
 const typeOptions: FormFieldType[] = [
   "Short Text",
@@ -37,14 +39,14 @@ const typeOptions: FormFieldType[] = [
   "Phone Number",
 ];
 
-export interface SetDialogProps {
+export interface SetFieldProps {
   open: boolean;
   onClose: () => void;
   onSetFieldSubmit: (field: NewFieldParams) => void;
   initialField?: NewFieldParams;
 }
 
-export const SetFieldDialog = (props: SetDialogProps) => {
+export const SetFieldDialog = (props: SetFieldProps) => {
   const { onClose, open, onSetFieldSubmit, initialField } = props;
 
   const [type, setType] = useState<FormFieldType | "">("");
@@ -129,7 +131,8 @@ export const SetFieldDialog = (props: SetDialogProps) => {
             labelId="select-label"
             id="select-id"
             value={type}
-            // label={"Type"}
+            inputProps={{ "data-testid": "select-type" }}
+            label={"Type"}
             onChange={handleTypeChange}
             fullWidth
           >
@@ -149,22 +152,19 @@ export const SetFieldDialog = (props: SetDialogProps) => {
             <FieldOptionsList options={newFieldOptions} />
 
             {onAddFieldOption && (
-              <Box>
-                <TextField
-                  sx={{ mt: 0.7, border: 0.0, mb: 0, pb: 0 }}
-                  id="add-field-option"
-                  label="Option"
-                  size="small"
-                  value={newFieldOption}
-                  onChange={handleNewFieldOptionChange}
-                  fullWidth
-                />
-              </Box>
+              <AddOptionInput
+                value={newFieldOption}
+                onChange={handleNewFieldOptionChange}
+              />
             )}
             <Box sx={{ display: "flex" }}>
               {onAddFieldOption && (
                 <Box sx={{ flexGrow: 1 }}>
-                  <Button
+                  <AddOptionConfirmButton
+                    onClick={() => handleNewFieldOptionAdded(newFieldOption)}
+                    disabled={!newFieldOption}
+                  />
+                  {/* <Button
                     sx={{
                       display: "inline-block",
                       py: 0.2,
@@ -175,7 +175,7 @@ export const SetFieldDialog = (props: SetDialogProps) => {
                     onClick={() => handleNewFieldOptionAdded(newFieldOption)}
                   >
                     Confirm
-                  </Button>
+                  </Button> */}
                 </Box>
               )}
 
@@ -188,20 +188,6 @@ export const SetFieldDialog = (props: SetDialogProps) => {
                   onClick={() => setOnAddFieldOption((prev) => !prev)}
                 />
               )}
-              {/* <IconButton
-                sx={{
-                  display: "inline-block",
-                  py: 0.2,
-                  px: 0.7,
-                  minHeight: 0,
-                  minWidth: 0,
-                }}
-                role="add-option-button"
-                aria-describedby={"add-field-option"}
-                color="secondary"
-                onClick={() => setOnAddFieldOption((prev) => !prev)}
-              >
-              </IconButton> */}
             </Box>
           </Box>
         )}

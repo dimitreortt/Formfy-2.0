@@ -42,7 +42,7 @@ test("Should display error when submiting without correct type argument", async 
   ).toBeInTheDocument();
 });
 
-test("Should call function given function on submit with correct parameters", async () => {
+test("Should call given function on submit with correct parameters", async () => {
   const { submitFn, utils } = setup();
   const labelInput = screen.getByLabelText("Label");
   fireEvent.change(labelInput, { target: { value: "Name" } });
@@ -83,13 +83,40 @@ test("Should render a button to add option when type selected is List Selection"
 
 test("Should render a button to close add option when this mode is on", async () => {
   setup();
-  expect(screen.queryByRole("add-option-button")).not.toBeInTheDocument();
   const typeSelectionInput = screen.getByLabelText("Type");
   fireEvent.mouseDown(typeSelectionInput);
   fireEvent.click(screen.getByText("List Selection"));
   fireEvent.click(screen.getByRole("add-option-button"));
   expect(screen.queryByRole("add-option-button")).not.toBeInTheDocument();
   expect(screen.getByRole("close-add-option")).toBeInTheDocument();
+});
+
+test("Should render an input field when in 'add option' mode", async () => {
+  setup();
+  const typeSelectionInput = screen.getByLabelText("Type");
+  fireEvent.mouseDown(typeSelectionInput);
+  fireEvent.click(screen.getByText("List Selection"));
+  expect(screen.queryByTestId("add-option-input")).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole("add-option-button"));
+  expect(screen.getByTestId("add-option-input")).toBeInTheDocument();
+});
+
+test("Should render a button to submit option input, it should be disabled if input is empty", async () => {
+  setup();
+  const typeSelectionInput = screen.getByLabelText("Type");
+  fireEvent.mouseDown(typeSelectionInput);
+  fireEvent.click(screen.getByText("List Selection"));
+  fireEvent.click(screen.getByRole("add-option-button"));
+
+  expect(screen.getByRole("submit-option-button")).toBeInTheDocument();
+  expect(screen.getByRole("submit-option-button")).toHaveClass("Mui-disabled");
+
+  fireEvent.change(screen.getByTestId("add-option-input"), {
+    target: { value: "Sedan" },
+  });
+  expect(screen.getByRole("submit-option-button")).not.toHaveClass(
+    "Mui-disabled"
+  );
 });
 
 test("Should display initial values when initial field is provided, used in edit mode", async () => {
@@ -106,6 +133,8 @@ test("Should display initial values when initial field is provided, used in edit
       initialField={initialField}
     />
   );
-  const input = screen.getByLabelText("Label");
-  expect(input.value).toBe("Factory Number");
+  const labelInput = screen.getByLabelText("Label");
+  const typeSelectInput = screen.getByTestId("select-type");
+  expect(labelInput.value).toBe("Factory Number");
+  expect(typeSelectInput.value).toBe("Short Text");
 });

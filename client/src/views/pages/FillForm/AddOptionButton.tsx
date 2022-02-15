@@ -13,7 +13,6 @@ export const AddOptionButton = ({ onClick }: any) => {
         minWidth: 0,
       }}
       role="add-option-button"
-      aria-describedby={"add-field-option"}
       color="secondary"
       onClick={onClick}
     >

@@ -183,3 +183,22 @@ test("Should display added option", async () => {
   expect(screen.getByText("Sedan")).toBeInTheDocument();
   expect(screen.getByText("Coupe")).toBeInTheDocument();
 });
+
+test("Should display a remove button for every option displayed", async () => {
+  const initialField: NewFieldParams = {
+    label: "Category",
+    type: "List Selection",
+    options: ["Sedan", "Coupe"],
+  };
+  render(
+    <SetFieldDialog
+      open={true}
+      onClose={() => {}}
+      onSetFieldSubmit={() => {}}
+      initialField={initialField}
+    />
+  );
+
+  const removeButtons = screen.getAllByTestId("remove-option-button");
+  expect(removeButtons).toHaveLength(2);
+});

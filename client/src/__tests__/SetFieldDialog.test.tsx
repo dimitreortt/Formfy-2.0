@@ -138,3 +138,48 @@ test("Should display initial values when initial field is provided, used in edit
   expect(labelInput.value).toBe("Factory Number");
   expect(typeSelectInput.value).toBe("Short Text");
 });
+
+test("Should display list selection options", async () => {
+  const initialField: NewFieldParams = {
+    label: "Category",
+    type: "List Selection",
+    options: ["Sedan", "Coupe", "Sports Car"],
+  };
+  render(
+    <SetFieldDialog
+      open={true}
+      onClose={() => {}}
+      onSetFieldSubmit={() => {}}
+      initialField={initialField}
+    />
+  );
+
+  expect(screen.getByText("Sedan")).toBeInTheDocument();
+  expect(screen.getByText("Coupe")).toBeInTheDocument();
+  expect(screen.getByText("Sports Car")).toBeInTheDocument();
+});
+
+test("Should display added option", async () => {
+  const initialField: NewFieldParams = {
+    label: "Category",
+    type: "List Selection",
+    options: ["Sedan"],
+  };
+  render(
+    <SetFieldDialog
+      open={true}
+      onClose={() => {}}
+      onSetFieldSubmit={() => {}}
+      initialField={initialField}
+    />
+  );
+
+  fireEvent.click(screen.getByRole("add-option-button"));
+  fireEvent.change(screen.getByTestId("add-option-input"), {
+    target: { value: "Coupe" },
+  });
+  fireEvent.click(screen.getByRole("submit-option-button"));
+
+  expect(screen.getByText("Sedan")).toBeInTheDocument();
+  expect(screen.getByText("Coupe")).toBeInTheDocument();
+});

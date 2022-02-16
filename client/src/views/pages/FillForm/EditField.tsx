@@ -5,26 +5,30 @@ import { Button, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { SetFieldDialog } from "./SetFieldDialog";
 import { FormFieldType, IFormField } from "../../../domain/FormField";
-import { useAddField } from "../../../application/usecase/useAddField";
 import { AlertSnackbar } from "./AlertSnackbar";
 import { NewFieldParams } from "./AddField";
+import { useEditField } from "../../../application/usecase/useEditField";
 
 type Props = {
   formId: number;
   field: IFormField;
+  open: boolean;
+  toggleOpen: () => void;
 };
 
-export const EditField: FunctionComponent<Props> = ({ formId, field }) => {
-  const [open, setOpen] = useState(true);
+export const EditField: FunctionComponent<Props> = ({
+  formId,
+  field,
+  open,
+  toggleOpen,
+}) => {
   const [error, setError] = useState();
 
-  const toggleOpen = () => setOpen((prev) => !prev);
-  const { addField } = useAddField(formId);
+  const { editField } = useEditField(formId);
 
   const onSetFieldSubmit = async (field: NewFieldParams) => {
-    const error = await addField(field);
+    const error = await editField();
     if (error) setError(error);
-    //  alert(error);
   };
 
   return (
@@ -33,6 +37,7 @@ export const EditField: FunctionComponent<Props> = ({ formId, field }) => {
         onClose={toggleOpen}
         open={open}
         onSetFieldSubmit={onSetFieldSubmit}
+        initialField={field}
       />
       <AlertSnackbar
         open={!!error}

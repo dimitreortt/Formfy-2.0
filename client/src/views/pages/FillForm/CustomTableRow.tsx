@@ -22,10 +22,12 @@ type Props = {
   handleMoveUp: (clickedField: IFormField) => void;
   handleMoveDown: (clickedField: IFormField) => void;
   field: IFormField;
+  formId: number;
 };
 
 export const CustomTableRow: FunctionComponent<Props> = ({
   field,
+  formId,
   handleMoveUp,
   handleMoveDown,
 }) => {
@@ -95,7 +97,11 @@ export const CustomTableRow: FunctionComponent<Props> = ({
           <Button onClick={moveDown}>down</Button>
           <Button onClick={moveUp}>up</Button>
 
-          <TableRowOptions toggleOptionsPopover={toggleOptionsPopover} />
+          <TableRowOptions
+            toggleOptionsPopover={toggleOptionsPopover}
+            field={field}
+            formId={formId}
+          />
         </>
       )}
     </Box>

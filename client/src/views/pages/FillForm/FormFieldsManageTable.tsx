@@ -18,15 +18,16 @@ type Params = {
 
 export const FormFieldsManageTable = () => {
   const { formId } = useParams<Params>();
+  const parsedFormId = parseInt(formId || "-1");
   const forms = useSelector((state: RootState) => state.forms.forms);
   const selectForm = () => {
     if (forms === "not_initialized") return;
-    return forms.find((form) => form.id.toString() === formId);
+    return forms.find((form) => form.id === parsedFormId);
   };
   const form = selectForm();
 
-  const { moveFieldUp } = useMoveFieldUp(parseInt(formId || "0"));
-  const { moveFieldDown } = useMoveFieldDown(parseInt(formId || "0"));
+  const { moveFieldUp } = useMoveFieldUp(parsedFormId);
+  const { moveFieldDown } = useMoveFieldDown(parsedFormId);
 
   const [formFields, setFormFields] = useState<IFormField[] | null>(null);
   const [lastClicked, setLastClicked] = useState<IFormField>();
@@ -140,6 +141,7 @@ export const FormFieldsManageTable = () => {
               [...formFields].map((field) => (
                 <Collapse key={field.label}>
                   <CustomTableRow
+                    formId={parsedFormId}
                     field={field}
                     handleMoveUp={handleMoveUp}
                     handleMoveDown={handleMoveDown}
@@ -148,7 +150,7 @@ export const FormFieldsManageTable = () => {
               ))}
           </TransitionGroup>
         </List>
-        <AddField formId={parseInt(formId || "-1")} />
+        <AddField formId={parsedFormId} />
       </Box>
     </div>
   );

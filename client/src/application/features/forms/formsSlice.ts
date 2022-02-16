@@ -8,6 +8,7 @@ type SliceState = {
   loadFormsFail: boolean;
   deleteFormFail: boolean;
   awaitingDeleteForm: boolean;
+  deleteFormSuccess: boolean;
 };
 
 const initialState: SliceState = {
@@ -16,6 +17,7 @@ const initialState: SliceState = {
   loadFormsFail: false,
   deleteFormFail: false,
   awaitingDeleteForm: false,
+  deleteFormSuccess: false,
 };
 
 const formsSlice = createSlice({
@@ -65,6 +67,10 @@ const formsSlice = createSlice({
     deleteFormFail: (state) => {
       state.awaitingDeleteForm = false;
       state.deleteFormFail = true;
+    },
+    deleteFormSuccess: (state) => {
+      state.awaitingDeleteForm = false;
+      state.deleteFormSuccess = true;
     },
   },
 });

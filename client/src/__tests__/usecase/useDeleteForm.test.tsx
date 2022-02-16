@@ -16,10 +16,12 @@ type UseContextType = typeof React.useContext;
 
 let realContext: UseContextType;
 let mockContext: UseContextType;
+let deleteForm: () => Promise<any>;
 
-beforeEach(() => {
+beforeAll(() => {
   realContext = React.useContext;
   mockContext = React.useContext = jest.fn;
+  deleteForm = useDeleteForm().deleteForm;
 });
 
 afterEach(() => {
@@ -28,17 +30,6 @@ afterEach(() => {
 
 afterAll(() => {
   React.useContext = realContext;
-});
-
-test("Should call formsGateway.deleteForms", async () => {
-  const gatewayDeleteFormSpy = jest
-    .spyOn(FormsGateway.prototype, "deleteForm")
-    .mockReturnValue("");
-
-  const { deleteForm } = useDeleteForm();
-  await deleteForm();
-
-  expect(gatewayDeleteFormSpy).toHaveBeenCalled();
 });
 
 const mockGatewayDeleteFormThrowError = () => {
@@ -55,12 +46,9 @@ const mockGatewayDeleteFormSuccess = () => {
     .mockReturnValue(undefined);
 };
 
-test("Should dipatch action deleteForm()", async () => {
-  const { deleteForm } = useDeleteForm();
-
+test("Should dispatch action deleteForm()", async () => {
   await deleteForm();
   expect(mockDispatch).toHaveBeenCalled();
-
   expect(mockDispatch).toHaveBeenCalledWith(
     expect.objectContaining({
       type: "forms/deleteForm",
@@ -68,30 +56,39 @@ test("Should dipatch action deleteForm()", async () => {
   );
 });
 
-test("Should dipatch action deleteFormFail() when error occured", async () => {
-  const gatewayDeleteFormSpy = mockGatewayDeleteFormThrowError();
-
-  const { deleteForm } = useDeleteForm();
-
+test("Should call formsGateway.deleteForms", async () => {
+  const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();
   await deleteForm();
+  expect(gatewayDeleteFormSpy).toHaveBeenCalled();
+  gatewayDeleteFormSpy.mockClear();
+});
 
+test("Should dispatch deleteFormSuccess() if no error occurred", async () => {
+  const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();
+  await deleteForm();
+  expect(mockDispatch).toHaveBeenCalledWith(
+    expect.objectContaining({
+      type: "forms/deleteFormSuccess",
+    })
+  );
+  gatewayDeleteFormSpy.mockClear();
+});
+
+test("Should dispatch action deleteFormFail() when error occurred", async () => {
+  const gatewayDeleteFormSpy = mockGatewayDeleteFormThrowError();
+  await deleteForm();
   expect(mockDispatch).toHaveBeenCalled();
   expect(mockDispatch).toHaveBeenCalledWith(
     expect.objectContaining({
       type: "forms/deleteFormFail",
     })
   );
-
   gatewayDeleteFormSpy.mockClear();
 });
 
 test("Should return error message when error occur", async () => {
   const gatewayDeleteFormSpy = mockGatewayDeleteFormThrowError();
-
-  const { deleteForm } = useDeleteForm();
-
   const errorMessage = await deleteForm();
   expect(errorMessage).toBe("Could not delete!");
-
   gatewayDeleteFormSpy.mockClear();
 });

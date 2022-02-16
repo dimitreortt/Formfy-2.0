@@ -57,6 +57,9 @@ const formsSlice = createSlice({
       const previousState = state.forms[formIndex].fields;
       state.forms[formIndex].fields = previousState.concat([newField]);
     },
+    deleteForm: (state, action: PayloadAction<number>) => {
+      const formId = action.payload;
+    },
   },
 });
 

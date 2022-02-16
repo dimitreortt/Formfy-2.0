@@ -37,23 +37,26 @@ test("Should call formsGateway.deleteForms", async () => {
   expect(gatewayDeleteFormSpy).toHaveBeenCalled();
 });
 
-// test.only("Should dipatch action deleteFormFail() when error ocurred", async () => {
-//   const gatewayDeleteFormSpy = jest
-//     .spyOn(FormsGateway.prototype, "deleteForm")
-//     .mockImplementation(() => {
-//       throw new Error("Could not delete!");
-//     });
+test.only("Should dipatch action deleteForm()", async () => {
+  const gatewayDeleteFormSpy = jest
+    .spyOn(FormsGateway.prototype, "deleteForm")
+    .mockImplementation(() => {
+      throw new Error("Could not delete!");
+    });
 
-//   const deleteFormActionSpy = jest.spyOn(formsActions, "deleteForm");
+  const { deleteForm } = useDeleteForm();
 
-//   // store.dispatch(formsActions.deleteForms())
-//   // dispatch();
+  deleteForm();
+  expect(mockDispatch).toHaveBeenCalled();
 
-//   const { deleteForm } = useDeleteForm();
+  expect(mockDispatch).toHaveBeenCalledWith(
+    expect.objectContaining({
+      type: "forms/deleteForm",
+    })
+  );
+});
 
-//   deleteForm();
-//   expect(deleteFormActionSpy).toHaveBeenCalled();
-// });
+// test.only("Should dipatch action deleteFormFail() when error ocurred", async () => {});
 
 test("Should return error message when error ocurr", async () => {
   const gatewayDeleteFormSpy = jest

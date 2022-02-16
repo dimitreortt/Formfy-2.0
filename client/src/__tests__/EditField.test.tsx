@@ -29,7 +29,7 @@ test("Should render correctly and render the component responsible for setting t
   expect(screen.getByText("Field Setup")).toBeInTheDocument();
 });
 
-test.only("Should call EditField usecase on set field submit", async () => {
+test("Should call EditField usecase on set field submit", async () => {
   const editFieldMock = jest.fn();
   const spy = jest.spyOn(editFieldUsecase, "useEditField").mockReturnValue({
     editField: editFieldMock,

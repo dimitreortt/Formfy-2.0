@@ -6,12 +6,16 @@ type SliceState = {
   forms: "not_initialized" | IForm[];
   loadingForms: boolean;
   loadFormsFail: boolean;
+  deleteFormFail: boolean;
+  awaitingDeleteForm: boolean;
 };
 
 const initialState: SliceState = {
   forms: "not_initialized",
   loadingForms: false,
   loadFormsFail: false,
+  deleteFormFail: false,
+  awaitingDeleteForm: false,
 };
 
 const formsSlice = createSlice({
@@ -57,8 +61,10 @@ const formsSlice = createSlice({
       const previousState = state.forms[formIndex].fields;
       state.forms[formIndex].fields = previousState.concat([newField]);
     },
-    deleteForm: (state, action: PayloadAction<number>) => {
-      const formId = action.payload;
+    deleteForm: () => {},
+    deleteFormFail: (state) => {
+      state.awaitingDeleteForm = false;
+      state.deleteFormFail = true;
     },
   },
 });

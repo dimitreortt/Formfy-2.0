@@ -22,6 +22,10 @@ beforeEach(() => {
   mockContext = React.useContext = jest.fn;
 });
 
+afterEach(() => {
+  mockDispatch.mockClear();
+});
+
 afterAll(() => {
   React.useContext = realContext;
 });
@@ -37,13 +41,15 @@ test("Should call formsGateway.deleteForms", async () => {
   expect(gatewayDeleteFormSpy).toHaveBeenCalled();
 });
 
-test.only("Should dipatch action deleteForm()", async () => {
-  const gatewayDeleteFormSpy = jest
+const mockGatewayDeleteFormThrowError = () => {
+  return jest
     .spyOn(FormsGateway.prototype, "deleteForm")
     .mockImplementation(() => {
       throw new Error("Could not delete!");
     });
+};
 
+test("Should dipatch action deleteForm()", async () => {
   const { deleteForm } = useDeleteForm();
 
   deleteForm();
@@ -56,19 +62,32 @@ test.only("Should dipatch action deleteForm()", async () => {
   );
 });
 
-// test.only("Should dipatch action deleteFormFail() when error ocurred", async () => {});
+test.only("Should dipatch action deleteFormFail() when error ocurred", async () => {
+  const gatewayDeleteFormSpy = mockGatewayDeleteFormThrowError();
+
+  const { deleteForm } = useDeleteForm();
+
+  deleteForm();
+
+  expect(mockDispatch).toHaveBeenCalled();
+  expect(mockDispatch).toHaveBeenCalledWith(
+    expect.objectContaining({
+      type: "forms/deleteFormFail",
+    })
+  );
+
+  gatewayDeleteFormSpy.mockClear();
+});
 
 test("Should return error message when error ocurr", async () => {
-  const gatewayDeleteFormSpy = jest
-    .spyOn(FormsGateway.prototype, "deleteForm")
-    .mockImplementation(() => {
-      throw new Error("Could not delete!");
-    });
+  const gatewayDeleteFormSpy = mockGatewayDeleteFormThrowError();
 
   const { deleteForm } = useDeleteForm();
 
   const errorMessage = deleteForm();
   expect(errorMessage).toBe("Could not delete!");
+
+  gatewayDeleteFormSpy.mockClear();
 });
 
 // test("testando o redux toolkit store", () => {

@@ -21,7 +21,8 @@ let deleteForm: () => Promise<any>;
 beforeAll(() => {
   realContext = React.useContext;
   mockContext = React.useContext = jest.fn;
-  deleteForm = useDeleteForm().deleteForm;
+  const FORM_ID = 1;
+  deleteForm = useDeleteForm(FORM_ID).deleteForm;
 });
 
 afterEach(() => {
@@ -57,7 +58,6 @@ test("Should dispatch action deleteForm()", async () => {
 });
 
 test("Should dispatch action awaitingDeleteForm()", async () => {
-  const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();
   await deleteForm();
   expect(mockDispatch).toHaveBeenCalled();
   expect(mockDispatch).toHaveBeenCalledWith(
@@ -65,6 +65,15 @@ test("Should dispatch action awaitingDeleteForm()", async () => {
       type: "forms/awaitingDeleteForm",
     })
   );
+});
+
+test("Should dispatch ratifyFilteredForms() on delete form success", async () => {
+  const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();
+  await deleteForm();
+  expect(mockDispatch).toHaveBeenCalledWith(
+    expect.objectContaining({ type: "forms/ratifyFilteredForms" })
+  );
+  gatewayDeleteFormSpy.mockClear();
 });
 
 test("Should call formsGateway.deleteForms", async () => {

@@ -77,6 +77,11 @@ const formsSlice = createSlice({
       state.deleteFormSuccess = false;
       state.deleteFormFail = false;
     },
+    ratifyFilteredForms: (state, action: PayloadAction<number>) => {
+      const formId = action.payload;
+      if (state.forms === "not_initialized") return;
+      state.forms = state.forms.filter((form) => form.id !== formId);
+    },
   },
 });
 

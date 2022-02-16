@@ -36,7 +36,7 @@ test("Should call formsGateway.deleteForms", async () => {
     .mockReturnValue("");
 
   const { deleteForm } = useDeleteForm();
-  deleteForm();
+  await deleteForm();
 
   expect(gatewayDeleteFormSpy).toHaveBeenCalled();
 });
@@ -49,10 +49,16 @@ const mockGatewayDeleteFormThrowError = () => {
     });
 };
 
+const mockGatewayDeleteFormSuccess = () => {
+  return jest
+    .spyOn(FormsGateway.prototype, "deleteForm")
+    .mockReturnValue(undefined);
+};
+
 test("Should dipatch action deleteForm()", async () => {
   const { deleteForm } = useDeleteForm();
 
-  deleteForm();
+  await deleteForm();
   expect(mockDispatch).toHaveBeenCalled();
 
   expect(mockDispatch).toHaveBeenCalledWith(
@@ -62,12 +68,12 @@ test("Should dipatch action deleteForm()", async () => {
   );
 });
 
-test.only("Should dipatch action deleteFormFail() when error ocurred", async () => {
+test("Should dipatch action deleteFormFail() when error occured", async () => {
   const gatewayDeleteFormSpy = mockGatewayDeleteFormThrowError();
 
   const { deleteForm } = useDeleteForm();
 
-  deleteForm();
+  await deleteForm();
 
   expect(mockDispatch).toHaveBeenCalled();
   expect(mockDispatch).toHaveBeenCalledWith(
@@ -79,34 +85,13 @@ test.only("Should dipatch action deleteFormFail() when error ocurred", async () 
   gatewayDeleteFormSpy.mockClear();
 });
 
-test("Should return error message when error ocurr", async () => {
+test("Should return error message when error occur", async () => {
   const gatewayDeleteFormSpy = mockGatewayDeleteFormThrowError();
 
   const { deleteForm } = useDeleteForm();
 
-  const errorMessage = deleteForm();
+  const errorMessage = await deleteForm();
   expect(errorMessage).toBe("Could not delete!");
 
   gatewayDeleteFormSpy.mockClear();
 });
-
-// test("testando o redux toolkit store", () => {
-//   const dispatchSpy = jest.spyOn(store, "dispatch");
-//   const dispatch = store.dispatch;
-
-//   const { getForms } = formsActions;
-
-//   dispatch(getForms());
-
-//   expect(dispatchSpy).toHaveBeenCalled();
-//   expect(dispatchSpy).toHaveBeenCalledWith({});
-// });
-
-// test("test", async () => {
-//   const getFormsSpy = jest.spyOn(formsActions, "getForms");
-
-//   const dispatch = store.dispatch;
-//   dispatch(formsActions.getForms());
-
-//   expect(getFormsSpy).toHaveBeenCalled();
-// });

@@ -31,11 +31,13 @@ test("Should render correctly and render the component responsible for setting t
 
 test.only("Should call EditField usecase on set field submit", async () => {
   const editFieldMock = jest.fn();
-  jest.spyOn(editFieldUsecase, "useEditField").mockReturnValue({
+  const spy = jest.spyOn(editFieldUsecase, "useEditField").mockReturnValue({
     editField: editFieldMock,
   });
   setup();
   expect(editFieldMock).not.toHaveBeenCalled();
   fireEvent.click(screen.getByRole("submit-button"));
   expect(editFieldMock).toHaveBeenCalled();
+
+  spy.mockRestore();
 });

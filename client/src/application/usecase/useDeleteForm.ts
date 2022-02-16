@@ -8,7 +8,11 @@ export const useDeleteForm = () => {
   const formsGateway = new FormsGateway(httpClient);
 
   const deleteForm = () => {
-    formsGateway.deleteForm("formName");
+    try {
+      formsGateway.deleteForm("formName");
+    } catch (error: any) {
+      return error.message;
+    }
   };
 
   return { deleteForm };

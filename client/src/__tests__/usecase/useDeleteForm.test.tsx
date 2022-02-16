@@ -1,5 +1,4 @@
 import React from "react";
-import { FetchAdapter } from "../../infra/http/FetchAdapter";
 import { useDeleteForm } from "../../application/usecase/useDeleteForm";
 import FormsGateway from "../../infra/api/FormsGateway";
 
@@ -17,7 +16,7 @@ afterAll(() => {
   React.useContext = realContext;
 });
 
-test.only("Should call formsGateway.deleteForms", async () => {
+test("Should call formsGateway.deleteForms", async () => {
   const gatewayDeleteFormSpy = jest
     .spyOn(FormsGateway.prototype, "deleteForm")
     .mockReturnValue("");
@@ -26,4 +25,17 @@ test.only("Should call formsGateway.deleteForms", async () => {
   deleteForm();
 
   expect(gatewayDeleteFormSpy).toHaveBeenCalled();
+});
+
+test.only("Should return error message when error ocurr", async () => {
+  const gatewayDeleteFormSpy = jest
+    .spyOn(FormsGateway.prototype, "deleteForm")
+    .mockImplementation(() => {
+      throw new Error("Could not delete!");
+    });
+
+  const { deleteForm } = useDeleteForm();
+
+  const errorMessage = deleteForm();
+  expect(errorMessage).toBe("Could not delete!");
 });

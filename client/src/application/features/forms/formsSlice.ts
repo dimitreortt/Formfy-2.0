@@ -72,6 +72,11 @@ const formsSlice = createSlice({
       state.awaitingDeleteForm = false;
       state.deleteFormSuccess = true;
     },
+    awaitingDeleteForm: (state) => {
+      state.awaitingDeleteForm = true;
+      state.deleteFormSuccess = false;
+      state.deleteFormFail = false;
+    },
   },
 });
 

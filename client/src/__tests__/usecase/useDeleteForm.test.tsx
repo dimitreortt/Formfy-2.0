@@ -56,6 +56,17 @@ test("Should dispatch action deleteForm()", async () => {
   );
 });
 
+test("Should dispatch action awaitingDeleteForm()", async () => {
+  const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();
+  await deleteForm();
+  expect(mockDispatch).toHaveBeenCalled();
+  expect(mockDispatch).toHaveBeenCalledWith(
+    expect.objectContaining({
+      type: "forms/awaitingDeleteForm",
+    })
+  );
+});
+
 test("Should call formsGateway.deleteForms", async () => {
   const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();
   await deleteForm();

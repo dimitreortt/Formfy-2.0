@@ -44,15 +44,15 @@ const mockGatewayDeleteFieldSuccess = () => {
     .mockReturnValue(undefined);
 };
 
-// test("Should dispatch action deleteFormm()", async () => {
-//   await deleteForm();
-//   expect(mockDispatch).toHaveBeenCalled();
-//   expect(mockDispatch).toHaveBeenCalledWith(
-//     expect.objectContaining({
-//       type: "forms/deleteForm",
-//     })
-//   );
-// });
+test("Should dispatch action deleteField()", async () => {
+  await deleteField();
+  expect(mockDispatch).toHaveBeenCalled();
+  expect(mockDispatch).toHaveBeenCalledWith(
+    expect.objectContaining({
+      type: "formFields/deleteField",
+    })
+  );
+});
 
 // test("Should dispatch action awaitingDeleteForm()", async () => {
 //   await deleteForm();

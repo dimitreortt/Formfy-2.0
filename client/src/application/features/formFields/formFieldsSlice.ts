@@ -90,6 +90,7 @@ const formFieldsSlice = createSlice({
       state.awaitingEditField = false;
       state.editFieldFail = true;
     },
+    deleteField: () => {},
   },
 });
 

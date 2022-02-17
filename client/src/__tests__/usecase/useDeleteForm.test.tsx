@@ -44,7 +44,7 @@ const mockGatewayDeleteFormSuccess = () => {
     .mockReturnValue(undefined);
 };
 
-test("Should dispatch action deleteFormm()", async () => {
+test("Should dispatch action deleteForm()", async () => {
   await deleteForm();
   expect(mockDispatch).toHaveBeenCalled();
   expect(mockDispatch).toHaveBeenCalledWith(

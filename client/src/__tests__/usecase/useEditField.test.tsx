@@ -44,15 +44,15 @@ const mockGatewayEditFieldSuccess = () => {
     .mockReturnValue(undefined);
 };
 
-// test("Should dispatch action editField()", async () => {
-//   await editField();
-//   expect(mockDispatch).toHaveBeenCalled();
-//   expect(mockDispatch).toHaveBeenCalledWith(
-//     expect.objectContaining({
-//       type: "forms/editField",
-//     })
-//   );
-// });
+test("Should dispatch action editField()", async () => {
+  await editField();
+  expect(mockDispatch).toHaveBeenCalled();
+  expect(mockDispatch).toHaveBeenCalledWith(
+    expect.objectContaining({
+      type: "forms/editField",
+    })
+  );
+});
 
 // test("Should dispatch action awaitingDeleteForm()", async () => {
 //   await deleteForm();

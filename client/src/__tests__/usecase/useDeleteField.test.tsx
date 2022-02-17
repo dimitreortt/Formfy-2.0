@@ -8,13 +8,15 @@ import {
   mockUseContext,
   unMockUseContext,
 } from "../../__testsUtils/mockUseContext";
+import { IFormField } from "../../domain/FormField";
 
 let mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch,
 }));
 
-let deleteField: () => Promise<any>;
+const fakeField: any = {};
+let deleteField: (field: IFormField) => Promise<any>;
 
 beforeAll(() => {
   mockUseContext(jest);
@@ -45,7 +47,7 @@ const mockGatewayDeleteFieldSuccess = () => {
 };
 
 test("Should dispatch action deleteField()", async () => {
-  await deleteField();
+  await deleteField(fakeField);
   expect(mockDispatch).toHaveBeenCalled();
   expect(mockDispatch).toHaveBeenCalledWith(
     expect.objectContaining({
@@ -55,7 +57,7 @@ test("Should dispatch action deleteField()", async () => {
 });
 
 test("Should dispatch action awaitingDeleteField()", async () => {
-  await deleteField();
+  await deleteField(fakeField);
   expect(mockDispatch).toHaveBeenCalled();
   expect(mockDispatch).toHaveBeenCalledWith(
     expect.objectContaining({
@@ -66,19 +68,19 @@ test("Should dispatch action awaitingDeleteField()", async () => {
 
 test("Should call formFieldsGateway.deleteFormField", async () => {
   const gatewayDeleteFieldSpy = mockGatewayDeleteFieldSuccess();
-  await deleteField();
+  await deleteField(fakeField);
   expect(gatewayDeleteFieldSpy).toHaveBeenCalled();
   gatewayDeleteFieldSpy.mockClear();
 });
 
-// test("Should dispatch ratifyFilteredForms() on delete form success", async () => {
-//   const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();
-//   await deleteForm();
-//   expect(mockDispatch).toHaveBeenCalledWith(
-//     expect.objectContaining({ type: "forms/ratifyFilteredForms" })
-//   );
-//   gatewayDeleteFormSpy.mockClear();
-// });
+test("Should dispatch ratifyFilteredFormFields() on delete form success", async () => {
+  const gatewayDeleteFormSpy = mockGatewayDeleteFieldSuccess();
+  await deleteField(fakeField);
+  expect(mockDispatch).toHaveBeenCalledWith(
+    expect.objectContaining({ type: "forms/ratifyFilteredFormFields" })
+  );
+  gatewayDeleteFormSpy.mockClear();
+});
 
 // test("Should dispatch deleteFormSuccess() if no error occurred", async () => {
 //   const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();

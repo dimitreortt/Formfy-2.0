@@ -87,17 +87,25 @@ const formsSlice = createSlice({
       state,
       action: PayloadAction<[number, IFormField, NewFieldParams]>
     ) => {
-      const [formId, field, newData] = action.payload;
       if (state.forms === "not_initialized") return;
-
+      const [formId, field, newData] = action.payload;
       const formIndex = state.forms.findIndex((form) => form.id === formId);
       let foundField = state.forms[formIndex].fields.find(
         (f) => f.id === field.id
       );
-
       foundField!.label = newData.label;
       foundField!.type = newData.type;
       foundField!.options = newData.options;
+    },
+    ratifyFilteredFormFields: (
+      state,
+      action: PayloadAction<[number, IFormField]>
+    ) => {
+      if (state.forms === "not_initialized") return;
+      const [formId, field] = action.payload;
+      const form = state.forms.find((form) => form.id === formId);
+      const fieldIndex = form!.fields.findIndex((f) => f.id === field.id);
+      form!.fields.splice(fieldIndex, 1);
     },
   },
 });

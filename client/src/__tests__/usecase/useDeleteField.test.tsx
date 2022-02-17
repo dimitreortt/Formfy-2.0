@@ -93,17 +93,17 @@ test("Should dispatch deleteFieldSuccess() if no error occurred", async () => {
   gatewayDeleteFieldSpy.mockClear();
 });
 
-// test("Should dispatch action deleteFormFail() when error occurred", async () => {
-//   const gatewayDeleteFieldSpy = mockGatewayDeleteFormThrowError();
-//   await deleteForm();
-//   expect(mockDispatch).toHaveBeenCalled();
-//   expect(mockDispatch).toHaveBeenCalledWith(
-//     expect.objectContaining({
-//       type: "forms/deleteFormFail",
-//     })
-//   );
-//   gatewayDeleteFieldSpy.mockClear();
-// });
+test("Should dispatch action deleteFieldFail() when error occurred", async () => {
+  const gatewayDeleteFieldSpy = mockGatewayDeleteFieldThrowError();
+  await deleteField(fakeField);
+  expect(mockDispatch).toHaveBeenCalled();
+  expect(mockDispatch).toHaveBeenCalledWith(
+    expect.objectContaining({
+      type: "formFields/deleteFieldFail",
+    })
+  );
+  gatewayDeleteFieldSpy.mockClear();
+});
 
 // test("Should return error message when error occur", async () => {
 //   const gatewayDeleteFieldSpy = mockGatewayDeleteFormThrowError();

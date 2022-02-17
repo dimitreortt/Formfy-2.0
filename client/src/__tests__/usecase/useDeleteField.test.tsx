@@ -30,19 +30,19 @@ afterAll(() => {
   unMockUseContext();
 });
 
-// const mockGatewayDeleteFieldThrowError = () => {
-//   return jest
-//     .spyOn(FormFieldsGateway.prototype, "deleteFormField")
-//     .mockImplementation(() => {
-//       throw new Error("Could not delete!");
-//     });
-// };
+const mockGatewayDeleteFieldThrowError = () => {
+  return jest
+    .spyOn(FormFieldsGateway.prototype, "deleteFormField")
+    .mockImplementation(() => {
+      throw new Error("Could not delete!");
+    });
+};
 
-// const mockGatewayDeleteFieldSuccess = () => {
-//   return jest
-//     .spyOn(FormFieldsGateway.prototype, "deleteForm")
-//     .mockReturnValue(undefined);
-// };
+const mockGatewayDeleteFieldSuccess = () => {
+  return jest
+    .spyOn(FormFieldsGateway.prototype, "deleteForm")
+    .mockReturnValue(undefined);
+};
 
 // test("Should dispatch action deleteFormm()", async () => {
 //   await deleteForm();

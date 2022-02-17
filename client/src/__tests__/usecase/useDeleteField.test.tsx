@@ -74,27 +74,27 @@ test("Should call formFieldsGateway.deleteFormField", async () => {
 });
 
 test("Should dispatch ratifyFilteredFormFields() on delete form success", async () => {
-  const gatewayDeleteFormSpy = mockGatewayDeleteFieldSuccess();
+  const gatewayDeleteFieldSpy = mockGatewayDeleteFieldSuccess();
   await deleteField(fakeField);
   expect(mockDispatch).toHaveBeenCalledWith(
     expect.objectContaining({ type: "forms/ratifyFilteredFormFields" })
   );
-  gatewayDeleteFormSpy.mockClear();
+  gatewayDeleteFieldSpy.mockClear();
 });
 
-// test("Should dispatch deleteFormSuccess() if no error occurred", async () => {
-//   const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();
-//   await deleteForm();
-//   expect(mockDispatch).toHaveBeenCalledWith(
-//     expect.objectContaining({
-//       type: "forms/deleteFormSuccess",
-//     })
-//   );
-//   gatewayDeleteFormSpy.mockClear();
-// });
+test("Should dispatch deleteFieldSuccess() if no error occurred", async () => {
+  const gatewayDeleteFieldSpy = mockGatewayDeleteFieldSuccess();
+  await deleteField(fakeField);
+  expect(mockDispatch).toHaveBeenCalledWith(
+    expect.objectContaining({
+      type: "formFields/deleteFieldSuccess",
+    })
+  );
+  gatewayDeleteFieldSpy.mockClear();
+});
 
 // test("Should dispatch action deleteFormFail() when error occurred", async () => {
-//   const gatewayDeleteFormSpy = mockGatewayDeleteFormThrowError();
+//   const gatewayDeleteFieldSpy = mockGatewayDeleteFormThrowError();
 //   await deleteForm();
 //   expect(mockDispatch).toHaveBeenCalled();
 //   expect(mockDispatch).toHaveBeenCalledWith(
@@ -102,12 +102,12 @@ test("Should dispatch ratifyFilteredFormFields() on delete form success", async 
 //       type: "forms/deleteFormFail",
 //     })
 //   );
-//   gatewayDeleteFormSpy.mockClear();
+//   gatewayDeleteFieldSpy.mockClear();
 // });
 
 // test("Should return error message when error occur", async () => {
-//   const gatewayDeleteFormSpy = mockGatewayDeleteFormThrowError();
+//   const gatewayDeleteFieldSpy = mockGatewayDeleteFormThrowError();
 //   const errorMessage = await deleteForm();
 //   expect(errorMessage).toBe("Could not delete!");
-//   gatewayDeleteFormSpy.mockClear();
+//   gatewayDeleteFieldSpy.mockClear();
 // });

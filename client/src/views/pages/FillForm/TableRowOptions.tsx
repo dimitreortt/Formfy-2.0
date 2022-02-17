@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import EditIcon from "@mui/icons-material/Edit";
-import EditIcon from "@mui/icons-material/Delete";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { EditField } from "./EditField";
 import { DeleteField } from "./DeleteField";
 import { IFormField } from "../../../domain/FormField";
@@ -48,12 +48,13 @@ export const TableRowOptions: FunctionComponent<Props> = ({
   const toggleInEditField = () => {
     setInEditField((prev) => !prev);
   };
-  const toggleInDeleteField = () => setInDeleteField((prev) => !prev);
 
   const onCloseEditField = () => {
     setInEditField(false);
     handleClose();
   };
+
+  const toggleInDeleteField = () => setInDeleteField((prev) => !prev);
 
   return (
     <div>
@@ -85,8 +86,8 @@ export const TableRowOptions: FunctionComponent<Props> = ({
             <ListItemText primary="Edit Field" />
           </ListItemButton>
           <ListItemButton onClick={toggleInDeleteField}>
-            <EditIcon></EditIcon>
-            <ListItemText primary="Edit Field" />
+            <DeleteIcon></DeleteIcon>
+            <ListItemText primary="Delete Field" />
           </ListItemButton>
         </List>
         {/* <Typography sx={{ p: 2 }}>The content of the Popover.</Typography> */}
@@ -98,7 +99,14 @@ export const TableRowOptions: FunctionComponent<Props> = ({
             toggleOpen={onCloseEditField}
           />
         )}
-        {inDeleteField && <DeleteField />}
+        {inDeleteField && (
+          <DeleteField
+            formId={formId}
+            field={field}
+            inDeleteField={inDeleteField}
+            onCancelDelete={toggleInDeleteField}
+          />
+        )}
       </Popover>
     </div>
   );

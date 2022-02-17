@@ -28,7 +28,6 @@ export const DeleteField: FunctionComponent<Props> = ({
 
   const onDeleteConfirm = async () => {
     const error = await deleteField(field);
-    console.log(error);
     if (error) setError(error);
   };
 

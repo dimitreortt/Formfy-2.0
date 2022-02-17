@@ -97,15 +97,21 @@ const formsSlice = createSlice({
       foundField!.type = newData.type;
       foundField!.options = newData.options;
     },
-    ratifyFilteredFormFields: (
+    removeDeletedField: (
       state,
       action: PayloadAction<[number, IFormField]>
     ) => {
       if (state.forms === "not_initialized") return;
-      const [formId, field] = action.payload;
+      const [formId, removedField] = action.payload;
       const form = state.forms.find((form) => form.id === formId);
-      const fieldIndex = form!.fields.findIndex((f) => f.id === field.id);
+      const fieldIndex = form!.fields.findIndex(
+        (f) => f.id === removedField.id
+      );
       form!.fields.splice(fieldIndex, 1);
+
+      for (const field of form!.fields) {
+        if (field.index > removedField.index) field.index--;
+      }
     },
   },
 });

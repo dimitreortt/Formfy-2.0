@@ -3,7 +3,7 @@ import { fireEvent, screen } from "@testing-library/react";
 import { EditField } from "../views/pages/FillForm/EditField";
 import { NewFieldParams } from "../views/pages/FillForm/AddField";
 import { IFormField } from "../domain/FormField";
-import { render } from "../__testsUtils/testUtils";
+import { render } from "../__testsUtils/renderWithStore";
 import * as editFieldUsecase from "../application/usecase/useEditField";
 
 const setup = () => {
@@ -38,6 +38,5 @@ test("Should call EditField usecase on set field submit", async () => {
   expect(editFieldMock).not.toHaveBeenCalled();
   fireEvent.click(screen.getByRole("submit-button"));
   expect(editFieldMock).toHaveBeenCalled();
-
   spy.mockRestore();
 });

@@ -1,10 +1,13 @@
 import React from "react";
 import { formsActions } from "../../application/features/forms/formsSlice";
-import { store } from "../../application/store/configureStore";
 import { useDeleteForm } from "../../application/usecase/useDeleteForm";
 import { useDispatch } from "react-redux";
 import FormsGateway from "../../infra/api/FormsGateway";
 // import { deleteFormFail } from "";
+import {
+  mockUseContext,
+  unMockUseContext,
+} from "../../__testsUtils/mockUseContext";
 
 let mockDispatch = jest.fn();
 
@@ -12,15 +15,10 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch,
 }));
 
-type UseContextType = typeof React.useContext;
-
-let realContext: UseContextType;
-let mockContext: UseContextType;
 let deleteForm: () => Promise<any>;
 
 beforeAll(() => {
-  realContext = React.useContext;
-  mockContext = React.useContext = jest.fn;
+  mockUseContext(jest);
   const FORM_ID = 1;
   deleteForm = useDeleteForm(FORM_ID).deleteForm;
 });
@@ -30,7 +28,7 @@ afterEach(() => {
 });
 
 afterAll(() => {
-  React.useContext = realContext;
+  unMockUseContext();
 });
 
 const mockGatewayDeleteFormThrowError = () => {

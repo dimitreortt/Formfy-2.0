@@ -32,7 +32,8 @@ export class FormFieldsGateway {
   ) {
     const data = {
       formId,
-      label: oldField.label,
+      fieldLabel: oldField.label,
+      newIndex: oldField.index,
       newType: newData.type,
       newLabel: newData.label,
       newOptions: newData.options,

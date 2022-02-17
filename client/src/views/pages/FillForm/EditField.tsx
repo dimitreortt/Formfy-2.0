@@ -26,8 +26,8 @@ export const EditField: FunctionComponent<Props> = ({
 
   const { editField } = useEditField(formId);
 
-  const onSetFieldSubmit = async (field: NewFieldParams) => {
-    const error = await editField();
+  const onSetFieldSubmit = async (newFieldData: NewFieldParams) => {
+    const error = await editField(field, newFieldData);
     if (error) setError(error);
   };
 

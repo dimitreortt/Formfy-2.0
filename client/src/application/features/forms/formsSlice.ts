@@ -89,13 +89,15 @@ const formsSlice = createSlice({
     ) => {
       const [formId, field, newData] = action.payload;
       if (state.forms === "not_initialized") return;
+
       const formIndex = state.forms.findIndex((form) => form.id === formId);
-      const previousFieldsState = [...state.forms[formIndex].fields];
-      const previousField = previousFieldsState[field.index];
-      const updatedField = { ...previousField, ...newData };
-      const newFieldsState = [...previousFieldsState];
-      newFieldsState[field.index] = updatedField;
-      state.forms[formIndex].fields = newFieldsState;
+      let foundField = state.forms[formIndex].fields.find(
+        (f) => f.id === field.id
+      );
+
+      foundField!.label = newData.label;
+      foundField!.type = newData.type;
+      foundField!.options = newData.options;
     },
   },
 });

@@ -1,7 +1,8 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import Button from "@mui/material/Button";
 import { IFormField } from "../../../domain/FormField";
 import { useDeleteField } from "../../../application/usecase/useDeleteField";
+import { AlertSnackbar } from "./AlertSnackbar";
 
 type Props = {
   field: IFormField;
@@ -10,9 +11,12 @@ type Props = {
 
 export const DeleteField: FunctionComponent<Props> = ({ field, formId }) => {
   const { deleteField } = useDeleteField(formId);
+  const [error, setError] = useState<string>();
 
   const onDeleteConfirm = async () => {
-    await deleteField(field);
+    const error = await deleteField(field);
+    console.log(error);
+    if (error) setError(error);
   };
 
   return (
@@ -26,6 +30,13 @@ export const DeleteField: FunctionComponent<Props> = ({ field, formId }) => {
       >
         Confirm
       </Button>
+      <AlertSnackbar
+        open={!!error}
+        onClose={() => setError(undefined)}
+        severity="warning"
+      >
+        {error}
+      </AlertSnackbar>
     </div>
   );
 };

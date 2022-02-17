@@ -10,6 +10,7 @@ export const useEditField = (formId: number) => {
     editField: editFieldAction,
     awaitingEditField,
     ratifyEditedField,
+    editFieldSuccess,
   } = useActions();
   const { httpClient } = useContext(ApplicationContext);
   const formFieldsGateway = new FormFieldsGateway(httpClient);
@@ -19,6 +20,7 @@ export const useEditField = (formId: number) => {
     try {
       awaitingEditField();
       await formFieldsGateway.updateFormField(formId, field, newData);
+      editFieldSuccess();
       ratifyEditedField([formId, field, newData]);
     } catch (error: any) {
       return error.message;

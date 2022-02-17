@@ -84,16 +84,16 @@ test("Should dispatch ratifyEditedField() on edit field success", async () => {
   gatewayUpdateFieldSpy.mockClear();
 });
 
-// test("Should dispatch deleteFormSuccess() if no error occurred", async () => {
-//   const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();
-//   await deleteForm();
-//   expect(mockDispatch).toHaveBeenCalledWith(
-//     expect.objectContaining({
-//       type: "forms/deleteFormSuccess",
-//     })
-//   );
-//   gatewayDeleteFormSpy.mockClear();
-// });
+test("Should dispatch editFieldSuccess() if no error occurred ", async () => {
+  const gatewayUpdateFieldSpy = mockGatewayUpdateFieldSuccess();
+  await editField(fakeField, fakeNewData);
+  expect(mockDispatch).toHaveBeenCalledWith(
+    expect.objectContaining({
+      type: "formFields/editFieldSuccess",
+    })
+  );
+  gatewayUpdateFieldSpy.mockClear();
+});
 
 // test("Should dispatch action deleteFormFail() when error occurred", async () => {
 //   const gatewayDeleteFormSpy = mockGatewayDeleteFormThrowError();

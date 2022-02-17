@@ -49,20 +49,20 @@ test("Should dispatch action editField()", async () => {
   expect(mockDispatch).toHaveBeenCalled();
   expect(mockDispatch).toHaveBeenCalledWith(
     expect.objectContaining({
-      type: "forms/editField",
+      type: "formFields/editField",
     })
   );
 });
 
-// test("Should dispatch action awaitingDeleteForm()", async () => {
-//   await deleteForm();
-//   expect(mockDispatch).toHaveBeenCalled();
-//   expect(mockDispatch).toHaveBeenCalledWith(
-//     expect.objectContaining({
-//       type: "forms/awaitingDeleteForm",
-//     })
-//   );
-// });
+test("Should dispatch action awaitingEditField()", async () => {
+  await editField();
+  expect(mockDispatch).toHaveBeenCalled();
+  expect(mockDispatch).toHaveBeenCalledWith(
+    expect.objectContaining({
+      type: "formFields/awaitingEditField",
+    })
+  );
+});
 
 // test("Should dispatch ratifyFilteredForms() on delete form success", async () => {
 //   const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();

@@ -65,6 +65,8 @@ const formFieldsSlice = createSlice({
     addField: (state) => {},
     awaitingAddField: (state) => {
       state.awaitingAddField = true;
+      state.addFieldSuccess = false;
+      state.addFieldFail = false;
     },
     addFieldSuccess: (state) => {
       state.awaitingAddField = false;
@@ -77,6 +79,8 @@ const formFieldsSlice = createSlice({
     editField: (state) => {},
     awaitingEditField: (state) => {
       state.awaitingEditField = true;
+      state.editFieldSuccess = false;
+      state.editFieldFail = false;
     },
     editFieldSuccess: (state) => {
       state.awaitingEditField = false;

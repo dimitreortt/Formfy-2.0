@@ -105,9 +105,9 @@ test("Should dispatch action deleteFieldFail() when error occurred", async () =>
   gatewayDeleteFieldSpy.mockClear();
 });
 
-// test("Should return error message when error occur", async () => {
-//   const gatewayDeleteFieldSpy = mockGatewayDeleteFormThrowError();
-//   const errorMessage = await deleteForm();
-//   expect(errorMessage).toBe("Could not delete!");
-//   gatewayDeleteFieldSpy.mockClear();
-// });
+test("Should return error message when error occur", async () => {
+  const gatewayDeleteFieldSpy = mockGatewayDeleteFieldThrowError();
+  const errorMessage = await deleteField(fakeField);
+  expect(errorMessage).toBe("Could not delete field!");
+  gatewayDeleteFieldSpy.mockClear();
+});

@@ -22,8 +22,9 @@ export const useDeleteField = (formId: number) => {
       await formFieldsGateway.deleteFormField(formId, field.label);
       deleteFieldSuccess();
       ratifyFilteredFormFields([formId, field]);
-    } catch (error) {
+    } catch (error: any) {
       deleteFieldFail();
+      return error.message;
     }
   };
 

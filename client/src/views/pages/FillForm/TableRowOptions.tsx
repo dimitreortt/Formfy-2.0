@@ -12,7 +12,9 @@ import {
 } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import EditIcon from "@mui/icons-material/Edit";
+import EditIcon from "@mui/icons-material/Delete";
 import { EditField } from "./EditField";
+import { DeleteField } from "./DeleteField";
 import { IFormField } from "../../../domain/FormField";
 
 type Props = {
@@ -30,6 +32,7 @@ export const TableRowOptions: FunctionComponent<Props> = ({
     null
   );
   const [inEditField, setInEditField] = useState(false);
+  const [inDeleteField, setInDeleteField] = useState(false);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -45,6 +48,7 @@ export const TableRowOptions: FunctionComponent<Props> = ({
   const toggleInEditField = () => {
     setInEditField((prev) => !prev);
   };
+  const toggleInDeleteField = () => setInDeleteField((prev) => !prev);
 
   const onCloseEditField = () => {
     setInEditField(false);
@@ -80,6 +84,10 @@ export const TableRowOptions: FunctionComponent<Props> = ({
             <EditIcon></EditIcon>
             <ListItemText primary="Edit Field" />
           </ListItemButton>
+          <ListItemButton onClick={toggleInDeleteField}>
+            <EditIcon></EditIcon>
+            <ListItemText primary="Edit Field" />
+          </ListItemButton>
         </List>
         {/* <Typography sx={{ p: 2 }}>The content of the Popover.</Typography> */}
         {inEditField && (
@@ -90,6 +98,7 @@ export const TableRowOptions: FunctionComponent<Props> = ({
             toggleOpen={onCloseEditField}
           />
         )}
+        {inDeleteField && <DeleteField />}
       </Popover>
     </div>
   );

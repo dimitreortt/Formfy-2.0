@@ -10,7 +10,6 @@ import {
 } from "../../__testsUtils/mockUseContext";
 
 let mockDispatch = jest.fn();
-
 jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch,
 }));
@@ -45,7 +44,7 @@ const mockGatewayDeleteFormSuccess = () => {
     .mockReturnValue(undefined);
 };
 
-test("Should dispatch action deleteForm()", async () => {
+test("Should dispatch action deleteFormm()", async () => {
   await deleteForm();
   expect(mockDispatch).toHaveBeenCalled();
   expect(mockDispatch).toHaveBeenCalledWith(

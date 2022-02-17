@@ -1,16 +1,31 @@
+import { useActions } from "./../hooks/useActions";
 import React from "react";
 import { ApplicationContext } from "./../contexts/ApplicationContext";
 import { useContext } from "react";
 import { FormsGateway } from "./../../infra/api/FormsGateway";
+import { store } from "../store/configureStore";
 
-export const useDeleteForm = () => {
+export const useDeleteForm = (formId: number) => {
   const { httpClient } = useContext(ApplicationContext);
   const formsGateway = new FormsGateway(httpClient);
 
-  const deleteForm = () => {
+  const {
+    deleteForm: deleteFormAction,
+    deleteFormFail,
+    deleteFormSuccess,
+    awaitingDeleteForm,
+    ratifyFilteredForms,
+  } = useActions();
+
+  const deleteForm = async () => {
+    deleteFormAction();
     try {
-      formsGateway.deleteForm("formName");
+      awaitingDeleteForm();
+      await formsGateway.deleteForm("formName");
+      deleteFormSuccess();
+      ratifyFilteredForms(formId);
     } catch (error: any) {
+      deleteFormFail();
       return error.message;
     }
   };

@@ -13,6 +13,9 @@ type SliceState = {
   awaitingEditField: boolean;
   editFieldSuccess: boolean;
   editFieldFail: boolean;
+  awaitingDeleteField: boolean;
+  deleteFieldSuccess: boolean;
+  deleteFieldFail: boolean;
 };
 
 const initialState: SliceState = {
@@ -28,6 +31,9 @@ const initialState: SliceState = {
   awaitingEditField: false,
   editFieldSuccess: false,
   editFieldFail: false,
+  awaitingDeleteField: false,
+  deleteFieldSuccess: false,
+  deleteFieldFail: false,
 };
 
 const formFieldsSlice = createSlice({
@@ -91,6 +97,19 @@ const formFieldsSlice = createSlice({
       state.editFieldFail = true;
     },
     deleteField: () => {},
+    awaitingDeleteField: (state) => {
+      state.awaitingDeleteField = true;
+      state.deleteFieldSuccess = false;
+      state.deleteFieldFail = false;
+    },
+    deleteFieldSuccess: (state) => {
+      state.awaitingDeleteField = false;
+      state.deleteFieldSuccess = true;
+    },
+    deleteFieldFail: (state) => {
+      state.awaitingDeleteField = false;
+      state.deleteFieldFail = true;
+    },
   },
 });
 

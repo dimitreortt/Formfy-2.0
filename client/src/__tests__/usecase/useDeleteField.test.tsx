@@ -54,15 +54,15 @@ test("Should dispatch action deleteField()", async () => {
   );
 });
 
-// test("Should dispatch action awaitingDeleteForm()", async () => {
-//   await deleteForm();
-//   expect(mockDispatch).toHaveBeenCalled();
-//   expect(mockDispatch).toHaveBeenCalledWith(
-//     expect.objectContaining({
-//       type: "forms/awaitingDeleteForm",
-//     })
-//   );
-// });
+test("Should dispatch action awaitingDeleteField()", async () => {
+  await deleteField();
+  expect(mockDispatch).toHaveBeenCalled();
+  expect(mockDispatch).toHaveBeenCalledWith(
+    expect.objectContaining({
+      type: "formFields/awaitingDeleteField",
+    })
+  );
+});
 
 // test("Should call formsGateway.deleteForms", async () => {
 //   const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();

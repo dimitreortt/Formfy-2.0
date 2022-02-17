@@ -1,3 +1,4 @@
+import { NewFieldParams } from "./../../../views/pages/FillForm/AddField";
 import { IFormField } from "./../../../domain/FormField";
 import { IForm } from "./../../../domain/Form";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -81,6 +82,20 @@ const formsSlice = createSlice({
       const formId = action.payload;
       if (state.forms === "not_initialized") return;
       state.forms = state.forms.filter((form) => form.id !== formId);
+    },
+    ratifyEditedField: (
+      state,
+      action: PayloadAction<[number, IFormField, NewFieldParams]>
+    ) => {
+      const [formId, field, newData] = action.payload;
+      if (state.forms === "not_initialized") return;
+      const formIndex = state.forms.findIndex((form) => form.id === formId);
+      const previousFieldsState = [...state.forms[formIndex].fields];
+      const previousField = previousFieldsState[field.index];
+      const updatedField = { ...previousField, ...newData };
+      const newFieldsState = [...previousFieldsState];
+      newFieldsState[field.index] = updatedField;
+      state.forms[formIndex].fields = newFieldsState;
     },
   },
 });

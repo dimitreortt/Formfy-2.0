@@ -64,19 +64,19 @@ test("Should dispatch action awaitingDeleteForm()", async () => {
   );
 });
 
+test("Should call formsGateway.deleteForms", async () => {
+  const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();
+  await deleteForm();
+  expect(gatewayDeleteFormSpy).toHaveBeenCalled();
+  gatewayDeleteFormSpy.mockClear();
+});
+
 test("Should dispatch ratifyFilteredForms() on delete form success", async () => {
   const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();
   await deleteForm();
   expect(mockDispatch).toHaveBeenCalledWith(
     expect.objectContaining({ type: "forms/ratifyFilteredForms" })
   );
-  gatewayDeleteFormSpy.mockClear();
-});
-
-test("Should call formsGateway.deleteForms", async () => {
-  const gatewayDeleteFormSpy = mockGatewayDeleteFormSuccess();
-  await deleteForm();
-  expect(gatewayDeleteFormSpy).toHaveBeenCalled();
   gatewayDeleteFormSpy.mockClear();
 });
 

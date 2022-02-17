@@ -1,5 +1,14 @@
+import { NewFieldParams } from "./../../views/pages/FillForm/AddField";
 import { FormFieldType, IFormField } from "./../../domain/FormField";
 import HttpClient from "../http/HttpClient";
+
+// type UpdateFormFieldParams = {
+//   label: string;
+//   formId: number;
+//   newType: FormFieldType;
+//   newLabel: string;
+//   newOptions: string[];
+// };
 
 export class FormFieldsGateway {
   serverBaseUrl = "http://localhost:4000";
@@ -17,18 +26,16 @@ export class FormFieldsGateway {
   }
 
   updateFormField(
-    label: string,
     formId: number,
-    newType: FormFieldType,
-    newLabel: string,
-    newOptions: string[]
+    oldField: IFormField,
+    newData: NewFieldParams
   ) {
     const data = {
-      label,
       formId,
-      newType,
-      newLabel,
-      newOptions,
+      label: oldField.label,
+      newType: newData.type,
+      newLabel: newData.label,
+      newOptions: newData.options,
     };
     const url = `${this.serverBaseUrl}/formField`;
     return this.httpClient.request(url, "PATCH", data);

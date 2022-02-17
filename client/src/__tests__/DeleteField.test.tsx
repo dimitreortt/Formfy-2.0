@@ -7,7 +7,15 @@ import { act, fireEvent, screen, waitFor } from "@testing-library/react";
 const setup = () => {
   const fakeField: any = {};
   const fakeFormId: any = 0;
-  render(<DeleteField formId={fakeFormId} field={fakeField} />);
+  const fakeOnCancelDelete: any = {};
+  render(
+    <DeleteField
+      formId={fakeFormId}
+      field={fakeField}
+      onCancelDelete={fakeOnCancelDelete}
+      inDeleteField={true}
+    />
+  );
 };
 
 test("Should render correctly", async () => {

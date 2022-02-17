@@ -38,7 +38,7 @@ const mockGatewayEditFieldThrowError = () => {
   return jest
     .spyOn(FormFieldsGateway.prototype, "updateFormField")
     .mockImplementation(() => {
-      throw new Error("Could not delete!");
+      throw new Error("Could not update field!");
     });
 };
 
@@ -95,21 +95,21 @@ test("Should dispatch editFieldSuccess() if no error occurred ", async () => {
   gatewayUpdateFieldSpy.mockClear();
 });
 
-// test("Should dispatch action deleteFormFail() when error occurred", async () => {
-//   const gatewayDeleteFormSpy = mockGatewayDeleteFormThrowError();
-//   await deleteForm();
-//   expect(mockDispatch).toHaveBeenCalled();
-//   expect(mockDispatch).toHaveBeenCalledWith(
-//     expect.objectContaining({
-//       type: "forms/deleteFormFail",
-//     })
-//   );
-//   gatewayDeleteFormSpy.mockClear();
-// });
+test("Should dispatch action editFieldFail() when error occurred", async () => {
+  const gatewayUpdateFieldSpy = mockGatewayEditFieldThrowError();
+  await editField(fakeField, fakeNewData);
+  expect(mockDispatch).toHaveBeenCalled();
+  expect(mockDispatch).toHaveBeenCalledWith(
+    expect.objectContaining({
+      type: "formFields/editFieldFail",
+    })
+  );
+  gatewayUpdateFieldSpy.mockClear();
+});
 
-// test("Should return error message when error occur", async () => {
-//   const gatewayDeleteFormSpy = mockGatewayDeleteFormThrowError();
-//   const errorMessage = await deleteForm();
-//   expect(errorMessage).toBe("Could not delete!");
-//   gatewayDeleteFormSpy.mockClear();
-// });
+test("Should return error message when error occur", async () => {
+  const gatewayUpdateFieldSpy = mockGatewayEditFieldThrowError();
+  const errorMessage = await editField(fakeField, fakeNewData);
+  expect(errorMessage).toBe("Could not update field!");
+  gatewayUpdateFieldSpy.mockClear();
+});

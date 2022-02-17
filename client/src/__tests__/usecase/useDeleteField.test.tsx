@@ -1,6 +1,6 @@
 import React from "react";
 import { formsActions } from "../../application/features/forms/formsSlice";
-// import { useDeleteField } from "../../application/usecase/useDeleteField";
+import { useDeleteField } from "../../application/usecase/useDeleteField";
 import { useDispatch } from "react-redux";
 import { FormFieldsGateway } from "../../infra/api/FormFieldsGateway";
 // import { deleteFormFail } from "";
@@ -34,13 +34,13 @@ const mockGatewayDeleteFieldThrowError = () => {
   return jest
     .spyOn(FormFieldsGateway.prototype, "deleteFormField")
     .mockImplementation(() => {
-      throw new Error("Could not delete!");
+      throw new Error("Could not delete field!");
     });
 };
 
 const mockGatewayDeleteFieldSuccess = () => {
   return jest
-    .spyOn(FormFieldsGateway.prototype, "deleteForm")
+    .spyOn(FormFieldsGateway.prototype, "deleteFormField")
     .mockReturnValue(undefined);
 };
 

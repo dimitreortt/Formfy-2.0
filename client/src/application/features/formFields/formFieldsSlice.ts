@@ -10,6 +10,9 @@ type SliceState = {
   awaitingAddField: boolean;
   addFieldSuccess: boolean;
   addFieldFail: boolean;
+  awaitingEditField: boolean;
+  editFieldSuccess: boolean;
+  editFieldFail: boolean;
 };
 
 const initialState: SliceState = {
@@ -22,6 +25,9 @@ const initialState: SliceState = {
   awaitingAddField: false,
   addFieldSuccess: false,
   addFieldFail: false,
+  awaitingEditField: false,
+  editFieldSuccess: false,
+  editFieldFail: false,
 };
 
 const formFieldsSlice = createSlice({
@@ -67,6 +73,18 @@ const formFieldsSlice = createSlice({
     addFieldFail: (state) => {
       state.awaitingAddField = false;
       state.addFieldFail = true;
+    },
+    editField: (state) => {},
+    awaitingEditField: (state) => {
+      state.awaitingEditField = true;
+    },
+    editFieldSuccess: (state) => {
+      state.awaitingEditField = false;
+      state.editFieldSuccess = true;
+    },
+    editFieldFail: (state) => {
+      state.awaitingEditField = false;
+      state.editFieldFail = true;
     },
   },
 });

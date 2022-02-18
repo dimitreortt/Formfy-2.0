@@ -22,7 +22,9 @@ test('Should render with default state', async () => {
   const labelInput = screen.getByLabelText('Label');
   const typeSelectInput = screen.getByTestId('select-type');
 
+  //@ts-ignore
   expect(labelInput.value).toBe('');
+  //@ts-ignore
   expect(typeSelectInput.value).toBe('');
 });
 
@@ -56,21 +58,9 @@ test('Should call given function on submit with correct parameters', async () =>
   const labelInput = screen.getByLabelText('Label');
   fireEvent.change(labelInput, { target: { value: 'Name' } });
   const typeSelectionInput = screen.getByLabelText('Type');
-  // const typeSelectionInput = screen.getByTestId("ArrowDropDownIcon");
   fireEvent.mouseDown(typeSelectionInput);
-  // expect(typeSelectionInput).toBeInTheDocument();
-
-  // const listboxElement = screen.getByRole("listbox");
-  // expect(listboxElement).toBeInTheDocument();
-
-  // const listbox = within(listboxElement);
-
-  // expect(listbox.getByText("Short Text")).toBeInTheDocument();
   expect(screen.getByText('Short Text')).toBeInTheDocument();
   fireEvent.click(screen.getByText('Short Text'));
-
-  // expect(screen.getByText("Short Text")).toBeInTheDocument();
-
   fireEvent.click(screen.getByRole('submit-button'));
   expect(submitFn).toHaveBeenCalled();
   expect(submitFn).toHaveBeenCalledWith({
@@ -144,7 +134,9 @@ test('Should display initial values when initial field is provided, used in edit
   );
   const labelInput = screen.getByLabelText('Label');
   const typeSelectInput = screen.getByTestId('select-type');
+  //@ts-ignore
   expect(labelInput.value).toBe('Factory Number');
+  //@ts-ignore
   expect(typeSelectInput.value).toBe('Short Text');
 });
 

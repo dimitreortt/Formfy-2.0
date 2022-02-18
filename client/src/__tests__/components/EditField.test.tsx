@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import { EditField } from '../../views/components/FormFieldsManageTable/EditField';
 import { NewFieldParams } from '../../views/components/FormFieldsManageTable/AddField';
-import { IFormField } from '../../domain/FormField';
+import { IFormField } from '../../domain/entities/FormField';
 import { render } from '../../__testsUtils/renderWithStore';
 import * as editFieldUsecase from '../../application/usecase/useEditField';
 

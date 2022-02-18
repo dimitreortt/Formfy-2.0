@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Sidebar } from '../../views/sidebar/Sidebar';
+import { Sidebar } from '../../views/components/Sidebar/Sidebar';
 
 describe('Sidebar', () => {
   it('Should render a button to toggle the sidebar open or closed', async () => {

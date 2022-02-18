@@ -1,8 +1,8 @@
-import { IFormField } from "./../../domain/FormField";
-import { ApplicationContext } from "./../contexts/ApplicationContext";
-import { useContext } from "react";
-import { FormFieldsGateway } from "./../../infra/api/FormFieldsGateway";
-import { useActions } from "./../hooks/useActions";
+import { IFormField } from './../../domain/entities/FormField';
+import { ApplicationContext } from './../contexts/ApplicationContext';
+import { useContext } from 'react';
+import { FormFieldsGateway } from './../../infra/api/FormFieldsGateway';
+import { useActions } from './../hooks/useActions';
 
 export const useDeleteField = (formId: number) => {
   const {

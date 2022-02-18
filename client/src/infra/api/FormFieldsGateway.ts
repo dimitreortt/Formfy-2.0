@@ -1,6 +1,6 @@
-import { NewFieldParams } from "./../../views/pages/FillForm/AddField";
-import { FormFieldType, IFormField } from "./../../domain/FormField";
-import HttpClient from "../http/HttpClient";
+import { NewFieldParams } from '../../views/components/FormFieldsManageTable/AddField';
+import { FormFieldType, IFormField } from './../../domain/entities/FormField';
+import HttpClient from '../http/HttpClient';
 
 // type UpdateFormFieldParams = {
 //   label: string;
@@ -11,10 +11,10 @@ import HttpClient from "../http/HttpClient";
 // };
 
 export class FormFieldsGateway {
-  serverBaseUrl = "http://localhost:4000";
+  serverBaseUrl = 'http://localhost:4000';
   constructor(readonly httpClient: HttpClient) {}
 
-  add(formId: number, field: Pick<IFormField, "label" | "type" | "options">) {
+  add(formId: number, field: Pick<IFormField, 'label' | 'type' | 'options'>) {
     const data = {
       formId,
       type: field.type,
@@ -22,7 +22,7 @@ export class FormFieldsGateway {
       options: field.options,
     };
     const url = `${this.serverBaseUrl}/formField`;
-    return this.httpClient.request(url, "POST", data);
+    return this.httpClient.request(url, 'POST', data);
   }
 
   updateFormField(
@@ -39,7 +39,7 @@ export class FormFieldsGateway {
       newOptions: newData.options,
     };
     const url = `${this.serverBaseUrl}/formField`;
-    return this.httpClient.request(url, "PATCH", data);
+    return this.httpClient.request(url, 'PATCH', data);
   }
 
   deleteFormField(formId: number, fieldLabel: string) {
@@ -48,7 +48,7 @@ export class FormFieldsGateway {
       formId,
       fieldLabel,
     };
-    return this.httpClient.request(url, "DELETE", data);
+    return this.httpClient.request(url, 'DELETE', data);
   }
 
   moveFieldUp(formId: number, index: number) {
@@ -57,7 +57,7 @@ export class FormFieldsGateway {
       formId,
       index,
     };
-    return this.httpClient.request(url, "PATCH", data);
+    return this.httpClient.request(url, 'PATCH', data);
   }
 
   moveFieldDown(formId: number, index: number) {
@@ -66,6 +66,6 @@ export class FormFieldsGateway {
       formId,
       index,
     };
-    return this.httpClient.request(url, "PATCH", data);
+    return this.httpClient.request(url, 'PATCH', data);
   }
 }

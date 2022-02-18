@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import App from '../views/components/App';
-import { FormManagePage } from '../views/pages/FormManage/FormManagePage';
-import { FillFormPage } from '../views/pages/FillForm/FillFormPage';
+import { FormManagePage } from '../views/pages/FormManagePage';
+import { FillFormPage } from '../views/pages/FillFormPage';
 
 export const AppRouter = () => {
   return (

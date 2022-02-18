@@ -1,18 +1,18 @@
-import React from "react";
-import { formsActions } from "../../application/features/forms/formsSlice";
-import { useEditField } from "../../application/usecase/useEditField";
-import { useDispatch } from "react-redux";
-import { FormFieldsGateway } from "../../infra/api/FormFieldsGateway";
+import React from 'react';
+import { formsActions } from '../../application/store/slices/formsSlice';
+import { useEditField } from '../../application/usecase/useEditField';
+import { useDispatch } from 'react-redux';
+import { FormFieldsGateway } from '../../infra/api/FormFieldsGateway';
 import {
   mockUseContext,
   unMockUseContext,
-} from "../../__testsUtils/mockUseContext";
-import { IFormField } from "../../domain/FormField";
-import { NewFieldParams } from "../../views/pages/FillForm/AddField";
+} from '../../__testsUtils/mockUseContext';
+import { IFormField } from '../../domain/entities/FormField';
+import { NewFieldParams } from '../../views/components/FormFieldsManageTable/AddField';
 // import { deleteFormFail } from "";
 
 let mockDispatch = jest.fn();
-jest.mock("react-redux", () => ({
+jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
 }));
 
@@ -36,80 +36,80 @@ afterAll(() => {
 
 const mockGatewayEditFieldThrowError = () => {
   return jest
-    .spyOn(FormFieldsGateway.prototype, "updateFormField")
+    .spyOn(FormFieldsGateway.prototype, 'updateFormField')
     .mockImplementation(() => {
-      throw new Error("Could not update field!");
+      throw new Error('Could not update field!');
     });
 };
 
 const mockGatewayUpdateFieldSuccess = () => {
   return jest
-    .spyOn(FormFieldsGateway.prototype, "updateFormField")
+    .spyOn(FormFieldsGateway.prototype, 'updateFormField')
     .mockReturnValue(undefined);
 };
 
-test("Should dispatch action editField()", async () => {
+test('Should dispatch action editField()', async () => {
   await editField(fakeField, fakeNewData);
   expect(mockDispatch).toHaveBeenCalled();
   expect(mockDispatch).toHaveBeenCalledWith(
     expect.objectContaining({
-      type: "formFields/editField",
+      type: 'formFields/editField',
     })
   );
 });
 
-test("Should dispatch action awaitingEditField()", async () => {
+test('Should dispatch action awaitingEditField()', async () => {
   await editField(fakeField, fakeNewData);
   expect(mockDispatch).toHaveBeenCalled();
   expect(mockDispatch).toHaveBeenCalledWith(
     expect.objectContaining({
-      type: "formFields/awaitingEditField",
+      type: 'formFields/awaitingEditField',
     })
   );
 });
 
-test("Should call formsFieldsGateway.updateField", async () => {
+test('Should call formsFieldsGateway.updateField', async () => {
   const gatewayUpdateFieldSpy = mockGatewayUpdateFieldSuccess();
   await editField(fakeField, fakeNewData);
   expect(gatewayUpdateFieldSpy).toHaveBeenCalled();
   gatewayUpdateFieldSpy.mockClear();
 });
 
-test("Should dispatch ratifyEditedField() on edit field success", async () => {
+test('Should dispatch ratifyEditedField() on edit field success', async () => {
   const gatewayUpdateFieldSpy = mockGatewayUpdateFieldSuccess();
   await editField(fakeField, fakeNewData);
   expect(mockDispatch).toHaveBeenCalledWith(
-    expect.objectContaining({ type: "forms/ratifyEditedField" })
+    expect.objectContaining({ type: 'forms/ratifyEditedField' })
   );
   gatewayUpdateFieldSpy.mockClear();
 });
 
-test("Should dispatch editFieldSuccess() if no error occurred ", async () => {
+test('Should dispatch editFieldSuccess() if no error occurred ', async () => {
   const gatewayUpdateFieldSpy = mockGatewayUpdateFieldSuccess();
   await editField(fakeField, fakeNewData);
   expect(mockDispatch).toHaveBeenCalledWith(
     expect.objectContaining({
-      type: "formFields/editFieldSuccess",
+      type: 'formFields/editFieldSuccess',
     })
   );
   gatewayUpdateFieldSpy.mockClear();
 });
 
-test("Should dispatch action editFieldFail() when error occurred", async () => {
+test('Should dispatch action editFieldFail() when error occurred', async () => {
   const gatewayUpdateFieldSpy = mockGatewayEditFieldThrowError();
   await editField(fakeField, fakeNewData);
   expect(mockDispatch).toHaveBeenCalled();
   expect(mockDispatch).toHaveBeenCalledWith(
     expect.objectContaining({
-      type: "formFields/editFieldFail",
+      type: 'formFields/editFieldFail',
     })
   );
   gatewayUpdateFieldSpy.mockClear();
 });
 
-test("Should return error message when error occur", async () => {
+test('Should return error message when error occur', async () => {
   const gatewayUpdateFieldSpy = mockGatewayEditFieldThrowError();
   const errorMessage = await editField(fakeField, fakeNewData);
-  expect(errorMessage).toBe("Could not update field!");
+  expect(errorMessage).toBe('Could not update field!');
   gatewayUpdateFieldSpy.mockClear();
 });

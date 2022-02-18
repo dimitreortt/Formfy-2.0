@@ -1,9 +1,9 @@
-import { IFormField } from "./../../domain/FormField";
-import { NewFieldParams } from "./../../views/pages/FillForm/AddField";
-import { FormFieldsGateway } from "./../../infra/api/FormFieldsGateway";
-import { ApplicationContext } from "./../contexts/ApplicationContext";
-import { useContext } from "react";
-import { useActions } from "./../hooks/useActions";
+import { IFormField } from './../../domain/entities/FormField';
+import { NewFieldParams } from '../../views/components/FormFieldsManageTable/AddField';
+import { FormFieldsGateway } from './../../infra/api/FormFieldsGateway';
+import { ApplicationContext } from './../contexts/ApplicationContext';
+import { useContext } from 'react';
+import { useActions } from './../hooks/useActions';
 
 export const useEditField = (formId: number) => {
   const {

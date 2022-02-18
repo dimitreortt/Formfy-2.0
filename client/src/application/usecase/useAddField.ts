@@ -1,10 +1,10 @@
-import { IFormField } from "./../../domain/FormField";
-import { FormFieldsGateway } from "./../../infra/api/FormFieldsGateway";
-import { FormsAssembler } from "../service/FormsAssembler";
-import { ApplicationContext } from "../contexts/ApplicationContext";
-import { useContext } from "react";
-import { FormsGateway } from "../../infra/api/FormsGateway";
-import { useActions } from "../hooks/useActions";
+import { IFormField } from './../../domain/entities/FormField';
+import { FormFieldsGateway } from './../../infra/api/FormFieldsGateway';
+import { FormsAssembler } from '../service/FormsAssembler';
+import { ApplicationContext } from '../contexts/ApplicationContext';
+import { useContext } from 'react';
+import { FormsGateway } from '../../infra/api/FormsGateway';
+import { useActions } from '../hooks/useActions';
 
 export const useAddField = (formId: number) => {
   const {
@@ -18,7 +18,7 @@ export const useAddField = (formId: number) => {
   const formFieldsGateway = new FormFieldsGateway(httpClient);
 
   const addField = async (
-    field: Pick<IFormField, "label" | "type" | "options">
+    field: Pick<IFormField, 'label' | 'type' | 'options'>
   ) => {
     addFieldAction();
     try {

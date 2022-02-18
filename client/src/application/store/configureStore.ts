@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import formsReducer from '../features/forms/formsSlice';
-import formFieldsReducer from '../features/formFields/formFieldsSlice';
-import registriesReducer from '../features/registries/registriesSlice';
+import formsReducer from '../store/slices/formsSlice';
+import formFieldsReducer from '../store/slices/formFieldsSlice';
+import registriesReducer from '../store/slices/registriesSlice';
 
 export const store = configureStore({
   reducer: {

@@ -61,9 +61,12 @@ test('Should call given function on submit with correct parameters', async () =>
   fireEvent.mouseDown(typeSelectionInput);
   expect(screen.getByText('Short Text')).toBeInTheDocument();
   fireEvent.click(screen.getByText('Short Text'));
+<<<<<<< HEAD
   fireEvent.mouseDown(typeSelectionInput);
   expect(screen.getByText('Short Text')).toBeInTheDocument();
   fireEvent.click(screen.getByText('Short Text'));
+=======
+>>>>>>> 52c736ecaad5a4c17a01270f03c2d625d499bc86
   fireEvent.click(screen.getByRole('submit-button'));
   expect(submitFn).toHaveBeenCalled();
   expect(submitFn).toHaveBeenCalledWith({

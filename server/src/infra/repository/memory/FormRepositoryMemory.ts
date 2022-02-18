@@ -14,6 +14,13 @@ export default class FormRepositoryMemory implements FormRepository {
   forms: Form[] = [];
 
   constructor() {}
+  updateFieldIndex(
+    formId: number,
+    oldIndex: number,
+    newIndex: number
+  ): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
   addField(formId: number, field: FormField): Promise<FormFieldDTO> {
     throw new Error("Method not implemented.");
   }
@@ -43,7 +50,7 @@ export default class FormRepositoryMemory implements FormRepository {
     throw new Error("Method not implemented.");
   }
 
-  deleteField(formId: number, label: string): Promise<void> {
+  deleteField(formId: number, label: string): Promise<FormFieldDTO> {
     throw new Error("Method not implemented.");
   }
 }

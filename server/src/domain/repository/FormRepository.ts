@@ -13,8 +13,13 @@ export default interface FormRepository {
     fieldName: string,
     newField: FormField
   ): Promise<void>;
-  deleteField(formId: number, label: string): Promise<void>;
+  deleteField(formId: number, label: string): Promise<FormFieldDTO>;
   formFieldsCount(formId: number): Promise<number>;
+  updateFieldIndex(
+    formId: number,
+    oldIndex: number,
+    newIndex: number
+  ): Promise<void>;
   swapIndexes(formId: number, index: number, indexB: number): Promise<void>;
   addField(formId: number, field: FormField): Promise<FormFieldDTO>;
 

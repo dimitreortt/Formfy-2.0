@@ -90,11 +90,12 @@ export default class FormRepositoryDatabase implements FormRepository {
     );
   }
 
-  async deleteField(formId: number, label: string): Promise<void> {
-    await this.databaseConnection.query(
-      "delete from formfy.form_field where form_id = $1 and label = $2;",
+  async deleteField(formId: number, label: string): Promise<FormFieldDTO> {
+    const [fieldData] = await this.databaseConnection.query(
+      "delete from formfy.form_field where form_id = $1 and label = $2 returning *;",
       [formId, label]
     );
+    return fieldData;
   }
 
   async formFieldsCount(formId: number) {
@@ -104,6 +105,13 @@ export default class FormRepositoryDatabase implements FormRepository {
     );
 
     return data ? data.count : 0;
+  }
+
+  async updateFieldIndex(formId: number, oldIndex: number, newIndex: number) {
+    await this.databaseConnection.query(
+      `update formfy.form_field set index = $1 where form_id = $2 and index = $3;`,
+      [newIndex, formId, oldIndex]
+    );
   }
 
   async swapIndexes(formId: number, indexA: number, indexB: number) {
@@ -116,12 +124,12 @@ export default class FormRepositoryDatabase implements FormRepository {
       );
     await this.databaseConnection.query(
       `
-    update formfy.form_field
-    set index = case index
-    when $1 then ($2)
-    when $2 then ($1)
-    end
-    where index in ($1,$2) and form_id = $3;
+      update formfy.form_field
+      set index = case index
+      when $1 then ($2)
+      when $2 then ($1)
+      end
+      where index in ($1,$2) and form_id = $3;
     `,
       [indexA, indexB, formId]
     );

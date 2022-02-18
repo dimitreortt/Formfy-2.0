@@ -71,11 +71,11 @@ test("Should call formFieldsGateway.deleteFormField", async () => {
   gatewayDeleteFieldSpy.mockClear();
 });
 
-test("Should dispatch ratifyFilteredFormFields() on delete form success", async () => {
+test("Should dispatch removeDeletedField() on delete form success", async () => {
   const gatewayDeleteFieldSpy = mockGatewayDeleteFieldSuccess();
   await deleteField(fakeField);
   expect(mockDispatch).toHaveBeenCalledWith(
-    expect.objectContaining({ type: "forms/ratifyFilteredFormFields" })
+    expect.objectContaining({ type: "forms/removeDeletedField" })
   );
   gatewayDeleteFieldSpy.mockClear();
 });

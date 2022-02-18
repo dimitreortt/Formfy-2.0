@@ -8,7 +8,7 @@ export const useDeleteField = (formId: number) => {
   const {
     deleteField: deleteFieldAction,
     awaitingDeleteField,
-    ratifyFilteredFormFields,
+    removeDeletedField,
     deleteFieldSuccess,
     deleteFieldFail,
   } = useActions();
@@ -21,7 +21,7 @@ export const useDeleteField = (formId: number) => {
       awaitingDeleteField();
       await formFieldsGateway.deleteFormField(formId, field.label);
       deleteFieldSuccess();
-      ratifyFilteredFormFields([formId, field]);
+      removeDeletedField([formId, field]);
     } catch (error: any) {
       deleteFieldFail();
       return error.message;

@@ -14,7 +14,7 @@ export const useDeleteForm = (formId: number) => {
     deleteFormFail,
     deleteFormSuccess,
     awaitingDeleteForm,
-    ratifyFilteredForms,
+    removeDeletedForm,
   } = useActions();
 
   const deleteForm = async () => {
@@ -23,7 +23,7 @@ export const useDeleteForm = (formId: number) => {
       awaitingDeleteForm();
       await formsGateway.deleteForm("formName");
       deleteFormSuccess();
-      ratifyFilteredForms(formId);
+      removeDeletedForm(formId);
     } catch (error: any) {
       deleteFormFail();
       return error.message;

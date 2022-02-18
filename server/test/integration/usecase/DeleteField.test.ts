@@ -69,7 +69,6 @@ test("Should update other fields's indexes if deleted field is not the last", as
   const getFormInput = new GetFormInput("Stock Analysis");
   const getFormOutput = await getForm.execute(getFormInput);
   expect(getFormOutput.formFields.length).toBe(2);
-  console.log(getFormOutput.formFields);
   expect(
     getFormOutput.formFields.find((field) => field.label === field2.label)
   ).toMatchObject(
